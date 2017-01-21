@@ -1,0 +1,9 @@
+/node_modules
+/public/storage
+/vendor
+/.idea
+.env
+
+# локальные файлы
+_ide_helper.php
+/.phpstorm.meta.php
