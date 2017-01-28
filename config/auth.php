@@ -22,7 +22,7 @@ return [
 
 		'api' => [
 			'driver'   => 'token',
-			'provider' => 'users',
+			'provider' => 'applications',
 		],
 	],
 	//-- -- -- --
@@ -31,8 +31,12 @@ return [
 	'providers' => [
 		'users' => [
 			'driver' => 'eloquent',
-			'model'  => App\User::class,
+			'model'  => \App\Entities\User::class,
 		],
+		'applications'  => [
+			'driver' => 'eloquent',
+			'model'  => \App\Entities\Application::class,
+		]
 	],
 	//-- -- -- --
 

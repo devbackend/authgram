@@ -19,7 +19,7 @@ return [
 
 	'encryption'    => env('MAIL_ENCRYPTION', 'tls'),  // шифрование
 	'username'      => env('MAIL_USERNAME'),           // имя пользователя
-	'password'      => env('MAIL_PASSWORD'),            // пароль
-	'sendmail'      => '/usr/sbin/sendmail -bs',        // путь до исполняемого файла sendmail на сервере
+	'password'      => env('MAIL_PASSWORD'),           // пароль
+	'sendmail'      => '/usr/sbin/sendmail -bs',       // путь до исполняемого файла sendmail на сервере
 
 ];

@@ -10,6 +10,6 @@ use Illuminate\Routing\Router;
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 
-$router->group(['middleware' => ['auth:api']], function() use ($router) {
-
+$router->group(['middleware' => ['auth:api'], 'prefix' => 'v1', 'namespace' => 'Api\v1'], function() use ($router) {
+	$router->get('/auth', 'AuthController@signAction');
 });

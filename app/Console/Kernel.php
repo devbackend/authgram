@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CreateTelegramCommand;
+use App\Console\Commands\TestTelegramCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -12,7 +14,10 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
  */
 class Kernel extends ConsoleKernel {
 	/** @var string[] Консольные команды */
-	protected $commands = [];
+	protected $commands = [
+		CreateTelegramCommand::class,
+		TestTelegramCommand::class,
+	];
 
 	/**
 	 * Команды, выполняемые по расписанию.
