@@ -22,6 +22,7 @@ class RouteServiceProvider extends ServiceProvider {
 	public function map() {
 		$this->mapApiRoutes();
 		$this->mapWebRoutes();
+		$this->mapBroadcastRoutes();
 	}
 
 	/**
@@ -51,5 +52,14 @@ class RouteServiceProvider extends ServiceProvider {
 		], function($router) {
 			require base_path('routes/api.php');
 		});
+	}
+
+	/**
+	 * Группировка роутов для вещания.
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	protected function mapBroadcastRoutes() {
+		require base_path('routes/channels.php');
 	}
 }

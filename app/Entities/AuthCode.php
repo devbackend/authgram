@@ -20,7 +20,7 @@ class AuthCode extends Entity {
 	const EXPIRED_AT        = 'expired_at';
 
 	/** Время устаревания кода авторизации (в секундах) */
-	const EXPIRED_TIME_SEC = 90;
+	const EXPIRED_TIME_SEC = 900;
 
 	/** @var bool Отключаем автоматические timestamp'ы */
 	public $timestamps = false;

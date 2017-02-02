@@ -12,7 +12,8 @@
 		"laravel/framework": "5.4.*",
 		"irazasyed/telegram-bot-sdk": "^2.0",
 		"webpatser/laravel-uuid": "^2.0",
-		"laravel/tinker": "^1.0"
+		"laravel/tinker": "^1.0",
+		"pusher/pusher-php-server": "^2.6"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "~1.4",

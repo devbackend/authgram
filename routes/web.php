@@ -11,6 +11,8 @@ use Telegram\Bot\Laravel\Facades\Telegram;
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 
+$router->any('/', 'HomepageController');
+
 $router->get('telegram', function(){
 	Telegram::commandsHandler();
 });

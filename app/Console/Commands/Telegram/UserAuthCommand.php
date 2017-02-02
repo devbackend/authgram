@@ -3,6 +3,8 @@
 namespace App\Console\Commands\Telegram;
 
 use App\Entities\AuthCode;
+use App\Entities\User;
+use App\Events\UserJoined;
 
 /**
  *
@@ -33,6 +35,11 @@ class UserAuthCommand extends TelegramCommand {
 
 			return;
 		}
+
+		$from = $this->getUpdate()->getMessage()->getFrom();
+		$user = User::loadByTelegramProfile($from);
+
+		event(new UserJoined($user));
 
 		$replyMessage->setText('Вы успешно авторизовались');
 
