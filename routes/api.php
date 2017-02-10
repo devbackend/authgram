@@ -11,5 +11,5 @@ use Illuminate\Routing\Router;
  */
 
 $router->group(['middleware' => ['auth:api'], 'prefix' => 'v1', 'namespace' => 'Api\v1'], function() use ($router) {
-	$router->get('/auth', 'AuthController@signAction');
+
 });

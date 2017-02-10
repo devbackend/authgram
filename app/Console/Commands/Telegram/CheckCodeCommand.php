@@ -4,14 +4,14 @@ namespace App\Console\Commands\Telegram;
 
 use App\Entities\AuthCode;
 use App\Entities\User;
-use App\Events\UserJoined;
+use App\Events\CodeChecked;
 
 /**
- *
+ * Проверка кода авторизации.
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-class UserAuthCommand extends TelegramCommand {
+class CheckCodeCommand extends TelegramCommand {
 	/** @var string Название команды */
 	protected $name = 'i';
 
@@ -33,13 +33,16 @@ class UserAuthCommand extends TelegramCommand {
 			$replyMessage->setText('Код авторизации не найден');
 			$this->replyWithMessage($replyMessage->get());
 
+			event(new CodeChecked(false, ''));
+
 			return;
 		}
 
+		//@todo-10.02.2017-krivonos.iv реализовать отправку данных пользователя в приложение и только потом отправлять перенаправление
 		$from = $this->getUpdate()->getMessage()->getFrom();
 		$user = User::loadByTelegramProfile($from);
 
-		event(new UserJoined($user));
+		event(new CodeChecked(true, $authCode->application->redirect_url . '?user_uuid=' . $user->uuid));
 
 		$replyMessage->setText('Вы успешно авторизовались');
 

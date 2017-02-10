@@ -12,9 +12,11 @@ class CreateApplicationsTable extends Migration {
 	public function up() {
 		Schema::create('applications', function(Blueprint $table) {
 			$table->uuid('uuid');
-			$table->uuid('owner_uuid');
+			$table->uuid('owner_uuid')->default('00000000-0000-0000-0000-000000000000');
 			$table->string('title');
 			$table->string('website');
+			$table->string('redirect_url');
+			$table->string('auth_request_url');
 			$table->string('api_token', 60);
 			$table->timestamps();
 

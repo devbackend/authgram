@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 /**
  * Сервис-провайдер для работы с роутами.
  *
+ * @todo-05.02.2017-krivonos.iv сделать прохождение по файлам по маске, чтоб можно было легко добавлять и удалять файлы
+ *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 class RouteServiceProvider extends ServiceProvider {

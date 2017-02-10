@@ -16,3 +16,12 @@ $router->any('/', 'HomepageController');
 $router->get('telegram', function(){
 	Telegram::commandsHandler();
 });
+
+//-- Получение кода авторизации
+$router->get('auth/{appUuid}', 'AuthController');
+//-- -- -- --
+
+//-- Управление приложениями
+$router->post('application', 'ApplicationController@createAction');
+$router->delete('application', 'ApplicationController@deleteAction');
+//-- -- -- --

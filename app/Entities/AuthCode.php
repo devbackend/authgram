@@ -2,6 +2,7 @@
 namespace App\Entities;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Модель кода авторизации.
@@ -11,19 +12,26 @@ use Carbon\Carbon;
  * @property int    $code               Код
  * @property string $expired_at         Время устаревания кода
  *
+ * @property-read Application $application Приложение, с которорым связан код авторизации
+ *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 class AuthCode extends Entity {
-	const ID                = 'id';
-	const APPLICATION_UUID  = 'application_uuid';
 	const CODE              = 'code';
+	const APPLICATION_UUID  = 'application_uuid';
 	const EXPIRED_AT        = 'expired_at';
 
 	/** Время устаревания кода авторизации (в секундах) */
 	const EXPIRED_TIME_SEC = 900;
 
+	/** @var bool Отключаем автоинкремент для первичного ключа */
+	public $incrementing = false;
+
 	/** @var bool Отключаем автоматические timestamp'ы */
 	public $timestamps = false;
+
+	/** @var string Первичный ключ */
+	protected $primaryKey = self::CODE;
 
 	/** @var string[] Названия полей для массового заполнения */
 	protected $fillable = [self::APPLICATION_UUID];
@@ -45,6 +53,18 @@ class AuthCode extends Entity {
 
 		return $code;
 	}
+
+	/**
+	 * Приложение, с которорым связан код авторизации
+	 *
+	 * @return BelongsTo
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function application() {
+		return $this->belongsTo(Application::class, static::APPLICATION_UUID);
+	}
+	const RELATION_APPLICATION = 'application';
 
 	/**
 	 * @inheritdoc

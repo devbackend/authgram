@@ -9,12 +9,17 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="/css/app.css">
+
 	@stack('styles')
 </head>
 <body>
-@yield('content')
+<div class="container">
+	@yield('content')
+</div>
 
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/materialize.min.js"></script>
 @stack('scripts')
 </body>
 </html>

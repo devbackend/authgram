@@ -59,6 +59,6 @@ return [
 	    \App\Console\Commands\Telegram\StartCommand::class,
         Telegram\Bot\Commands\HelpCommand::class,
 	    \App\Console\Commands\Telegram\AddApplicationCommand::class,
-	    \App\Console\Commands\Telegram\UserAuthCommand::class,
+	    \App\Console\Commands\Telegram\CheckCodeCommand::class,
     ],
 ];

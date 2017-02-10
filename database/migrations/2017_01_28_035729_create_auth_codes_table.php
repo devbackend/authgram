@@ -16,10 +16,11 @@ class CreateAuthCodesTable extends Migration {
 	 */
 	public function up() {
 		Schema::create('auth_codes', function (Blueprint $table) {
-			$table->increments('id');
-			$table->uuid('application_uuid');
 			$table->integer('code');
+			$table->uuid('application_uuid');
 			$table->timestamp('expired_at');
+
+			$table->primary('code');
 		});
 	}
 

@@ -1,10 +1,8 @@
 <?php
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers;
 
 use App\Entities\Application;
 use App\Entities\AuthCode;
-use App\Http\Controllers\Controller;
-use Auth;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -16,15 +14,19 @@ class AuthController extends Controller {
 	/**
 	 * Получение кода авторизации.
 	 *
+	 * @param string $appUuid UUID приложения
+	 *
 	 * @return JsonResponse
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function signAction() {
-		/** @var Application $application */
-		$application = Auth::guard('api')->user();
+	public function __invoke(string $appUuid) {
+		$application = Application::find($appUuid);
+		if (null === $application) {
+			return response()->json(['error' => 'Приложение не найдено']);
+		}
 
-		$authCode = AuthCode::create([AuthCode::APPLICATION_UUID => $application->uuid]);
+		$authCode = AuthCode::create([AuthCode::APPLICATION_UUID => $appUuid]);
 
 		return response()->json([
 			'code' => $authCode->code,
