@@ -17,6 +17,8 @@ $router->get('telegram', function(){
 	Telegram::commandsHandler();
 });
 
+$router->post('webhook/{token}', 'WebhookController');
+
 //-- Получение кода авторизации
 $router->get('auth/{appUuid}', 'AuthController');
 //-- -- -- --

@@ -11,5 +11,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
  */
 class VerifyCsrfToken extends BaseVerifier {
 	/** @var string[] URL-адреса, для которых не надо проверять токен */
-	protected $except = [];
+	protected $except = [
+		'webhook/*', // webhook telegram бота
+	];
 }
