@@ -58,7 +58,7 @@ class WebhookSwitchCommand extends Command {
 			return;
 		}
 
-		$this->line('Webhook успешно установлен: ' . $webhookUrl);
+		$this->info('Webhook успешно установлен: ' . $webhookUrl);
 	}
 
 	/**
