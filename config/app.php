@@ -10,7 +10,7 @@ return [
 	'name'              => 'Adrc Web Application',              // название приложения
 	'env'               => env('APP_ENV', 'production'),        // окружение, в котором будет запущено приложение
 	'debug'             => env('APP_DEBUG', false),             // требуется ли режим отладки
-	'url'               => env('APP_URL', 'http://adrc.ru'),    // url-адрес приложения
+	'url'               => env('APP_URL', 'http://localhost'),  // url-адрес приложения
 	'timezone'          => 'Europe/Moscow',                     // часовой пояс приложения
 	'locale'            => 'ru',                                // основная локализация приложения
 	'fallback_locale'   => 'ru',                                // локализация приложения, если недоступная основная
