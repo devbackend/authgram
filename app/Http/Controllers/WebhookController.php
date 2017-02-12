@@ -23,7 +23,8 @@ class WebhookController extends Controller {
 			App::abort(401);
 		}
 
-		Telegram::getWebhookUpdates();
+		$update = Telegram::getWebhookUpdates();
+		Telegram::commandsHandler(true);
 
 		return response('ok');
 	}
