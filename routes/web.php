@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\RouteServiceProvider;
 use Illuminate\Routing\Router;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
@@ -17,7 +18,7 @@ $router->get('telegram', function(){
 	Telegram::commandsHandler();
 });
 
-$router->post('webhook/{token}', 'WebhookController');
+$router->post('webhook/{token}', 'WebhookController')->name(RouteServiceProvider::ROUTE_NAME_WEBHOOK);
 
 //-- Получение кода авторизации
 $router->get('auth/{appUuid}', 'AuthController');

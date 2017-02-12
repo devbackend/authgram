@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 class RouteServiceProvider extends ServiceProvider {
+	const ROUTE_NAME_WEBHOOK = 'webhook';
+
 	/** @var string Неймспейс, в котором хранятся контроллеры приложения. */
 	protected $namespace = 'App\Http\Controllers';
 
