@@ -5,6 +5,7 @@ namespace App\Console\Commands\Telegram;
 use App\Entities\AuthCode;
 use App\Entities\User;
 use App\Events\CodeChecked;
+use GuzzleHttp\Client;
 
 /**
  * Проверка кода авторизации.
@@ -38,9 +39,40 @@ class CheckCodeCommand extends TelegramCommand {
 			return;
 		}
 
-		//@todo-10.02.2017-krivonos.iv реализовать отправку данных пользователя в приложение и только потом отправлять перенаправление
 		$from = $this->getUpdate()->getMessage()->getFrom();
 		$user = User::loadByTelegramProfile($from);
+
+		//-- Отправляем запрс с авторизационными данными приложению
+		$client = new Client;
+		// Пытаем отправить запрос в несколько попыток
+		$isSuccessResponse = false;
+		for ($i = 0; $i < 3; $i++) {
+			$response = $client->post($authCode->application->auth_request_url, [
+				'form_params' => [
+					'token'         => $authCode->application->api_token,
+					'uuid'          => $user->uuid,
+					'username'      => $user->username,
+					'first_name'    => $user->first_name,
+					'last_name'     => $user->last_name,
+				]
+			]);
+
+			if (200 === $response->getStatusCode()) {
+				$isSuccessResponse = true;
+
+				break;
+			}
+		}
+		//-- -- -- --
+
+		if (false === $isSuccessResponse) {
+			$replyMessage->setText('Ошибка авторизации. Попробуйте позже');
+			$this->replyWithMessage($replyMessage->get());
+
+			event(new CodeChecked(false, ''));
+
+			return;
+		}
 
 		event(new CodeChecked(true, $authCode->application->redirect_url . '?user_uuid=' . $user->uuid));
 
