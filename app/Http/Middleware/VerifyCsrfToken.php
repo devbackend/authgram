@@ -13,5 +13,6 @@ class VerifyCsrfToken extends BaseVerifier {
 	/** @var string[] URL-адреса, для которых не надо проверять токен */
 	protected $except = [
 		'webhook/*', // webhook telegram бота
+		'auth/telegram', // авторизация через Telegram
 	];
 }
