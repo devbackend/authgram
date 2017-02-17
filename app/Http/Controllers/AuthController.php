@@ -28,7 +28,7 @@ class AuthController extends Controller {
 
 		$authCode = AuthCode::create([AuthCode::APPLICATION_UUID => $appUuid]);
 
-		return response()->json([
+		return response()->jsonp('AuthoriseWidget.showCode', [
 			'code' => $authCode->code,
 		]);
 	}
