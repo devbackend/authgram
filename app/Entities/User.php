@@ -17,17 +17,17 @@ use Uuid;
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 class User extends Entity {
-	/** @var bool Отключаем автоинкремент для первичного ключа */
-	public $incrementing = false;
-
-	/** @var string Первичный ключ */
-	protected $primaryKey = 'uuid';
-
 	const UUID          = 'uuid';
 	const TELEGRAM_ID   = 'telegram_id';
 	const USERNAME      = 'username';
 	const FIRST_NAME    = 'first_name';
 	const LAST_NAME     = 'last_name';
+
+	/** @var bool Отключаем автоинкремент для первичного ключа */
+	public $incrementing = false;
+
+	/** @var string Первичный ключ */
+	protected $primaryKey = self::UUID;
 
 	protected $fillable = [
 		self::TELEGRAM_ID,
