@@ -13,18 +13,18 @@ class CodeChecked implements ShouldBroadcast {
 	/** @var bool Статус проверки кода */
 	public $status = false;
 
-	/** @var string URL-адрес для перенаправления пользователя */
-	public $redirectUrl = '';
+	/** @var string Код авторизации пользователя */
+	public $authKey = '';
 
 	/**
-	 * @param bool   $status        Статус проверки кода
-	 * @param string $redirectUrl   URL-адрес для перенаправления пользователя
+	 * @param bool   $status  Статус проверки кода
+	 * @param string $authKey URL-адрес для перенаправления пользователя
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function __construct(bool $status, string $redirectUrl) {
-		$this->status       = $status;
-		$this->redirectUrl  = $redirectUrl;
+	public function __construct(bool $status, string $authKey) {
+		$this->status   = $status;
+		$this->authKey  = $authKey;
 	}
 
 	/**

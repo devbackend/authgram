@@ -42,6 +42,8 @@ class CheckCodeCommand extends TelegramCommand {
 		$from = $this->getUpdate()->getMessage()->getFrom();
 		$user = User::loadByTelegramProfile($from);
 
+		$authKey = md5(random_bytes(128));
+
 		//-- Отправляем запрс с авторизационными данными приложению
 		$client = new Client;
 		// Пытаем отправить запрос в несколько попыток
@@ -49,11 +51,14 @@ class CheckCodeCommand extends TelegramCommand {
 		for ($i = 0; $i < 3; $i++) {
 			$response = $client->post($authCode->application->auth_request_url, [
 				'form_params' => [
-					'token'         => $authCode->application->api_token,
-					'uuid'          => $user->uuid,
-					'username'      => $user->username,
-					'first_name'    => $user->first_name,
-					'last_name'     => $user->last_name,
+					'token'     => $authCode->application->api_token,
+					'auth_key'  => $authKey,
+					'user'  => [
+						'uuid'          => $user->uuid,
+						'username'      => $user->username,
+						'first_name'    => $user->first_name,
+						'last_name'     => $user->last_name,
+					]
 				]
 			]);
 
@@ -74,7 +79,7 @@ class CheckCodeCommand extends TelegramCommand {
 			return;
 		}
 
-		event(new CodeChecked(true, $authCode->application->redirect_url . '?user_uuid=' . $user->uuid));
+		event(new CodeChecked(true, $authKey));
 
 		$replyMessage->setText('Вы успешно авторизовались');
 

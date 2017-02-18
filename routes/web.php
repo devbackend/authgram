@@ -12,7 +12,7 @@ use Telegram\Bot\Laravel\Facades\Telegram;
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 
-$router->any('/', 'HomepageController');
+$router->any('/', 'HomepageController')->name(RouteServiceProvider::ROUTE_NAME_HOMEPAGE);
 
 $router->get('telegram', function(){
 	Telegram::commandsHandler();

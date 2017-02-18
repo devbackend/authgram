@@ -9,7 +9,7 @@ return [
 	//-- Параметры по-умолчанию
 	'defaults'  => [
 		'guard'     => 'web',   // тип приложения, защищенный авторизацией
-		'passwords' => 'users', // таблица, в которой хранятся данные по доступам
+		'passwords' => 'owners', // таблица, в которой хранятся данные по доступам
 	],
 	//-- -- -- --
 
@@ -17,7 +17,7 @@ return [
 	'guards'    => [
 		'web' => [
 			'driver'   => 'session',
-			'provider' => 'users',
+			'provider' => 'owners',
 		],
 
 		'api' => [
@@ -29,24 +29,14 @@ return [
 
 	//-- Провайдеры данных доступа
 	'providers' => [
-		'users' => [
+		'owners' => [
 			'driver' => 'eloquent',
-			'model'  => \App\Entities\User::class,
+			'model'  => \App\Entities\Owner::class,
 		],
 		'applications'  => [
 			'driver' => 'eloquent',
 			'model'  => \App\Entities\Application::class,
 		]
-	],
-	//-- -- -- --
-
-	//-- Настройки сброса пароля
-	'passwords' => [
-		'users' => [
-			'provider' => 'users',
-			'table'    => 'password_resets',
-			'expire'   => 60,
-		],
 	],
 	//-- -- -- --
 ];
