@@ -53,7 +53,14 @@
 					;
 				},
 				success: function(response){
-					$creationForm.remove();
+					let $tokenMessage = $('<blockquote />').text('Токен вашего приложения: ' + response.data.token);
+					let $formContainer = $('#creation-form');
+
+					$formContainer
+						.find(SELECTOR_CREATE_APPLICATION_FORM + ', .errors').remove()
+						.end()
+						.append($tokenMessage)
+					;
 				},
 				error: function (response) {
 					let responseJSON = response.responseJSON;

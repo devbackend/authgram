@@ -28,7 +28,6 @@ class CreateApplicationRequest extends FormRequest {
 		return [
 			Application::TITLE              => 'required|min:5',
 			Application::WEBSITE            => 'required|url|unique:applications',
-			Application::REDIRECT_URL       => 'required|url',
 			Application::AUTH_REQUEST_URL   => 'required|url',
 		];
 	}

@@ -11,7 +11,6 @@ use Uuid;
  * @property string    $owner_uuid          Идентификатор владельца приложения
  * @property string    $title               Название приложения
  * @property string    $website             Адрес сайта
- * @property string    $redirect_url        URL на который будет перенаправлен пользователь после авторизации
  * @property string    $auth_request_url    URL на который будут отправлены данные авторизации пользователя
  * @property string    $api_token           Уникальный токен приложения
  *
@@ -20,21 +19,20 @@ use Uuid;
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 class Application extends Entity {
-	/** @var bool Отключаем автоинкремент для первичного ключа */
-	public $incrementing = false;
-
-	/** @var string Первичный ключ */
-	protected $primaryKey = 'uuid';
-
 	const UUID              = 'uuid';
 	const OWNER_UUID        = 'owner_uuid';
 	const TOKEN             = 'token';
 	const TITLE             = 'title';
 	const WEBSITE           = 'website';
-	const REDIRECT_URL      = 'redirect_url';
 	const AUTH_REQUEST_URL  = 'auth_request_url';
 
-	protected $fillable = [/*self::OWNER_UUID,*/ self::TITLE, self::WEBSITE, self::REDIRECT_URL, self::AUTH_REQUEST_URL];
+	/** @var bool Отключаем автоинкремент для первичного ключа */
+	public $incrementing = false;
+
+	/** @var string Первичный ключ */
+	protected $primaryKey = self::UUID;
+
+	protected $fillable = [self::OWNER_UUID, self::TITLE, self::WEBSITE, self::AUTH_REQUEST_URL];
 
 	/**
 	 * Релейшн с владельцем приложения.

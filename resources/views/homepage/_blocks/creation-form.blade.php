@@ -8,15 +8,16 @@
 use App\Entities\Application;
 ?>
 
-<h3>Добавить приложение</h3>
-
 <div class="row" id="creation-form">
+	<h3>Добавить приложение</h3>
+
 	<div class="col s12 errors">
 		<ul></ul>
 	</div>
 
 	<form class="col s12" action="<?= action('ApplicationController@createAction') ?>" method="post" data-role="create-application-form">
 		{{ csrf_field() }}
+		<input type="hidden" name="<?= Application::OWNER_UUID ?>" value="<?= Auth::user()->user_uuid ?>">
 		<div class="row">
 			<div class="input-field col s6">
 				<input type="text" name="<?= Application::TITLE ?>" class="validate" required placeholder="Например: Авторизатор" value="<?= old(Application::TITLE) ?>" id="field-<?= Application::TITLE ?>">
@@ -25,13 +26,6 @@ use App\Entities\Application;
 			<div class="input-field col s6">
 				<input type="text" name="<?= Application::WEBSITE ?>" placeholder="Например: http://example.com" class="validate" data-inputmask-url required value="<?= old(Application::WEBSITE) ?>" id="field-<?= Application::WEBSITE ?>">
 				<label for="field-<?= Application::WEBSITE ?>">Адрес сайта</label>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="input-field col s12">
-				<input type="text" name="<?= Application::REDIRECT_URL ?>" class="validate" data-inputmask-url required placeholder="Например: http://example.com/profile" value="<?= old(Application::REDIRECT_URL) ?>" id="field-<?= Application::REDIRECT_URL ?>">
-				<label for="field-<?= Application::REDIRECT_URL ?>">URL-адрес, на который перенаправить пользователя после авторизации</label>
 			</div>
 		</div>
 
