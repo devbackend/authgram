@@ -17,7 +17,23 @@
 	а также при помощи этого токена вы сможете проверять входящие от бота запросы на авторизацию.
 </p>
 
-@include('homepage._blocks.creation-form')
+<?php if (Auth::check()): ?>
+	@include('homepage._blocks.creation-form')
+<?php else: ?>
+	<div id="telegram-auth-widget" class="telegram-auth-widget"></div>
+
+	@push('scripts')
+		<script type="text/javascript" src="/js/authgram-widget.js"></script>
+		<script type="text/javascript">
+			var authbotWidget = new AuthoriseWidget('157bb070-eaee-11e6-84e2-0f2ab592a536', {
+				selector: '#telegram-auth-widget',
+				onAuthSuccess: function (authKey) {
+					document.location.href = '?auth_key=' + authKey;
+				}
+			});
+		</script>
+@endpush
+<?php endif ?>
 
 <h3>Механика авторизации пошагово</h3>
 <div>

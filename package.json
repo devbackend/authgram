@@ -18,7 +18,9 @@
   "dependencies": {
     "jquery": "^3.1.1",
     "laravel-echo": "^1.2.3",
+    "laravel-elixir-typescript": "^3.0.5",
     "materialize-css": "^0.98.0",
-    "pusher-js": "^4.0.0"
+    "pusher-js": "^4.0.0",
+    "typescript": "^2.1.6"
   }
 }
