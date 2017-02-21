@@ -23,7 +23,7 @@ $router->post('webhook/{token}', 'WebhookController')->name(RouteServiceProvider
 $router->post('auth/telegram', 'AuthRequestController');
 
 //-- Получение кода авторизации
-$router->get('auth/{appUuid}', 'AuthController');
+$router->get('auth/{appUuid}/{callback}', 'AuthController');
 //-- -- -- --
 
 //-- Управление приложениями

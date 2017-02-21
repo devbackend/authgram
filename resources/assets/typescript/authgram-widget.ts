@@ -66,17 +66,6 @@ class AuthoriseWidget {
 	}
 
 	/**
-	 * Отображение кода пользователю.
-	 *
-	 * @param responseCode
-	 *
-	 * @author Кривонос Иван <devbackend@yandex.ru>
-	 */
-	public showCode(responseCode) {
-		this.drawCodeContainer(responseCode.code);
-	}
-
-	/**
 	 * Отрисовка кнопки авторизации.
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
@@ -97,12 +86,18 @@ class AuthoriseWidget {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	protected getCode = () => {
-		this.htmlContainer.innerHTML = 'Получение кода...';
+		let callback = 'getCode' + Math.floor(Math.random() * 1024) + 1;
 
+		this.htmlContainer.innerHTML = 'Получение кода...';
+		this[callback] = (responseCode) => {
+			this.drawCodeContainer(responseCode.code);
+
+			delete this[callback];
+		};
 		(<any>window).AuthoriseWidget = this;
 
 		let elem = document.createElement("script");
-		elem.src = AUTH_BASE_URL + this.uuid;
+		elem.src = AUTH_BASE_URL + this.uuid + '/' + 'window.AuthoriseWidget.' + callback;
 		document.head.appendChild(elem);
 	};
 

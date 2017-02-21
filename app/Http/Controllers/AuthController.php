@@ -14,13 +14,14 @@ class AuthController extends Controller {
 	/**
 	 * Получение кода авторизации.
 	 *
-	 * @param string $appUuid UUID приложения
+	 * @param string $appUuid   UUID приложения
+	 * @param string $callback  Название callback-функции для выполнения на клиенте
 	 *
 	 * @return JsonResponse
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function __invoke(string $appUuid) {
+	public function __invoke(string $appUuid, string $callback) {
 		$application = Application::find($appUuid);
 		if (null === $application) {
 			return response()->json(['error' => 'Приложение не найдено']);
@@ -28,7 +29,7 @@ class AuthController extends Controller {
 
 		$authCode = AuthCode::create([AuthCode::APPLICATION_UUID => $appUuid]);
 
-		return response()->jsonp('window.AuthoriseWidget.showCode', [
+		return response()->jsonp($callback, [
 			'code' => $authCode->code,
 		]);
 	}
