@@ -97,24 +97,13 @@ class AuthoriseWidget {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	protected getCode = () => {
-		let requestUrl      = AUTH_BASE_URL + this.uuid,
-			authCodeRequest = new XMLHttpRequest();
-
-		authCodeRequest.open('GET', requestUrl, true);
-
-		authCodeRequest.onload = function () {
-			let elem = document.createElement("script");
-			elem.innerHTML = authCodeRequest.responseText;
-			document.head.appendChild(elem);
-		};
-
-		authCodeRequest.onerror = this.drawAuthoriseButton;
-
 		this.htmlContainer.innerHTML = 'Получение кода...';
 
 		(<any>window).AuthoriseWidget = this;
 
-		authCodeRequest.send();
+		let elem = document.createElement("script");
+		elem.src = AUTH_BASE_URL + this.uuid;
+		document.head.appendChild(elem);
 	};
 
 	/**
