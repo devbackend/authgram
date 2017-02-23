@@ -16,6 +16,8 @@ elixir(function(mix) {
 		'node_modules/jquery/dist/jquery.min.js',
 	], 'public/js/');
 
+	mix.copy('resources/assets/fonts/**/*', 'public/fonts/');
+
 	//-- Генерация скриптов и стилей для виджета
 	mix.typescript('authgram-widget.ts');
 	mix.webpack('authgram-listener.js', 'public/js/authgram-listener.js');
