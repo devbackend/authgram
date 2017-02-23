@@ -3,7 +3,7 @@
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-const BASE_URL      = 'https://authbot.devbackend.com/';
+const BASE_URL      = 'https://authbot.devbackend.com';
 const AUTH_BASE_URL = BASE_URL + '/auth/';
 
 const DEFAULT_SELECTOR = '[data-role="authorise-bot"]';
