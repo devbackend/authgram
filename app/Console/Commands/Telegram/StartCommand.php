@@ -33,5 +33,7 @@ class StartCommand extends TelegramCommand {
 		;
 
 		$this->replyWithMessage($message);
+
+		$this->triggerCommand(HelpCommand::class);
 	}
 }

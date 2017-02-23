@@ -56,9 +56,9 @@ return [
     |
     */
     'commands' => [
-	    \App\Console\Commands\Telegram\StartCommand::class,
-        Telegram\Bot\Commands\HelpCommand::class,
 	    \App\Console\Commands\Telegram\AddApplicationCommand::class,
 	    \App\Console\Commands\Telegram\CheckCodeCommand::class,
+        \App\Console\Commands\Telegram\HelpCommand::class,
+	    \App\Console\Commands\Telegram\StartCommand::class,
     ],
 ];
