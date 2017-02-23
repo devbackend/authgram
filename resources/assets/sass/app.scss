@@ -7,8 +7,6 @@
  */
 
 @import "materialize";
-
-.telegram-auth-widget {
-	margin: 35px auto 0;
-	display: block !important;
-}
+@import "page-block";
+@import "about";
+@import "auth-widget";

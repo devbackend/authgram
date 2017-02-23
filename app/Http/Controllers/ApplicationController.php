@@ -36,7 +36,12 @@ class ApplicationController extends Controller {
 		}
 
 		$jsonResponse->status = true;
-		$jsonResponse->data   = ['token' => $application->api_token];
+		$jsonResponse->data   = [
+			'uuid'  => $application->uuid,
+			'token' => $application->api_token,
+		];
+
+		$jsonResponse->text = e(view('application.widget-content', ['application' => $application])->render());
 
 		return response()->json($jsonResponse);
 	}

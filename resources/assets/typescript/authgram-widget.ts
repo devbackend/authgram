@@ -6,17 +6,17 @@
 const BASE_URL      = 'https://authbot.devbackend.com';
 const AUTH_BASE_URL = BASE_URL + '/auth/';
 
-const DEFAULT_SELECTOR = '[data-role="authorise-bot"]';
+const DEFAULT_SELECTOR = '[data-role="authgram-bot"]';
 
-const AUTHORISE_BUTTON_TEXT = 'Войти через Telegram';
+const AUTHGRAM_BUTTON_TEXT = 'Войти через Telegram';
 
-const DEFAULT_CLASS_AUTHORISE_BUTTON = 'authorise-button';
-const DEFAULT_CLASS_CODE_CONTAINER   = 'authorise-code-container';
+const DEFAULT_CLASS_AUTHGRAM_BUTTON = 'authgram-button';
+const DEFAULT_CLASS_CODE_CONTAINER  = 'authgram-code-container';
 
 const CHANNEL_CHECK_CODE_STATUS = 'check-code-status';
 const COMMAND_CODE_CHECKED      = 'CodeChecked';
 
-class AuthoriseWidget {
+class AuthGramWidget {
 	public uuid:        string;
 	public selector:    string  = DEFAULT_SELECTOR;
 
@@ -44,13 +44,13 @@ class AuthoriseWidget {
 		//-- -- -- --
 
 		//-- Добавляем дополнительный класс для стилизации
-		this.htmlContainer.classList.add('authorise-bot-widget-container');
+		this.htmlContainer.classList.add('authgram-bot-widget-container');
 		//-- -- -- --
 
 		//-- Подключаем стили
 		let widgetStyles = document.createElement('link');
 		widgetStyles.setAttribute('rel', 'stylesheet');
-		widgetStyles.setAttribute('href', BASE_URL + '/css/authorise-widget.css');
+		widgetStyles.setAttribute('href', BASE_URL + '/css/authgram-widget.css');
 		//-- -- -- --
 
 		//-- Подключаем скрипты
@@ -72,8 +72,8 @@ class AuthoriseWidget {
 	 */
 	protected drawAuthoriseButton = () => {
 		let button = document.createElement('button');
-		button.className = DEFAULT_CLASS_AUTHORISE_BUTTON;
-		button.innerHTML = AUTHORISE_BUTTON_TEXT;
+		button.className = DEFAULT_CLASS_AUTHGRAM_BUTTON;
+		button.innerHTML = AUTHGRAM_BUTTON_TEXT;
 		button.addEventListener('click', this.getCode, false);
 
 		this.htmlContainer.innerHTML = '';
@@ -94,10 +94,10 @@ class AuthoriseWidget {
 
 			delete this[callback];
 		};
-		(<any>window).AuthoriseWidget = this;
+		(<any>window).AuthGramWidget = this;
 
 		let elem = document.createElement("script");
-		elem.src = AUTH_BASE_URL + this.uuid + '/' + 'window.AuthoriseWidget.' + callback;
+		elem.src = AUTH_BASE_URL + this.uuid + '/' + 'window.AuthGramWidget.' + callback;
 		document.head.appendChild(elem);
 	};
 

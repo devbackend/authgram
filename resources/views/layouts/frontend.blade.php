@@ -14,12 +14,15 @@
 	@stack('styles')
 </head>
 <body>
+@include('layouts._blocks.nav')
+
 <div class="container">
 	@yield('content')
 </div>
 
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/js/materialize.min.js"></script>
+<script type="text/javascript" src="/js/scrollIt.min.js"></script>
 @stack('scripts')
 </body>
 </html>

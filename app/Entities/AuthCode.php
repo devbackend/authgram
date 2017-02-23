@@ -22,7 +22,7 @@ class AuthCode extends Entity {
 	const EXPIRED_AT        = 'expired_at';
 
 	/** Время устаревания кода авторизации (в секундах) */
-	const EXPIRED_TIME_SEC = 900;
+	const EXPIRED_TIME_SEC = 30;
 
 	/** @var bool Отключаем автоинкремент для первичного ключа */
 	public $incrementing = false;
@@ -77,7 +77,7 @@ class AuthCode extends Entity {
 		static::creating(function($entity) {
 			/** @var static $entity */
 
-			$entity->code       = rand(100000, 999999);
+			$entity->code       = rand(1000, 9999);
 			$entity->expired_at = Carbon::now()->addSecond(static::EXPIRED_TIME_SEC)->toDateTimeString();
 		});
 	}

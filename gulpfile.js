@@ -4,18 +4,21 @@ require('laravel-elixir-typescript');
 elixir(function(mix) {
 	mix.webpack([
 		'manage-application.js',
-		'jquery.inputmask.bundle.js'
+		'scroll-menu.js'
 	]);
 
-	mix.webpack(['authgram-listener.js'], 'public/js/authgram-listener.js');
-
-	mix.typescript(['authgram-widget.ts']);
+	mix.scripts('scrollIt.js', 'public/js/scrollIt.min.js');
 
 	mix.sass('resources/assets/sass/app.scss', 'public/css');
-	mix.sass('resources/assets/sass/authorise-widget.scss', 'public/css/authorise-widget.css');
+
 	mix.copy([
 		'node_modules/materialize-css/dist/js/materialize.min.js',
 		'node_modules/jquery/dist/jquery.min.js',
-		'node_modules/materialize-css/dist/js/materialize.min.js'
 	], 'public/js/');
+
+	//-- Генерация скриптов и стилей для виджета
+	mix.typescript('authgram-widget.ts');
+	mix.webpack('authgram-listener.js', 'public/js/authgram-listener.js');
+	mix.sass('resources/assets/sass/authgram-widget.scss', 'public/css/authgram-widget.css');
+	//-- -- -- --
 });

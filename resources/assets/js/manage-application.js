@@ -53,7 +53,12 @@
 					;
 				},
 				success: function(response){
-					let $tokenMessage = $('<blockquote />').text('Токен вашего приложения: ' + response.data.token);
+					let $tokenMessage = $('<blockquote />')
+						.html('<p>Идентификатор вашего приложения: <b>' + response.data.uuid + '</b></p>'
+							+ '<p>Секреный ключ: <b>' + response.data.token + '</b></p>'
+							+ '<p>Код виджета:<pre>' + response.text + '</pre></p>'
+						)
+					;
 					let $formContainer = $('#creation-form');
 
 					$formContainer
