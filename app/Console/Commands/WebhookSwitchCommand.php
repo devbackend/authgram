@@ -50,7 +50,7 @@ class WebhookSwitchCommand extends Command {
 
 		/** @var TelegramResponse $response */
 		$response = Telegram::setWebhook(['url' => $webhookUrl]);
-		if (200 !== $response) {
+		if (200 !== $response->getHttpStatusCode()) {
 			$this->error(
 				$response->getDecodedBody()
 			);
