@@ -34,7 +34,7 @@ class CheckCodeCommand extends TelegramCommand {
 			$replyMessage->setText('Код авторизации не найден');
 			$this->replyWithMessage($replyMessage->get());
 
-			event(new CodeChecked(false, ''));
+			event(new CodeChecked($code, false, ''));
 
 			return;
 		}
@@ -74,12 +74,12 @@ class CheckCodeCommand extends TelegramCommand {
 			$replyMessage->setText('Ошибка авторизации. Попробуйте позже');
 			$this->replyWithMessage($replyMessage->get());
 
-			event(new CodeChecked(false, ''));
+			event(new CodeChecked($code, false, ''));
 
 			return;
 		}
 
-		event(new CodeChecked(true, $authKey));
+		event(new CodeChecked($code, true, $authKey));
 
 		$replyMessage->setText('Вы успешно авторизовались');
 

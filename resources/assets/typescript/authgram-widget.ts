@@ -116,7 +116,7 @@ class AuthGramWidget {
 
 		//-- Начинаем слушать ответ от сервера
 		(<any>window).Echo
-			.channel(CHANNEL_CHECK_CODE_STATUS)
+			.channel(CHANNEL_CHECK_CODE_STATUS + '.' + code)
 			.listen(COMMAND_CODE_CHECKED, (e) => {
 				//-- Если произошла ошибка, сообщаем пользователю и рисуем кнопку заново
 				if (false === e.status) {

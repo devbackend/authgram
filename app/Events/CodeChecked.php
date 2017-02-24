@@ -16,13 +16,18 @@ class CodeChecked implements ShouldBroadcast {
 	/** @var string Код авторизации пользователя */
 	public $authKey = '';
 
+	/** @var int Авторизационный код */
+	protected $authCode;
+
 	/**
-	 * @param bool   $status  Статус проверки кода
-	 * @param string $authKey URL-адрес для перенаправления пользователя
+	 * @param int    $authCode  Авторизационный код
+	 * @param bool   $status    Статус проверки кода
+	 * @param string $authKey   Ключ авторизации
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function __construct(bool $status, string $authKey) {
+	public function __construct(int $authCode, bool $status, string $authKey) {
+		$this->authCode = $authCode;
 		$this->status   = $status;
 		$this->authKey  = $authKey;
 	}
@@ -33,6 +38,6 @@ class CodeChecked implements ShouldBroadcast {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function broadcastOn() {
-		return new Channel('check-code-status');
+		return new Channel('check-code-status.' . $this->authCode);
 	}
 }
