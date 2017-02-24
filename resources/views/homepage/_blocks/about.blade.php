@@ -14,7 +14,7 @@
 	</p>
 
 	<p class="center">
-		<a href="web+tg://resolve?domain=authgrambot" class="waves-effect waves-light btn-large" target="_blank">Начать использовать AuthGram</a>
+		<a href="https://telegram.me/authgrambot" class="waves-effect waves-light btn-large" target="_blank">Начать использовать AuthGram</a>
 	</p>
 </div>
 <div class="about-col">
