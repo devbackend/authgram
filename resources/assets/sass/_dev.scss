@@ -1,0 +1,27 @@
+/**
+ * Стили блока "Разработчикам"
+ *
+ * @author Кривонос Иван <devbackend@yandex.ru>
+ */
+
+[data-role="developers-faq"] {
+	ol {
+		li {
+			list-style: decimal !important;
+		}
+	}
+
+	li {
+		margin-bottom: 10px;
+	}
+
+	.param-list {
+		li {
+			margin: {
+				bottom: 0;
+				top: 5px;
+				left: 20px;
+			}
+		}
+	}
+}

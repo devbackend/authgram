@@ -4,7 +4,7 @@ require('laravel-elixir-typescript');
 elixir(function(mix) {
 	mix.webpack([
 		'manage-application.js',
-		'scroll-menu.js'
+		'website.js'
 	]);
 
 	mix.scripts('scrollIt.js', 'public/js/scrollIt.min.js');

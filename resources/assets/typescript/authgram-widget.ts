@@ -20,8 +20,17 @@ class AuthGramWidget {
 	public uuid:        string;
 	public selector:    string  = DEFAULT_SELECTOR;
 
-	public onAuthSuccess    = function (authKey: string) {console.warn('Переопределите метод onAuthSuccess')};
-	public onAuthFail       = function () {console.warn('Переопределите метод onAuthFail')};
+	public onAuthSuccess = (authKey: string) => {
+		document.location.href = '?auth_key=' + authKey;
+	};
+
+	public onAuthFail = () => {
+		let errorMessage = document.createElement('p');
+		errorMessage.classList.add('authgram-bot-widget-container');
+		errorMessage.innerText = 'При авторизации произошла ошибка. Попробуйте снова.';
+
+		this.drawAuthoriseButton(errorMessage.outerHTML);
+	};
 
 	protected htmlContainer: Element;
 
@@ -70,13 +79,13 @@ class AuthGramWidget {
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	protected drawAuthoriseButton = () => {
+	protected drawAuthoriseButton = (containerHtml = '') => {
 		let button = document.createElement('button');
 		button.className = DEFAULT_CLASS_AUTHGRAM_BUTTON;
 		button.innerHTML = AUTHGRAM_BUTTON_TEXT;
 		button.addEventListener('click', this.getCode, false);
 
-		this.htmlContainer.innerHTML = '';
+		this.htmlContainer.innerHTML = containerHtml;
 		this.htmlContainer.appendChild(button);
 	};
 
