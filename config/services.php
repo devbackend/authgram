@@ -19,7 +19,7 @@ return [
 		'secret' => env('SPARKPOST_SECRET'),
 	],
 	'stripe' => [
-		'model'  => App\User::class,
+		'model'  => \App\Entities\User::class,
 		'key'    => env('STRIPE_KEY'),
 		'secret' => env('STRIPE_SECRET'),
 	],
