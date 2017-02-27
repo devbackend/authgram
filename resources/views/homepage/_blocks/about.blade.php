@@ -4,6 +4,18 @@
 	авторизационные данные пользователя и идентифицировать его.
 </p>
 
+<div class="card-panel red lighten-4 red-text text-darken-2">
+	<p>
+		<i class="material-icons">info</i>
+		<b>ВАЖНО:</b>
+		Сервис работает в режиме Beta-тестирования и на данный момент крайне нежелательно использовать его на реальных боевых проектах.
+	</p>
+	<p>
+		Обо всех найденных ошибках сообщайте по email: <a href="mailto:bot@authgram.ru" class="red-text text-darken-2">bot@authgram.ru</a>
+		или в личном сообщении боту <a href="https://telegram.me/<?= env('BOT_NAME') ?>bot" class="red-text text-darken-2" target="_blank"><?= env('BOT_NAME') ?>Bot</a>
+	</p>
+</div>
+
 <div class="about-col">
 	<h3>Пользователям сайтов</h3>
 
