@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 
-	<title>AuthGram - сервис авторизации пользователей при помощи Telegram</title>
+	<title><?= env('BOT_NAME') ?> - сервис авторизации пользователей при помощи Telegram</title>
 
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
