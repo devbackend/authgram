@@ -37,4 +37,15 @@ abstract class Entity extends Eloquent {
 
 		return $entity;
 	}
+
+	/**
+	 * Получение имени таблицы, с которой связана модель.
+	 *
+	 * @return string
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public static function table() {
+		return (new static)->table;
+	}
 }
