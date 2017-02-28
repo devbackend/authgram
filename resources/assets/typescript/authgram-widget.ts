@@ -3,7 +3,7 @@
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-const BASE_URL      = 'https://cdn.authgram.ru';
+const BASE_URL      = 'http://authgram.ru';
 const AUTH_BASE_URL = BASE_URL + '/auth/';
 
 const DEFAULT_SELECTOR = '[data-role="authgram-bot"]';
@@ -97,9 +97,9 @@ class AuthGramWidget {
 	protected getCode = () => {
 		let callback = 'getCode' + Math.floor(Math.random() * 1024) + 1;
 
-		this.htmlContainer.innerHTML = 'Получение кода...';
+		this.htmlContainer.innerHTML = '<p class="getting-code">Получение кода...</p>';
 		this[callback] = (responseCode) => {
-			this.drawCodeContainer(responseCode.code);
+			this.drawCodeContainer(responseCode);
 
 			delete this[callback];
 		};
@@ -115,17 +115,42 @@ class AuthGramWidget {
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	protected drawCodeContainer(code: number) {
+	protected drawCodeContainer(response) {
 		let codeContainer = document.createElement('div');
 		codeContainer.className = DEFAULT_CLASS_CODE_CONTAINER;
-		codeContainer.innerHTML = '<span>Ваш код авторизации:</span> <span>' + code + '</span>';
+		codeContainer.innerHTML = '<div class="code">'
+			+ '<span>Ваш код авторизации:</span> '
+			+ '<span class="code">' + response.code + '</span>'
+			+ '</div>'
+			+ '<div class="expired">'
+			+ '<span>Истекает через 00:</span>'
+			+ '<span data-role="expired-value">' + response.expired + '</span>'
+			+ '</div>'
+		;
 
 		this.htmlContainer.innerHTML = '';
 		this.htmlContainer.appendChild(codeContainer);
 
+		//-- Устанавливаем таймер
+		let expireTimer = (<any>window).setInterval(() => {
+			let expiredElem  = this.htmlContainer.querySelector('[data-role="expired-value"]');
+			let expiredValue = parseInt(expiredElem.textContent) - 1;
+
+			expiredElem.textContent = (expiredValue < 10 ? '0' : '') + expiredValue;
+		}, 1000);
+		//-- -- -- --
+
+		//-- Перезагружаем код через указанное время
+		(<any>window).setTimeout(() => {
+			(<any>window).clearInterval(expireTimer);
+
+			this.getCode();
+		}, response.expired * 1000);
+		//-- -- -- --
+
 		//-- Начинаем слушать ответ от сервера
 		(<any>window).Echo
-			.channel(CHANNEL_CHECK_CODE_STATUS + '.' + code)
+			.channel(CHANNEL_CHECK_CODE_STATUS + '.' + response.code)
 			.listen(COMMAND_CODE_CHECKED, (e) => {
 				//-- Если произошла ошибка, сообщаем пользователю и рисуем кнопку заново
 				if (false === e.status) {
