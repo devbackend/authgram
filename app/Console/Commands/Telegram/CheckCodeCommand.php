@@ -84,5 +84,7 @@ class CheckCodeCommand extends TelegramCommand {
 		$replyMessage->setText('Вы успешно авторизовались');
 
 		$this->replyWithMessage($replyMessage->get());
+
+		$authCode->delete();
 	}
 }
