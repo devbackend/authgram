@@ -20,17 +20,19 @@ class AuthRequestController extends Controller {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function __invoke(Request $request) {
-		$requestData = $request->all();
-		$user        = $requestData['user'];
+		/** @var \App\Wrappers\authRequest\Request $authRequest */
+		$authRequest = @json_decode($request->getContent());
 
-		$owner = Owner::where(Owner::USER_UUID, $user['uuid'])->first(); /** @var Owner $owner */
+		$user = $authRequest->user;
+
+		$owner = Owner::where(Owner::USER_UUID, $user->uuid)->first();
 		if (null === $owner) {
 			$owner = Owner::create([
-				Owner::USER_UUID => $user['uuid'],
+				Owner::USER_UUID => $user->uuid,
 			]);
 		}
 
-		$owner->password = $requestData['auth_key'];
+		$owner->password = $authRequest->authKey;
 		$owner->save();
 
 		return 'ok';

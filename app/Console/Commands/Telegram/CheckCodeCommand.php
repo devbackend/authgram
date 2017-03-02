@@ -5,7 +5,11 @@ namespace App\Console\Commands\Telegram;
 use App\Entities\AuthCode;
 use App\Entities\User;
 use App\Events\CodeChecked;
+use App\Wrappers\authRequest\Request;
+use App\Wrappers\authRequest\User as AuthUser;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ServerException;
+use Log;
 
 /**
  * Проверка кода авторизации.
@@ -48,24 +52,32 @@ class CheckCodeCommand extends TelegramCommand {
 		$client = new Client;
 		// Пытаем отправить запрос в несколько попыток
 		$isSuccessResponse = false;
+
+		$authUser = new AuthUser;
+		$authUser->uuid        = $user->uuid;
+		$authUser->username     = $user->username;
+		$authUser->firstName    = $user->first_name;
+		$authUser->lastName    = $user->last_name;
+
+		$authRequest = new Request;
+		$authRequest->token     = $authCode->application->api_token;
+		$authRequest->authKey   = $authKey;
+		$authRequest->user      = $authUser;
+
 		for ($i = 0; $i < 3; $i++) {
-			$response = $client->post($authCode->application->auth_request_url, [
-				'form_params' => [
-					'token'     => $authCode->application->api_token,
-					'auth_key'  => $authKey,
-					'user'  => [
-						'uuid'          => $user->uuid,
-						'username'      => $user->username,
-						'first_name'    => $user->first_name,
-						'last_name'     => $user->last_name,
-					]
-				]
-			]);
+			try {
+				$response = $client->post($authCode->application->auth_request_url, [
+					'json' => $authRequest
+				]);
 
-			if (200 === $response->getStatusCode()) {
-				$isSuccessResponse = true;
+				if (200 === $response->getStatusCode()) {
+					$isSuccessResponse = true;
 
-				break;
+					break;
+				}
+			}
+			catch (ServerException $e) {
+				Log::error($e->getMessage());
 			}
 		}
 		//-- -- -- --
