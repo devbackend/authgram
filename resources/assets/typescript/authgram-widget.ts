@@ -3,7 +3,7 @@
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-const BASE_URL      = 'http://authgram.ru';
+const BASE_URL      = 'https://authgram.ru';
 const AUTH_BASE_URL = BASE_URL + '/auth/';
 
 const DEFAULT_SELECTOR = '[data-role="authgram-bot"]';
