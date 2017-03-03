@@ -4,9 +4,42 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d95987f92dd32028d6ee09c466bd9464",
-    "content-hash": "842652fd4ae315cc0fdc1f46a65cf1dd",
+    "hash": "81f39dfa85e8b8eadb91dd4f6cf9eef5",
+    "content-hash": "34e810ca4e6efa97784f0eae39a00d4d",
     "packages": [
+        {
+            "name": "devbackend/authgram-request-handler",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/devbackend/authgram-request-handler.git",
+                "reference": "c7d54fc513f936f846768527adf6d06f14b29c4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/devbackend/authgram-request-handler/zipball/c7d54fc513f936f846768527adf6d06f14b29c4e",
+                "reference": "c7d54fc513f936f846768527adf6d06f14b29c4e",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AuthGramRequestHandler\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Krivonos",
+                    "email": "devbackend@yandex.ru"
+                }
+            ],
+            "description": "PHP library for handling authorise request from AuthGramBot",
+            "time": "2017-03-03 13:57:17"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",

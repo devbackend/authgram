@@ -7,8 +7,8 @@ use App\Entities\User;
 use App\Events\CodeChecked;
 use App\Wrappers\authRequest\Request;
 use App\Wrappers\authRequest\User as AuthUser;
+use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ServerException;
 use Log;
 
 /**
@@ -76,7 +76,7 @@ class CheckCodeCommand extends TelegramCommand {
 					break;
 				}
 			}
-			catch (ServerException $e) {
+			catch (Exception $e) {
 				Log::error($e->getMessage());
 			}
 		}
