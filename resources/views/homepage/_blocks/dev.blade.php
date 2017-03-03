@@ -101,8 +101,17 @@
 		</div>
 	</li>
 	<li>
-		<div class="collapsible-header"><i class="material-icons">settings_input_hdmi</i>Готовые плагины</div>
+		<div class="collapsible-header"><i class="material-icons">settings_input_hdmi</i>Готовые решения</div>
 		<div class="collapsible-body">
+			<p>
+				<a href="https://github.com/devbackend/authgram-request-handler" target="_blank"><b>AuthGram Request Handler</b></a>
+				&mdash;
+				библиотека для обработки входящих запросов на авторизацию. Превращает тело POST запроса с данными в PHP объект, готовый к использованию
+				в ваших приложениях
+			</p>
+
+			<hr>
+
 			<p>
 				Данный раздел находится в стадии наполнения. Если у вас есть готовое решение для обработки авторизации и вы хотите им поделиться,
 				сообщите об этом нам - <a href="mailto:code@authgram.ru">code@authgram.ru</a> - и мы добавим ваш плагин в этот список.
