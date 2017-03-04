@@ -58,7 +58,7 @@ use App\Entities\Application;
 
 			<div class="row">
 				<div class="input-field col s12 center-align" data-role="submit-container">
-					<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+					<button class="btn waves-effect waves-light" type="submit" name="action">Добавить
 						<i class="material-icons right">send</i>
 					</button>
 
