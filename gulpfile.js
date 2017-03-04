@@ -1,5 +1,11 @@
 const elixir = require('laravel-elixir');
 require('laravel-elixir-typescript');
+require('laravel-elixir-replace');
+require('laravel-elixir-env');
+
+let authgramWidgetReplacements = [
+	['APP_URL', process.env.APP_URL],
+];
 
 elixir(function(mix) {
 	mix.webpack([
@@ -22,5 +28,7 @@ elixir(function(mix) {
 	mix.typescript('authgram-widget.ts');
 	mix.webpack('authgram-listener.js', 'public/js/authgram-listener.js');
 	mix.sass('resources/assets/sass/authgram-widget.scss', 'public/css/authgram-widget.css');
+
+	mix.replace('public/js/authgram-widget.js', authgramWidgetReplacements);
 	//-- -- -- --
 });

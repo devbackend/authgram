@@ -1,9 +1,9 @@
 <ul class="collapsible" data-collapsible="accordion" data-role="developers-faq">
 	<li>
-		<div class="collapsible-header"><i class="material-icons">info_outline</i>Что такое AuthGram?</div>
+		<div class="collapsible-header"><i class="material-icons">info_outline</i>Что такое <?= env('BOT_NAME') ?>?</div>
 		<div class="collapsible-body">
 			<p>
-				AuthGram - сервис авторизации пользователей при помощи Telegram. Весь процесс, со стороны пользователя, сводится к тому, чтобы получить код
+				<?= env('BOT_NAME') ?> - сервис авторизации пользователей при помощи Telegram. Весь процесс, со стороны пользователя, сводится к тому, чтобы получить код
 				идентификации и отправить его боту, который передаст данные из профиля Telegram на тот сайт, где совершается вход. Со стороны сайта
 				необходимо принять авторизационные данные пользователя и идентифицировать его.
 			</p>
@@ -16,7 +16,7 @@
 				</li>
 				<li>
 					При помощи мессенджера Telegram пользователь отправляет данный код боту
-					<a href="https://telegram.me/authgrambot" target="_blank">@AuthGramBot</a>
+					<a href="https://telegram.me/authgrambot" target="_blank">@<?= env('BOT_NAME') ?>Bot</a>
 				</li>
 				<li>
 					Бот подтверждает авторизацию и отправляет данные о пользователе на ваш сайт при помощи POST запроса на URL-адрес,
@@ -33,7 +33,7 @@
 	<li>
 		<div class="collapsible-header"><i class="material-icons">vpn_key</i>Подключение javascript-виджета на сайте</div>
 		<div class="collapsible-body">
-			<p>Для того, чтобы использовать виджет AuthGram, разместите следующий код на своём сайте:</p>
+			<p>Для того, чтобы использовать виджет <?= env('BOT_NAME') ?>, разместите следующий код на своём сайте:</p>
 			<blockquote>
 				<pre><!--
 	                -->&lt;div data-role=&quot;authgram-bot&quot; class=&quot;authgram-widget&quot;&gt;&lt;/div&gt;
@@ -79,27 +79,20 @@
 		<div class="collapsible-body">
 			<p>
 				После того, как пользователь отправит код потверждения боту, инициируется отправка данных на сайт, где выполняется вход.
-				Будет выполнен POST апрос, содержащий следующие поля:
+				Будет отправлен POST запрос, в теле которого находится json следующего вида:
 			</p>
-			<ul>
-				<li>
-					<b>token</b> &mdash; секретный токен вашего приложения. Необходим для потверждения того, что запрос происходит от AuthGram.
-				</li>
-				<li>
-					<b>auth_key</b> &mdash; авторизационный ключ пользователя. Данный ключ автоматически генерируется на каждый запрос авторизации пользователем.
-					Необходим для связывания серверной и клиентской сторон авторизации: точно такой же ключ будет отправлен в виджет авторизации,
-					где вы сможете обработать его при помощи метода <i>onAuthSuccess</i> виджета AuthGram
-				</li>
-				<li>
-					<b>user</b> &mdash; массив данных пользователя из профиля Telegram. Содержит в себе
-					<ul class="param-list">
-						<li><i>uuid</i>         &mdash; идентификатор пользователя</li>
-						<li><i>first_name</i>   &mdash; имя пользователя (если указано в профиле)</li>
-						<li><i>last_name</i>    &mdash; фамилия пользователя (если указана в профиле)</li>
-						<li><i>username</i>     &mdash; никнейм (если указан в профиле)</li>
-					</ul>
-				</li>
-			</ul>
+			<pre>
+{
+	"token":    "[ТОКЕН ВАШЕГО ПРИЛОЖЕНИЯ]",
+	"authKey":  "[КЛЮЧ АВТОРИЗАЦИИ ПОЛЬЗОВАТЕЛЯ]",
+	"user": {
+		"uuid":         "[ИДЕНТИФИКАТОР ПОЛЬЗОВАТЕЛЯ В UUID ФОРМАТЕ]",
+		"username":     "[НИКНЕЙМ ПОЛЬЗОВАТЕЛЯ]",
+		"firstName":    "[ИМЯ ПОЛЬЗОВАТЕЛЯ]",
+		"lastName":     "[ФАМИЛИЯ ПОЛЬЗОВАТЕЛЯ]"
+	}
+}
+			</pre>
 			<p>
 				<i class="material-icons">info</i>
 				<b>Важно:</b> при отправке POST запроса, бот ожидает ответ 200 от сервера. В случае, если этот ответ не будет получен,
@@ -108,8 +101,17 @@
 		</div>
 	</li>
 	<li>
-		<div class="collapsible-header"><i class="material-icons">settings_input_hdmi</i>Готовые плагины</div>
+		<div class="collapsible-header"><i class="material-icons">settings_input_hdmi</i>Готовые решения</div>
 		<div class="collapsible-body">
+			<p>
+				<a href="https://github.com/devbackend/authgram-request-handler" target="_blank"><b>AuthGram Request Handler</b></a>
+				&mdash;
+				библиотека для обработки входящих запросов на авторизацию. Превращает тело POST запроса с данными в PHP объект, готовый к использованию
+				в ваших приложениях
+			</p>
+
+			<hr>
+
 			<p>
 				Данный раздел находится в стадии наполнения. Если у вас есть готовое решение для обработки авторизации и вы хотите им поделиться,
 				сообщите об этом нам - <a href="mailto:code@authgram.ru">code@authgram.ru</a> - и мы добавим ваш плагин в этот список.

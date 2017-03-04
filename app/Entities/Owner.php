@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Eloquent;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
 
@@ -14,6 +15,9 @@ use Illuminate\Notifications\Notifiable;
  * @property string $remember_token Токен для запоминания авторизации пользователя
  * @property string $created_at     Дата создания записи
  * @property string $updated_at     Дата обновления записи
+ *
+ * @method static Eloquent where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Owner create($attributes = [])
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */

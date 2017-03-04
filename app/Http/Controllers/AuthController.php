@@ -30,7 +30,8 @@ class AuthController extends Controller {
 		$authCode = AuthCode::create([AuthCode::APPLICATION_UUID => $appUuid]);
 
 		return response()->jsonp($callback, [
-			'code' => $authCode->code,
+			'code'    => $authCode->code,
+			'expired' => $authCode::EXPIRED_TIME_SEC,
 		]);
 	}
 }

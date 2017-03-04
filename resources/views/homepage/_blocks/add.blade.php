@@ -11,7 +11,7 @@ use App\Entities\Application;
 <?php if (false === Auth::check()): ?>
 	<p>Для того, чтобы добавить виджет на свой сайт, вам необходимо авторизоваться.</p>
 	<p>Сделать это вы можете, используя наш виджет.</p>
-	<p>Нажмите кнопку "Войти через Telegram" для получения кода и отправьте этот код боту AuthGramBot при помощи команды /i &laquo;Полученный код&raquo;</p>
+	<p>Нажмите кнопку "Войти через Telegram" для получения кода и отправьте этот код боту <?= env('BOT_NAME') ?>Bot при помощи команды /i &laquo;Полученный код&raquo;</p>
 	<div id="telegram-auth-widget" class="telegram-auth-widget"></div>
 
 	@push('scripts')
@@ -27,7 +27,7 @@ use App\Entities\Application;
 	@endpush
 <?php else: ?>
 	<div class="row" id="creation-form">
-		<p>Для того чтобы начать использовать возможности AuthGram, необходимо добавить свой сайт при помощи формы ниже, указав все необходимые данные.</p>
+		<p>Для того чтобы начать использовать возможности <?= env('BOT_NAME') ?>, необходимо добавить свой сайт при помощи формы ниже, указав все необходимые данные.</p>
 		<p>После этого вы получите идентификатор вашего приложения, токен доступа и код виджета для вставки его на своём сайте.</p>
 		<p>Вам останется настроить скрипт по указанному адресу на принятие данных пользователя и его идентификацию.</p>
 
@@ -58,7 +58,7 @@ use App\Entities\Application;
 
 			<div class="row">
 				<div class="input-field col s12 center-align" data-role="submit-container">
-					<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+					<button class="btn waves-effect waves-light" type="submit" name="action">Добавить
 						<i class="material-icons right">send</i>
 					</button>
 

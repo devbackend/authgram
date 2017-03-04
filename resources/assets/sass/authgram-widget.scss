@@ -9,6 +9,11 @@
 	width: 250px;
 }
 
+.getting-code {
+	text-align: center;
+	font-size: 1.25em;
+}
+
 .authgram-button {
 	font-family: "Roboto", sans-serif;
 	width: 175px;
@@ -26,18 +31,26 @@
 	display: inline-block;
 	width: 100%;
 
-	span {
-		display: inline-block;
-		width: 100%;
+	.code {
+		span {
+			display: inline-block;
+			width: 100%;
+			text-align: center;
+
+			&:first-child {
+				font-size: 1.5em;
+			}
+
+			&:last-child {
+				font-size: 2em;
+			}
+		}
+	}
+
+	.expired {
 		text-align: center;
-
-		&:first-child {
-			font-size: 1.5em;
-		}
-
-		&:last-child {
-			font-size: 2em;
-		}
+		margin-top: 10px;
+		font-size: 1.15em;
 	}
 }
 

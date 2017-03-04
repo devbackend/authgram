@@ -1,8 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use App;
 use App\Entities\Owner;
-use Illuminate\Http\Request;
+use AuthGramRequestHandler\AuthGramRequestHandler;
 
 /**
  * Контроллер для обработки входящего запроса с авторизационными данными пользователя.
@@ -13,24 +14,27 @@ class AuthRequestController extends Controller {
 	/**
 	 * Обработчик контроллера
 	 *
-	 * @param Request $request Данные запроса
-	 *
 	 * @return string
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function __invoke(Request $request) {
-		$requestData = $request->all();
-		$user        = $requestData['user'];
+	public function __invoke() {
+		$requestHandler = new AuthGramRequestHandler('3865dcfd8826cb974c39625e291e885awgi75zss0csqdrzliwjrv4s3c3xu');
+		\Log::info(print_r($requestHandler, true));
+		if (false === $requestHandler->isValidToken()) {
+			App::abort(401);
+		}
 
-		$owner = Owner::where(Owner::USER_UUID, $user['uuid'])->first(); /** @var Owner $owner */
+		$authRequest = $requestHandler->getRequest();
+
+		$owner = Owner::where(Owner::USER_UUID, $authRequest->user->uuid)->first();
 		if (null === $owner) {
 			$owner = Owner::create([
-				Owner::USER_UUID => $user['uuid'],
+				Owner::USER_UUID => $authRequest->user->uuid,
 			]);
 		}
 
-		$owner->password = $requestData['auth_key'];
+		$owner->password = $authRequest->authKey;
 		$owner->save();
 
 		return 'ok';
