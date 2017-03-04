@@ -52,7 +52,7 @@ shell_exec('/usr/local/bin/yarn install >> ' . $releaseDir . '/yarn.log');
 writeToLog($deployHandler, 'Завершение установки зависимостей Yarn');
 
 writeToLog($deployHandler, 'Выполнение миграций');
-shell_exec('/usr/bin/php ' . __DIR__ . '/../artisan migrate >> ' . $releaseDir . '/migrate.log');
+shell_exec('/usr/bin/php ' . __DIR__ . '/../artisan migrate --force >> ' . $releaseDir . '/migrate.log');
 writeToLog($deployHandler, 'Завершение выполнения миграций');
 
 writeToLog($deployHandler, 'Сборка фронтенда');
