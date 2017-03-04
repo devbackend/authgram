@@ -37,7 +37,7 @@
 			<blockquote>
 				<pre><!--
 	                -->&lt;div data-role=&quot;authgram-bot&quot; class=&quot;authgram-widget&quot;&gt;&lt;/div&gt;
-<!--                -->&lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.authgram.ru/js/authgram-widget.js&quot;&gt;&lt;/script&gt;
+<!--                -->&lt;script type=&quot;text/javascript&quot; src=&quot;//cdn.authgram.ru/js/authgram-widget.js&quot;&gt;&lt;/script&gt;
 <!--                -->&lt;script type=&quot;text/javascript&quot;&gt;
 <!--                -->    var AuthGramWidget = new AuthGramWidget('[UUID ВАШЕГО ПРИЛОЖЕНИЯ]', [НАСТРОЙКИ]);
 <!--                -->&lt;/script&gt;<!--
