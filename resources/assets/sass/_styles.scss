@@ -1,0 +1,13 @@
+/**
+ * Общие стили страницы
+ *
+ * @author Кривонос Иван <devbackend@yandex.ru>
+ */
+
+.brand-logo {
+	i {
+		width: 64px;
+		background-image: url('/images/logo.svg');
+		background-size: cover;
+	}
+}
