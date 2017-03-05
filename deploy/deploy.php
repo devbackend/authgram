@@ -7,35 +7,9 @@
 
 require "deployer/functions.php";
 
-//-- Создаём папку, в которой будут храниться данные по текущему релизу
-$releaseDir = __DIR__ . '/releases/' . date('Y-m-d-H-i-s');
-@mkdir($releaseDir, 0755);
-//-- -- -- --
-
 $deployHandler = fopen($releaseDir . '/deploy.log', 'w');
 
 writeToLog($deployHandler, 'Начало деплоя');
-
-//-- Пытаемся обработать данные вебхука
-$webhookRequest = @file_get_contents('php://input');
-if ('' === $webhookRequest) {
-	writeToLog($deployHandler, 'Не удалось получить данные вебхука. Остановка деплоя');
-	fclose($deployHandler);
-
-	exit;
-}
-
-// сохраняем содержимое payload'а
-file_put_contents($releaseDir . '/payload.json', $webhookRequest);
-
-/*$webhookRequest = @json_decode($webhookRequest);
-if (null === $webhookRequest) {
-	writeToLog($deployHandler, 'Не удалось распарсить данные вебхука. Остановка деплоя');
-	fclose($deployHandler);
-
-	exit;
-}*/
-//-- -- -- --
 
 chdir(__DIR__ . '/..');
 
