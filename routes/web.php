@@ -30,3 +30,7 @@ $router->get('auth/{appUuid}/{callback}', 'AuthController');
 $router->post('application', 'ApplicationController@createAction');
 $router->delete('application', 'ApplicationController@deleteAction');
 //-- -- -- --
+
+//-- Получение данных по релизам
+$router->get('releases/getInfo', 'ReleasesController@getInfoAction');
+//-- -- -- --
