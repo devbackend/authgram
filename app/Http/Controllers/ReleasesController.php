@@ -67,7 +67,7 @@ class ReleasesController extends Controller {
 		}
 		//-- -- -- --
 
-		arsort($response->data);
+		krsort($response->data);
 
 		//return response()->json($response);
 		return response()->jsonp($callback, $response);
