@@ -46,6 +46,6 @@ abstract class Entity extends Eloquent {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public static function table() {
-		return (new static)->table;
+		return (new static)->getTable();
 	}
 }
