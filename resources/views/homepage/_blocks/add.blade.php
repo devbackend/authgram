@@ -15,7 +15,7 @@ use App\Entities\Application;
 	<div id="telegram-auth-widget" class="telegram-auth-widget"></div>
 
 	@push('scripts')
-	<script type="text/javascript" src="//cdn.authgram.ru/js/authgram-widget.js"></script>
+	<script type="text/javascript" src="<?= env('API_URL') ?>/js/authgram-widget.js"></script>
 	<script type="text/javascript">
 		new AuthGramWidget('157bb070-eaee-11e6-84e2-0f2ab592a536', {
 			selector: '#telegram-auth-widget',
@@ -44,14 +44,14 @@ use App\Entities\Application;
 					<label for="field-<?= Application::TITLE ?>">Название приложения или сайта</label>
 				</div>
 				<div class="input-field col s6">
-					<input type="text" name="<?= Application::WEBSITE ?>" placeholder="Например: http://example.com" class="validate" data-inputmask-url required value="<?= old(Application::WEBSITE) ?>" id="field-<?= Application::WEBSITE ?>">
+					<input type="url" name="<?= Application::WEBSITE ?>" placeholder="Например: http://example.com" class="validate" data-inputmask-url required value="<?= old(Application::WEBSITE) ?>" id="field-<?= Application::WEBSITE ?>">
 					<label for="field-<?= Application::WEBSITE ?>">Адрес сайта</label>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="input-field col s12">
-					<input type="text" name="<?= Application::AUTH_REQUEST_URL ?>" class="validate" data-inputmask-url required placeholder="Например: http://example.com/secret-auth-path" value="<?= old(Application::AUTH_REQUEST_URL) ?>" id="field-<?= Application::AUTH_REQUEST_URL ?>">
+					<input type="url" name="<?= Application::AUTH_REQUEST_URL ?>" class="validate" data-inputmask-url required placeholder="Например: http://example.com/secret-auth-path" value="<?= old(Application::AUTH_REQUEST_URL) ?>" id="field-<?= Application::AUTH_REQUEST_URL ?>">
 					<label for="field-<?= Application::AUTH_REQUEST_URL ?>">URL-адрес, на который будут отправляться авторизационные данные пользователя</label>
 				</div>
 			</div>

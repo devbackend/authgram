@@ -21,10 +21,6 @@
 		$creationForm    = $(SELECTOR_CREATE_APPLICATION_FORM);
 		$submitContainer = $(SELECTOR_SUBMIT_CONTAINER);
 
-		/*$('[ data-inputmask-url]').inputmask('Regex', {
-			regex: "https?://.*"
-		});*/
-
 		$creationForm.on('submit', function (e) {
 			e.preventDefault();
 
