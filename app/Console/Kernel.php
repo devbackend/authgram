@@ -3,7 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CreateTelegramCommand;
-use App\Console\Commands\TestTelegramCommand;
+use App\Console\Commands\SetApplicationAuthCommand;
 use App\Console\Commands\WebhookSwitchCommand;
 use App\Entities\AuthCode;
 use Carbon\Carbon;
@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel {
 	/** @var string[] Консольные команды */
 	protected $commands = [
 		CreateTelegramCommand::class,
-		TestTelegramCommand::class,
+		SetApplicationAuthCommand::class,
 		WebhookSwitchCommand::class,
 	];
 
@@ -39,14 +39,5 @@ class Kernel extends ConsoleKernel {
 			DB::table(AuthCode::table())->where(AuthCode::EXPIRED_AT, '<', $now)->delete();
 		})->hourly();
 		//-- -- -- --
-	}
-
-	/**
-	 * Регистрация консольных команд через замыкания.
-	 *
-	 * @author Кривонос Иван <devbackend@yandex.ru>
-	 */
-	protected function commands() {
-		require base_path('routes/console.php');
 	}
 }
