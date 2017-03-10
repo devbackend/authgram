@@ -59,7 +59,20 @@ class Application extends Entity {
 			$uuid = Uuid::generate()->string;
 
 			$entity->uuid       = $uuid;
-			$entity->api_token  = strtolower(md5($uuid) . str_random(28));
+			$entity->api_token  = static::generateApiToken($uuid);
 		});
+	}
+
+	/**
+	 * Генерация токена для приложения
+	 *
+	 * @param string $uuid Идентификатор приложения
+	 *
+	 * @return string
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	protected static function generateApiToken($uuid) {
+		return strtolower(md5($uuid) . str_random(28));
 	}
 }
