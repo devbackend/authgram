@@ -4,6 +4,11 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+/**
+ * Создание команды для Telegram
+ *
+ * @author Кривонос Иван <devbackend@yandex.ru>
+ */
 class CreateTelegramCommand extends Command {
 	/** @inheritdoc */
 	protected $signature = 'make:telegram-command {commandName}';
