@@ -14,7 +14,7 @@
 	/** @type {jQuery} Форма создания приложения */
 	let $creationForm;
 
-	/** @type {jQuery} Контеёнер с кнопкой отправки формы */
+	/** @type {jQuery} Контейнер с кнопкой отправки формы */
 	let $submitContainer;
 
 	$(function () {
@@ -24,8 +24,8 @@
 		$creationForm.on('submit', function (e) {
 			e.preventDefault();
 
-			let formParams = $creationForm.serialize();
-			let $errors = $creationForm.closest('.row').find('.errors ul');
+			let formParams  = $creationForm.serialize();
+			let $errors     = $creationForm.closest('.row').find('.errors ul');
 
 			$.ajax({
 				type: "POST",

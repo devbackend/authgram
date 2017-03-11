@@ -4,7 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\CreateTelegramCommand;
 use App\Console\Commands\WebhookSwitchCommand;
-use App\Entities\AuthCode;
+use App\Entities\AuthCommand;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Console\Scheduling\Schedule;
@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel {
 		$schedule->call(function () {
 			$now = Carbon::now()->toDateTimeString();
 
-			DB::table(AuthCode::table())->where(AuthCode::EXPIRED_AT, '<', $now)->delete();
+			DB::table(AuthCommand::table())->where(AuthCommand::EXPIRED_AT, '<', $now)->delete();
 		})->hourly();
 		//-- -- -- --
 	}
