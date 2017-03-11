@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Telegram;
 
 use App\Wrappers\TelegramMessage;
+use Illuminate\Contracts\Logging\Log;
 use Telegram\Bot\Commands\Command;
 
 /**
@@ -11,6 +12,13 @@ use Telegram\Bot\Commands\Command;
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 abstract class TelegramCommand extends Command {
+	/** @var Log Логгер */
+	protected $logger;
+
+	public function __construct() {
+		$this->logger = resolve(Log::class);
+	}
+
 	/**
 	 * Инициализация сообщения
 	 *

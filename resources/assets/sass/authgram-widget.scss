@@ -6,10 +6,10 @@
 
 .authgram-bot-widget-container {
 	display: inline-block;
-	width: 250px;
+	width: 325px;
 }
 
-.getting-code {
+.getting-command {
 	text-align: center;
 	font-size: 1.25em;
 }
@@ -23,38 +23,42 @@
 	background-color: #5682A3;
 	border: 1px solid #689dbf;
 	color: #fff;
-	border-radius: 3px;
-	box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+	box-shadow: 0 4px 5px 0 rgba(0,0,0,0.1), 0 1px 10px 0 rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.3);
 }
 
-.authgram-code-container {
+.authgram-command-container {
 	display: inline-block;
 	width: 100%;
+	border: 1px solid rgba(0,0,0,0.1);
+	box-shadow: 0 4px 5px 0 rgba(0,0,0,0.1), 0 1px 10px 0 rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.3);
+	padding: 10px;
 
-	.code {
+	.command {
 		span {
 			display: inline-block;
 			width: 100%;
 			text-align: center;
+			font-size: 1.25em;
+		}
 
-			&:first-child {
-				font-size: 1.5em;
-			}
-
-			&:last-child {
-				font-size: 2em;
-			}
+		a {
+			font-size: 1.5em;
+			text-align: center;
+			display: block;
+			margin-top: 15px;
 		}
 	}
 
 	.expired {
 		text-align: center;
+		padding-top: 10px;
 		margin-top: 10px;
 		font-size: 1.15em;
+		border-top: 1px solid #eee;
 	}
 }
 
-.error {
+.command-error {
 	color: #f00;
 	text-align: center;
 	font-weight: 700;

@@ -5,6 +5,8 @@ namespace App\Console\Commands\Telegram;
 /**
  * Проверка кода авторизации.
  *
+ * @deprecated
+ *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 class CheckCodeCommand extends TelegramCommand {

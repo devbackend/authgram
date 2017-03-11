@@ -2,7 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Entities\Application;
-use App\Entities\AuthCode;
+use App\Entities\AuthCommand;
+use App\Jobs\CreateAuthCommandClass;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -22,16 +23,18 @@ class AuthController extends Controller {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function __invoke(string $appUuid, string $callback) {
+		/** @var Application $application */
 		$application = Application::find($appUuid);
 		if (null === $application) {
-			return response()->json(['error' => 'Приложение не найдено']);
+			return response()->jsonp($callback, ['error' => 'Приложение не найдено']);
 		}
 
-		$authCode = AuthCode::create([AuthCode::APPLICATION_UUID => $appUuid]);
+		$authCommand = AuthCommand::create([AuthCommand::APPLICATION_UUID => $appUuid]);
+		$this->dispatchNow(new CreateAuthCommandClass($authCommand));
 
 		return response()->jsonp($callback, [
-			'code'    => $authCode->code,
-			'expired' => $authCode::EXPIRED_TIME_SEC,
+			'command' => $authCommand->command,
+			'expired' => $authCommand::EXPIRED_TIME_SEC,
 		]);
 	}
 }
