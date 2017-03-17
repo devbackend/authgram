@@ -14,8 +14,6 @@ elixir(function(mix) {
 		'website.js'
 	]);
 
-	mix.scripts('scrollIt.js', 'public/js/scrollIt.min.js');
-
 	mix.sass('resources/assets/sass/app.scss', 'public/css');
 
 	mix.copy([

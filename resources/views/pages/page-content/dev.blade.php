@@ -1,3 +1,7 @@
+<h1>
+	Разработчикам
+</h1>
+
 <ul class="collapsible" data-collapsible="accordion" data-role="developers-faq">
 	<li>
 		<div class="collapsible-header"><i class="material-icons">info_outline</i>Что такое <?= env('BOT_NAME') ?>?</div>
