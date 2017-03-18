@@ -8,7 +8,7 @@ const AUTH_BASE_URL = BASE_URL + '/auth/';
 
 const DEFAULT_SELECTOR = '[data-role="authgram-bot"]';
 
-const AUTHGRAM_BUTTON_TEXT = 'Войти через Telegram';
+const AUTHGRAM_BUTTON_TEXT = '<span>Войти через Telegram</span>';
 
 const DEFAULT_CLASS_AUTHGRAM_BUTTON = 'authgram-button';
 const DEFAULT_CLASS_CODE_CONTAINER  = 'authgram-command-container';

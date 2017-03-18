@@ -17,9 +17,13 @@
 <body>
 @include('layouts._blocks.nav')
 
-<div class="container">
-	@yield('content')
-</div>
+<main>
+	<div class="container">
+		@yield('content')
+	</div>
+</main>
+
+@include('layouts._blocks.footer')
 
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/js/materialize.min.js"></script>
