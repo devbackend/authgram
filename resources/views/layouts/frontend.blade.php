@@ -29,5 +29,10 @@
 <script type="text/javascript" src="/js/materialize.min.js"></script>
 <script type="text/javascript" src="/js/all.js"></script>
 @stack('scripts')
+
+<?php if ('local' !== app()->environment()): ?>
+	@include('layouts._blocks.counters')
+<?php endif ?>
+
 </body>
 </html>
