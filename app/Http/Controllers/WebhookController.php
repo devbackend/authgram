@@ -34,7 +34,7 @@ class WebhookController extends Controller {
 		$user = User::loadByTelegramProfile($from);
 		IncomeMessageLog::create([
 			IncomeMessageLog::USER_UUID     => $user->uuid,
-			IncomeMessageLog::MESSAGE_DATA  => serialize($update),
+			IncomeMessageLog::MESSAGE_DATA  => json_encode($update),
 		]);
 
 		return response('ok');
