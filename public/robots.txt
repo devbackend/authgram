@@ -1,4 +1,4 @@
-Host: DevBackend.com
+Host: AuthGram.ru
 User-agent: *
 Allow: /
 Crawl-delay: 10
