@@ -14,22 +14,18 @@
 	/** @type {jQuery} Форма создания приложения */
 	let $creationForm;
 
-	/** @type {jQuery} Контеёнер с кнопкой отправки формы */
+	/** @type {jQuery} Контейнер с кнопкой отправки формы */
 	let $submitContainer;
 
 	$(function () {
 		$creationForm    = $(SELECTOR_CREATE_APPLICATION_FORM);
 		$submitContainer = $(SELECTOR_SUBMIT_CONTAINER);
 
-		/*$('[ data-inputmask-url]').inputmask('Regex', {
-			regex: "https?://.*"
-		});*/
-
 		$creationForm.on('submit', function (e) {
 			e.preventDefault();
 
-			let formParams = $creationForm.serialize();
-			let $errors = $creationForm.closest('.row').find('.errors ul');
+			let formParams  = $creationForm.serialize();
+			let $errors     = $creationForm.closest('.row').find('.errors ul');
 
 			$.ajax({
 				type: "POST",

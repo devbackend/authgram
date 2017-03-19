@@ -8,14 +8,31 @@
 use App\Entities\Application;
 ?>
 
+<h1>
+	Добавить виджет на сайт
+</h1>
+
 <?php if (false === Auth::check()): ?>
 	<p>Для того, чтобы добавить виджет на свой сайт, вам необходимо авторизоваться.</p>
-	<p>Сделать это вы можете, используя наш виджет.</p>
-	<p>Нажмите кнопку "Войти через Telegram" для получения кода и отправьте этот код боту <?= env('BOT_NAME') ?>Bot при помощи команды /i &laquo;Полученный код&raquo;</p>
+	<p>Для авторизации совершите следующие шаги:</p>
+	<ol>
+		<li>Нажмите на сайте кнопку "Войти через Telegram"</li>
+		<li>Дождитесь команду для авторизации</li>
+		<li>Отправьте эту команду боту <a href="https://telegram.me/<?= env('BOT_NAME') ?>bot" target="_blank"><?= env('BOT_NAME') ?>Bot</a></li>
+	</ol>
+	<p>После этого</p>
+	<ul>
+		<li>&mdash; в случае успеха: авторизация на сайте должна произойти автоматически, от вас не требуется больше никаких действий</li>
+		<li>
+			&mdash; в случае ошибки: вы будете уведомлены о причинах и будет снова предложено войти при помощи бота
+			<a href="https://telegram.me/<?= env('BOT_NAME') ?>bot" target="_blank"><?= env('BOT_NAME') ?>Bot</a>
+		</li>
+	</ul>
+
 	<div id="telegram-auth-widget" class="telegram-auth-widget"></div>
 
 	@push('scripts')
-	<script type="text/javascript" src="//cdn.authgram.ru/js/authgram-widget.js"></script>
+	<script type="text/javascript" src="<?= env('API_URL') ?>/js/authgram-widget.js"></script>
 	<script type="text/javascript">
 		new AuthGramWidget('157bb070-eaee-11e6-84e2-0f2ab592a536', {
 			selector: '#telegram-auth-widget',
@@ -44,14 +61,14 @@ use App\Entities\Application;
 					<label for="field-<?= Application::TITLE ?>">Название приложения или сайта</label>
 				</div>
 				<div class="input-field col s6">
-					<input type="text" name="<?= Application::WEBSITE ?>" placeholder="Например: http://example.com" class="validate" data-inputmask-url required value="<?= old(Application::WEBSITE) ?>" id="field-<?= Application::WEBSITE ?>">
+					<input type="url" name="<?= Application::WEBSITE ?>" placeholder="Например: http://example.com" class="validate" data-inputmask-url required value="<?= old(Application::WEBSITE) ?>" id="field-<?= Application::WEBSITE ?>">
 					<label for="field-<?= Application::WEBSITE ?>">Адрес сайта</label>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="input-field col s12">
-					<input type="text" name="<?= Application::AUTH_REQUEST_URL ?>" class="validate" data-inputmask-url required placeholder="Например: http://example.com/secret-auth-path" value="<?= old(Application::AUTH_REQUEST_URL) ?>" id="field-<?= Application::AUTH_REQUEST_URL ?>">
+					<input type="url" name="<?= Application::AUTH_REQUEST_URL ?>" class="validate" data-inputmask-url required placeholder="Например: http://example.com/secret-auth-path" value="<?= old(Application::AUTH_REQUEST_URL) ?>" id="field-<?= Application::AUTH_REQUEST_URL ?>">
 					<label for="field-<?= Application::AUTH_REQUEST_URL ?>">URL-адрес, на который будут отправляться авторизационные данные пользователя</label>
 				</div>
 			</div>

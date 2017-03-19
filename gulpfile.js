@@ -5,6 +5,7 @@ require('laravel-elixir-env');
 
 let authgramWidgetReplacements = [
 	['API_URL', process.env.API_URL],
+	['BOT_NAME', process.env.BOT_NAME],
 ];
 
 elixir(function(mix) {
@@ -12,8 +13,6 @@ elixir(function(mix) {
 		'manage-application.js',
 		'website.js'
 	]);
-
-	mix.scripts('scrollIt.js', 'public/js/scrollIt.min.js');
 
 	mix.sass('resources/assets/sass/app.scss', 'public/css');
 
