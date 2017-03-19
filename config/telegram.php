@@ -1,5 +1,17 @@
 <?php
 
+$commandList = [
+	\App\Console\Commands\Telegram\AddApplicationCommand::class,
+	\App\Console\Commands\Telegram\CheckCodeCommand::class,
+	\App\Console\Commands\Telegram\HelpCommand::class,
+	\App\Console\Commands\Telegram\StartCommand::class,
+];
+
+$cachedAuthCommands = (file_exists(base_path('app/Console/Commands/Telegram/AuthoriseCommands/cached.php'))
+	? require base_path('app/Console/Commands/Telegram/AuthoriseCommands/cached.php')
+	: []
+);
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -55,10 +67,5 @@ return [
     | will respond with a list of available commands and description.
     |
     */
-    'commands' => [
-	    \App\Console\Commands\Telegram\AddApplicationCommand::class,
-	    \App\Console\Commands\Telegram\CheckCodeCommand::class,
-        \App\Console\Commands\Telegram\HelpCommand::class,
-	    \App\Console\Commands\Telegram\StartCommand::class,
-    ],
+    'commands' => array_merge($commandList, $cachedAuthCommands),
 ];

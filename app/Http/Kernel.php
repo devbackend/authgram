@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckAuthKey;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -41,6 +42,7 @@ class Kernel extends HttpKernel {
 			ShareErrorsFromSession::class,
 			VerifyCsrfToken::class,
 			SubstituteBindings::class,
+			CheckAuthKey::class,
 		],
 
 		self::MIDDLEWARE_GROUP_API => [

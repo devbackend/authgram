@@ -8,26 +8,31 @@ const AUTH_BASE_URL = BASE_URL + '/auth/';
 
 const DEFAULT_SELECTOR = '[data-role="authgram-bot"]';
 
-const AUTHGRAM_BUTTON_TEXT = 'Войти через Telegram';
+const AUTHGRAM_BUTTON_TEXT = '<span>Войти через Telegram</span>';
 
 const DEFAULT_CLASS_AUTHGRAM_BUTTON = 'authgram-button';
-const DEFAULT_CLASS_CODE_CONTAINER  = 'authgram-code-container';
+const DEFAULT_CLASS_CODE_CONTAINER  = 'authgram-command-container';
 
-const CHANNEL_CHECK_CODE_STATUS = 'check-code-status';
-const COMMAND_CODE_CHECKED      = 'CodeChecked';
+const CHANNEL_AUTH_COMMAND_STATUS   = 'auth-command-status';
+const EVENTS_USER_JOIN_SUCCESS      = 'UserJoinSuccessEvent';
+const EVENTS_USER_JOIN_FAIL         = 'UserJoinFailEvent';
 
 class AuthGramWidget {
 	public uuid:        string;
 	public selector:    string  = DEFAULT_SELECTOR;
 
+	protected channelName;
+	protected expireTimer;
+	protected reloadTimer;
+
 	public onAuthSuccess = (authKey: string) => {
 		document.location.href = '?auth_key=' + authKey;
 	};
 
-	public onAuthFail = () => {
+	public onAuthFail = (reason) => {
 		let errorMessage = document.createElement('p');
 		errorMessage.classList.add('authgram-bot-widget-container');
-		errorMessage.innerText = 'При авторизации произошла ошибка. Попробуйте снова.';
+		errorMessage.innerHTML = '<p class="command-error">' + reason + '. Попробуйте снова.</p>';
 
 		this.drawAuthoriseButton(errorMessage.outerHTML);
 	};
@@ -43,7 +48,9 @@ class AuthGramWidget {
 	constructor(uuid: string, config?) {
 		this.uuid = uuid;
 
-		Object.keys(config).forEach((key) => { this[key] = config[key];});
+		Object.keys(config).forEach((key) => {
+			this[key] = config[key];
+		});
 
 		//-- Устанавливаем селектор
 		this.htmlContainer = document.querySelector(this.selector);
@@ -83,27 +90,31 @@ class AuthGramWidget {
 		let button = document.createElement('button');
 		button.className = DEFAULT_CLASS_AUTHGRAM_BUTTON;
 		button.innerHTML = AUTHGRAM_BUTTON_TEXT;
-		button.addEventListener('click', this.getCode, false);
+		button.addEventListener('click', this.getCommand, false);
 
 		this.htmlContainer.innerHTML = containerHtml;
 		this.htmlContainer.appendChild(button);
 	};
 
 	/**
-	 * Получение кода авторизации
+	 * Получение telegram-команды для авторизации на сайте.
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	protected getCode = () => {
-		let callback = 'getCode' + Math.floor(Math.random() * 1024) + 1;
+	protected getCommand = () => {
+		let callback = 'getCommand' + Math.floor(Math.random() * 1024) + 1;
 
-		this.htmlContainer.innerHTML = '<p class="getting-code">Получение кода...</p>';
-		this[callback] = (responseCode) => {
-			this.drawCodeContainer(responseCode);
+		this.htmlContainer.innerHTML = '<p class="getting-command">Загрузка данных...</p>';
+		this[callback] = (response) => {
+			this.drawCommandContainer(response);
 
 			delete this[callback];
 		};
 		(<any>window).AuthGramWidget = this;
+
+		if (undefined !== this.channelName) {
+			(<any>window).Echo.leave(this.channelName);
+		}
 
 		let elem = document.createElement("script");
 		elem.src = AUTH_BASE_URL + this.uuid + '/' + 'window.AuthGramWidget.' + callback;
@@ -111,56 +122,68 @@ class AuthGramWidget {
 	};
 
 	/**
-	 * Отрисовка блока с кодом
+	 * Отрисовка блока с командой
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	protected drawCodeContainer(response) {
-		let codeContainer = document.createElement('div');
-		codeContainer.className = DEFAULT_CLASS_CODE_CONTAINER;
-		codeContainer.innerHTML = '<div class="code">'
-			+ '<span>Ваш код авторизации:</span> '
-			+ '<span class="code">' + response.code + '</span>'
-			+ '</div>'
-			+ '<div class="expired">'
-			+ '<span>Истекает через 00:</span>'
-			+ '<span data-role="expired-value">' + response.expired + '</span>'
-			+ '</div>'
-		;
+	protected drawCommandContainer(response) {
+		let commandContainer = document.createElement('div');
+		commandContainer.className = DEFAULT_CLASS_CODE_CONTAINER;
+		if (undefined !== response.error) {
+			commandContainer.innerHTML = '<div class="command-error">' + response.error + '</div>';
+		}
+		else {
+			commandContainer.innerHTML = '<div class="command">'
+				+ '<span>Чтобы войти на сайт, отправьте боту следующую команду:</span> '
+				+ '<a href="https://telegram.me/BOT_NAME" target="_blank" class="command">'
+				+ '/' + response.command + ''
+				+ '</a>'
+				+ '</div>'
+				+ '<div class="expired">'
+				+ '<span>Истекает через 00:</span>'
+				+ '<span data-role="expired-value">' + response.expired + '</span>'
+				+ '</div>'
+			;
+
+			//-- Устанавливаем таймер
+			this.expireTimer = (<any>window).setInterval(() => {
+				let expiredElem  = this.htmlContainer.querySelector('[data-role="expired-value"]');
+				let expiredValue = parseInt(expiredElem.textContent) - 1;
+
+				expiredElem.textContent = (expiredValue < 10 ? '0' : '') + expiredValue;
+			}, 1000);
+			//-- -- -- --
+
+			//-- Перезагружаем код через указанное время
+			this.reloadTimer = (<any>window).setTimeout(() => {
+				(<any>window).clearInterval(this.expireTimer);
+
+				this.getCommand();
+			}, response.expired * 1000);
+			//-- -- -- --
+		}
 
 		this.htmlContainer.innerHTML = '';
-		this.htmlContainer.appendChild(codeContainer);
+		this.htmlContainer.appendChild(commandContainer);
 
-		//-- Устанавливаем таймер
-		let expireTimer = (<any>window).setInterval(() => {
-			let expiredElem  = this.htmlContainer.querySelector('[data-role="expired-value"]');
-			let expiredValue = parseInt(expiredElem.textContent) - 1;
-
-			expiredElem.textContent = (expiredValue < 10 ? '0' : '') + expiredValue;
-		}, 1000);
-		//-- -- -- --
-
-		//-- Перезагружаем код через указанное время
-		(<any>window).setTimeout(() => {
-			(<any>window).clearInterval(expireTimer);
-
-			this.getCode();
-		}, response.expired * 1000);
-		//-- -- -- --
+		this.channelName = CHANNEL_AUTH_COMMAND_STATUS + '.' + response.command;
 
 		//-- Начинаем слушать ответ от сервера
 		(<any>window).Echo
-			.channel(CHANNEL_CHECK_CODE_STATUS + '.' + response.code)
-			.listen(COMMAND_CODE_CHECKED, (e) => {
-				//-- Если произошла ошибка, сообщаем пользователю и рисуем кнопку заново
-				if (false === e.status) {
-					this.onAuthFail();
+			.channel(this.channelName)
+			.listen(EVENTS_USER_JOIN_SUCCESS, (eventUserJoinSuccess) => {
+				(<any>window).clearInterval(this.expireTimer);
+				(<any>window).clearInterval(this.reloadTimer);
+				(<any>window).Echo.leave(this.channelName);
 
-					return;
-				}
-				//-- -- -- --
+				this.onAuthSuccess(eventUserJoinSuccess.authKey);
+			})
+			.listen(EVENTS_USER_JOIN_FAIL, (eventUserJoinFail) => {
+				(<any>window).clearInterval(this.expireTimer);
+				(<any>window).clearInterval(this.reloadTimer);
+				(<any>window).Echo.leave(this.channelName);
 
-				this.onAuthSuccess(e.authKey);
+				this.onAuthFail(eventUserJoinFail.reason);
 			})
 		;
 		//-- -- -- --
