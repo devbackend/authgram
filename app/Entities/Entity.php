@@ -16,7 +16,7 @@ abstract class Entity extends Eloquent {
 	/**
 	 * Создание модели на основе данных реквеста.
 	 *
-	 * @param Request $request Реквест
+	 * @param Request $request Данные запроса
 	 *
 	 * @return static
 	 *
@@ -27,8 +27,13 @@ abstract class Entity extends Eloquent {
 	public static function createByRequest(Request $request) {
 		$entity = new static;
 
-		foreach ($entity->fillable as $field) {
-			$entity->$field = $request->input($field) ?? '';
+		$requestData = $request->all();
+		foreach ($requestData as $field => $value) {
+			if (false === in_array($field, $entity->fillable)) {
+				continue;
+			}
+
+			$entity->$field = $value;
 		}
 
 		if (false === $entity->save()) {

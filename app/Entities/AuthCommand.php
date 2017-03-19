@@ -5,19 +5,18 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Модель кода авторизации.
+ * Модель команды авторизации.
  *
- * @property int    $id                 Идентификатор записи
  * @property string $application_uuid   Идентификатор приложения
- * @property int    $code               Код
+ * @property string $command            Значение команды авторизации
  * @property string $expired_at         Время устаревания кода
  *
- * @property-read Application $application Приложение, с которорым связан код авторизации
+ * @property-read Application $application Приложение, с которорым связана команда авторизации
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-class AuthCode extends Entity {
-	const CODE              = 'code';
+class AuthCommand extends Entity {
+	const COMMAND           = 'command';
 	const APPLICATION_UUID  = 'application_uuid';
 	const EXPIRED_AT        = 'expired_at';
 
@@ -31,7 +30,7 @@ class AuthCode extends Entity {
 	public $timestamps = false;
 
 	/** @var string Первичный ключ */
-	protected $primaryKey = self::CODE;
+	protected $primaryKey = self::COMMAND;
 
 	/** @var string[] Названия полей для массового заполнения */
 	protected $fillable = [self::APPLICATION_UUID];
@@ -40,18 +39,18 @@ class AuthCode extends Entity {
 	 * Проверка кода авторизации.
 	 * Если код не найден или устарел - возвращает null
 	 *
-	 * @param int $code код авторизации
+	 * @param string $command код авторизации
 	 *
 	 * @return static|null
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public static function check(int $code) {
+	public static function check(string $command) {
 		$now = Carbon::now()->toDateTimeString();
 
-		$code = static::where(static::CODE, $code)->where(static::EXPIRED_AT, '>=', $now)->first();
+		$command = static::where(static::COMMAND, $command)->where(static::EXPIRED_AT, '>=', $now)->first();
 
-		return $code;
+		return $command;
 	}
 
 	/**
@@ -76,8 +75,7 @@ class AuthCode extends Entity {
 
 		static::creating(function($entity) {
 			/** @var static $entity */
-
-			$entity->code       = rand(1000, 9999);
+			$entity->command    = 'ag' . strtolower(str_random(2));
 			$entity->expired_at = Carbon::now()->addSecond(static::EXPIRED_TIME_SEC)->toDateTimeString();
 		});
 	}

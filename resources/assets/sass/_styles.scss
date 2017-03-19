@@ -4,7 +4,31 @@
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 
+BODY {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+MAIN {
+	flex: 1 0 auto;
+}
+
+.page-footer {
+	padding-bottom: 20px;
+}
+
+.mobile-menu {
+	display: inline-block;
+}
+
+#sidenav-overlay {
+	z-index: 995;
+}
+
 .brand-logo {
+	font-family: 'Arvo', serif;
+
 	i {
 		width: 64px;
 		background-image: url('/images/logo.svg');
