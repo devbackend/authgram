@@ -12,7 +12,7 @@ namespace App\Entities;
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-class IncomeMessageLog extends Entity {
+class LogIncomeMessage extends Entity {
 	const ID            = 'id';
 	const USER_UUID     = 'user_uuid';
 	const MESSAGE_DATA  = 'message_data';
