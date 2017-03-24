@@ -2,6 +2,7 @@
 namespace App\Console\Commands\Telegram;
 
 use App\Entities\AuthCommand;
+use App\Entities\LogAuthAttempt;
 use App\Entities\User;
 use App\Events\UserJoinFailEvent;
 use App\Events\UserJoinSuccessEvent;
@@ -28,17 +29,39 @@ class AuthoriseCommand extends TelegramCommand {
 		$replyMessage = $this->initiateMessage();
 
 		$dbAuthCommand = AuthCommand::check($this->name);
+
+		$from = $this->getUpdate()->getMessage()->getFrom();
+		$user = User::loadByTelegramProfile($from);
+
+		//-- Логируем попытку авторизации
+		$authAttempt = LogAuthAttempt::create([
+			LogAuthAttempt::STEP        => LogAuthAttempt::STEP_GET_COMMAND,
+			LogAuthAttempt::USER_UUID   => $user->uuid,
+			LogAuthAttempt::COMMAND     => $this->name,
+		]);
+		$authAttempt->save();
+		//-- -- -- --
+
 		if (null === $dbAuthCommand) {
 			$replyMessage->setText('Команда не найдена');
 			$this->replyWithMessage($replyMessage->get());
 
 			event(new UserJoinFailEvent($this->name, 'Команда не найдена'));
 
+			//-- Логируем попытку авторизации
+			$additionalInfo = ['reason' => 'Команда не найдена'];
+
+			$authAttempt = LogAuthAttempt::create([
+				LogAuthAttempt::STEP            => LogAuthAttempt::STEP_AUTH_FAIL,
+				LogAuthAttempt::USER_UUID       => $user->uuid,
+				LogAuthAttempt::COMMAND         => $this->name,
+				LogAuthAttempt::ADDITIONAL_INFO => json_encode($additionalInfo),
+			]);
+			$authAttempt->save();
+			//-- -- -- --
+
 			return;
 		}
-
-		$from = $this->getUpdate()->getMessage()->getFrom();
-		$user = User::loadByTelegramProfile($from);
 
 		$authKey = $this->generateAuthKey();
 
@@ -84,10 +107,33 @@ class AuthoriseCommand extends TelegramCommand {
 
 			event(new UserJoinFailEvent($this->name, 'Не смогли получить ответ от сайта'));
 
+			//-- Логируем попытку авторизации
+			$additionalInfo = ['reason' => 'Не смогли получить ответ от сайта'];
+
+			$authAttempt = LogAuthAttempt::create([
+				LogAuthAttempt::STEP                => LogAuthAttempt::STEP_AUTH_FAIL,
+				LogAuthAttempt::USER_UUID           => $user->uuid,
+				LogAuthAttempt::APPLICATION_UUID    => $dbAuthCommand->application_uuid,
+				LogAuthAttempt::COMMAND             => $this->name,
+				LogAuthAttempt::ADDITIONAL_INFO     => json_encode($additionalInfo),
+			]);
+			$authAttempt->save();
+			//-- -- -- --
+
 			return;
 		}
 
 		event(new UserJoinSuccessEvent($this->name, $authKey));
+
+		//-- Логируем попытку авторизации
+		$authAttempt = LogAuthAttempt::create([
+			LogAuthAttempt::STEP                => LogAuthAttempt::STEP_AUTH_SUCCESS,
+			LogAuthAttempt::USER_UUID           => $user->uuid,
+			LogAuthAttempt::APPLICATION_UUID    => $dbAuthCommand->application_uuid,
+			LogAuthAttempt::COMMAND             => $this->name,
+		]);
+		$authAttempt->save();
+		//-- -- -- --
 
 		$replyMessage->setText('Вы успешно авторизовались');
 
