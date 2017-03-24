@@ -1,6 +1,7 @@
 <?php
 namespace App\Console\Commands\Telegram;
 
+use App\Entities\Application;
 use App\Entities\AuthCommand;
 use App\Entities\LogAuthAttempt;
 use App\Entities\User;
@@ -28,7 +29,8 @@ class AuthoriseCommand extends TelegramCommand {
 	public function handle($arguments) {
 		$replyMessage = $this->initiateMessage();
 
-		$dbAuthCommand = AuthCommand::check($this->name);
+		$cacheKey    = AuthCommand::getKeyName($this->name);
+		$authCommand = $this->cache->get($cacheKey);/** @var AuthCommand $authCommand */
 
 		$from = $this->getUpdate()->getMessage()->getFrom();
 		$user = User::loadByTelegramProfile($from);
@@ -42,7 +44,7 @@ class AuthoriseCommand extends TelegramCommand {
 		$authAttempt->save();
 		//-- -- -- --
 
-		if (null === $dbAuthCommand) {
+		if (null === $authCommand) {
 			$replyMessage->setText('Команда не найдена');
 			$this->replyWithMessage($replyMessage->get());
 
@@ -64,6 +66,7 @@ class AuthoriseCommand extends TelegramCommand {
 		}
 
 		$authKey = $this->generateAuthKey();
+		$application = Application::find($authCommand->applicationUuid);
 
 		//-- Отправляем запрс с авторизационными данными приложению
 		$httpClient = new Client;
@@ -77,13 +80,13 @@ class AuthoriseCommand extends TelegramCommand {
 		$authUser->lastName     = $user->last_name;
 
 		$authRequest = new Request;
-		$authRequest->token     = $dbAuthCommand->application->api_token;
+		$authRequest->token     = $application->api_token;
 		$authRequest->authKey   = $authKey;
 		$authRequest->user      = $authUser;
 
 		for ($i = 0; $i < 3; $i++) {
 			try {
-				$response = $httpClient->post($dbAuthCommand->application->auth_request_url, [
+				$response = $httpClient->post($application->auth_request_url, [
 					'json' => $authRequest
 				]);
 
@@ -99,7 +102,7 @@ class AuthoriseCommand extends TelegramCommand {
 		}
 		//-- -- -- --
 
-		$dbAuthCommand->delete();
+		$this->cache->forget($cacheKey);
 
 		if (false === $isSuccessResponse) {
 			$replyMessage->setText('Ошибка авторизации. Попробуйте позже');
@@ -113,7 +116,7 @@ class AuthoriseCommand extends TelegramCommand {
 			$authAttempt = LogAuthAttempt::create([
 				LogAuthAttempt::STEP                => LogAuthAttempt::STEP_AUTH_FAIL,
 				LogAuthAttempt::USER_UUID           => $user->uuid,
-				LogAuthAttempt::APPLICATION_UUID    => $dbAuthCommand->application_uuid,
+				LogAuthAttempt::APPLICATION_UUID    => $authCommand->applicationUuid,
 				LogAuthAttempt::COMMAND             => $this->name,
 				LogAuthAttempt::ADDITIONAL_INFO     => json_encode($additionalInfo),
 			]);
@@ -129,7 +132,7 @@ class AuthoriseCommand extends TelegramCommand {
 		$authAttempt = LogAuthAttempt::create([
 			LogAuthAttempt::STEP                => LogAuthAttempt::STEP_AUTH_SUCCESS,
 			LogAuthAttempt::USER_UUID           => $user->uuid,
-			LogAuthAttempt::APPLICATION_UUID    => $dbAuthCommand->application_uuid,
+			LogAuthAttempt::APPLICATION_UUID    => $authCommand->applicationUuid,
 			LogAuthAttempt::COMMAND             => $this->name,
 		]);
 		$authAttempt->save();

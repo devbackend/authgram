@@ -32,7 +32,12 @@ class AuthController extends Controller {
 			return response()->jsonp($callback, ['error' => 'Приложение не найдено']);
 		}
 
-		$authCommand = AuthCommand::create([AuthCommand::APPLICATION_UUID => $appUuid]);
+		$authCommand = new AuthCommand;
+		$authCommand->applicationUuid   = $appUuid;
+		$authCommand->command           = AuthCommand::generateCommandName();
+
+		$cacheKey = AuthCommand::getKeyName($authCommand->command);
+		$this->cache->put($cacheKey, $authCommand, 1);
 		$this->dispatchNow(new CreateAuthCommandClass($authCommand));
 
 		//-- Логируем попытку авторизации
