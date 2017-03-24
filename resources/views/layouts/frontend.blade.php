@@ -12,6 +12,20 @@
 	<link rel="stylesheet" href="/css/app.css">
 	<link rel="shortcut icon" href="/favicon.png">
 
+	{{-- Meta теги для импорта в соц.сети --}}
+	<meta name="theme-color" content="#006064" />
+	<meta property="og:site_name" content="AuthGram" />
+	<meta property="og:title" content="Сервис авторизации при помощи Telegram" />
+
+	<meta name="keywords" content="авторизация, telegram, telegram бот, аутентификация, личный кабинет">
+	<meta name="description" property="og:description" content="Сервис авторизации при помощи Telegram. Весь процесс, со стороны пользователя, сводится к тому, чтобы получить команду авторизации и отправить её боту, который передаст данные из профиля Telegram на тот сайт, где совершается вход.">
+
+	<meta name="image" property="og:image" content="https://authgram.ru/images/logo.png" />
+
+	<meta property="og:image:width" content="640" data-ajax-meta-tag="true" />
+	<meta property="og:image:height" content="640" data-ajax-meta-tag="true" />
+	{{-- Meta теги для импорта в соц.сети --}}
+
 	@stack('styles')
 </head>
 <body>
