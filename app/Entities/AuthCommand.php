@@ -1,82 +1,45 @@
 <?php
 namespace App\Entities;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 /**
  * Модель команды авторизации.
  *
- * @property string $application_uuid   Идентификатор приложения
- * @property string $command            Значение команды авторизации
- * @property string $expired_at         Время устаревания кода
- *
- * @property-read Application $application Приложение, с которорым связана команда авторизации
- *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-class AuthCommand extends Entity {
-	const COMMAND           = 'command';
-	const APPLICATION_UUID  = 'application_uuid';
-	const EXPIRED_AT        = 'expired_at';
-
+class AuthCommand {
 	/** Время устаревания кода авторизации (в секундах) */
 	const EXPIRED_TIME_SEC = 59;
 
-	/** @var bool Отключаем автоинкремент для первичного ключа */
-	public $incrementing = false;
+	/** Константа для префикса названия ключа кэша */
+	const CACHE_KEY_NAME_PREFIX = 'authorisation-command';
 
-	/** @var bool Отключаем автоматические timestamp'ы */
-	public $timestamps = false;
+	/** @var string Идентификатор приложения */
+	public $applicationUuid;
 
-	/** @var string Первичный ключ */
-	protected $primaryKey = self::COMMAND;
-
-	/** @var string[] Названия полей для массового заполнения */
-	protected $fillable = [self::APPLICATION_UUID];
+	/** @var string Значение команды авторизации */
+	public $command;
 
 	/**
-	 * Проверка кода авторизации.
-	 * Если код не найден или устарел - возвращает null
+	 * Генерация команды.
 	 *
-	 * @param string $command код авторизации
-	 *
-	 * @return static|null
+	 * @return string
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public static function check(string $command) {
-		$now = Carbon::now()->toDateTimeString();
-
-		$command = static::where(static::COMMAND, $command)->where(static::EXPIRED_AT, '>=', $now)->first();
-
-		return $command;
+	public static function generateCommandName() {
+		return 'ag' . strtolower(str_random(2));
 	}
 
 	/**
-	 * Приложение, с которорым связан код авторизации
+	 * Получение ключа для кэширования команды.
 	 *
-	 * @return BelongsTo
+	 * @param string $commandName Название команды
 	 *
-	 * @author Кривонос Иван <devbackend@yandex.ru>
-	 */
-	public function application() {
-		return $this->belongsTo(Application::class, static::APPLICATION_UUID);
-	}
-	const RELATION_APPLICATION = 'application';
-
-	/**
-	 * @inheritdoc
+	 * @return string
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	protected static function boot() {
-		parent::boot();
-
-		static::creating(function($entity) {
-			/** @var static $entity */
-			$entity->command    = 'ag' . strtolower(str_random(2));
-			$entity->expired_at = Carbon::now()->addSecond(static::EXPIRED_TIME_SEC)->toDateTimeString();
-		});
+	public static function getKeyName($commandName) {
+		return AuthCommand::CACHE_KEY_NAME_PREFIX . '-' . $commandName;
 	}
 }

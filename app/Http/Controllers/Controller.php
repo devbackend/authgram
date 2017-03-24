@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -17,17 +18,22 @@ use Illuminate\View\View;
 class Controller extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+	/** @var Repository */
+	protected $cache;
+
 	/** @var Log */
 	protected $logger;
 
 	/**
 	 *
-	 * @param Log $logger Инстанс логгера
+	 * @param Log        $logger    Инстанс логгера
+	 * @param Repository $cache     Инстанс для работы с кэшем
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function __construct(Log $logger) {
-		$this->logger = $logger;
+	public function __construct(Log $logger, Repository $cache) {
+		$this->logger   = $logger;
+		$this->cache    = $cache;
 	}
 
 	/**
