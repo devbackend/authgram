@@ -2,3 +2,4 @@ Host: AuthGram.ru
 User-agent: *
 Allow: /
 Crawl-delay: 10
+Sitemap: https://AuthGram.ru/sitemap.xml

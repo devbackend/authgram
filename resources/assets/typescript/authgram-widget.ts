@@ -3,15 +3,16 @@
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-const BASE_URL      = 'API_URL';
+const BASE_URL      = '%API_URL%';
 const AUTH_BASE_URL = BASE_URL + '/auth/';
 
 const DEFAULT_SELECTOR = '[data-role="authgram-bot"]';
 
 const AUTHGRAM_BUTTON_TEXT = '<span>Войти через Telegram</span>';
 
-const DEFAULT_CLASS_AUTHGRAM_BUTTON = 'authgram-button';
-const DEFAULT_CLASS_CODE_CONTAINER  = 'authgram-command-container';
+const DEFAULT_CLASS_AUTHGRAM_BUTTON     = 'authgram-button';
+const DEFAULT_CLASS_CODE_CONTAINER      = 'authgram-command-container';
+const DEFAULT_CLASS_CONTAINER_SHADOW    = 'authgram-command-container-shadow';
 
 const CHANNEL_AUTH_COMMAND_STATUS   = 'auth-command-status';
 const EVENTS_USER_JOIN_SUCCESS      = 'UserJoinSuccessEvent';
@@ -86,7 +87,7 @@ class AuthGramWidget {
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	protected drawAuthoriseButton = (containerHtml = '') => {
+	public drawAuthoriseButton = (containerHtml = '') => {
 		let button = document.createElement('button');
 		button.className = DEFAULT_CLASS_AUTHGRAM_BUTTON;
 		button.innerHTML = AUTHGRAM_BUTTON_TEXT;
@@ -94,6 +95,19 @@ class AuthGramWidget {
 
 		this.htmlContainer.innerHTML = containerHtml;
 		this.htmlContainer.appendChild(button);
+	};
+
+	/**
+	 * Удаление контейнера с кодом
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public removeCodeContainer = () => {
+		(<any>window).clearInterval(this.expireTimer);
+		(<any>window).clearInterval(this.reloadTimer);
+		(<any>window).Echo.leave(this.channelName);
+
+		this.htmlContainer.innerHTML = '';
 	};
 
 	/**
@@ -134,10 +148,14 @@ class AuthGramWidget {
 		}
 		else {
 			commandContainer.innerHTML = '<div class="command">'
-				+ '<span>Чтобы войти на сайт, отправьте боту следующую команду:</span> '
-				+ '<a href="https://telegram.me/BOT_NAME" target="_blank" class="command">'
-				+ '/' + response.command + ''
+				+ '<a href="https://telegram.me/%BOT_NAME%Bot/?start=' + response.command + '" target="_blank" class="sign-button">'
+				+ 'Войти'
 				+ '</a>'
+				+ 'и нажмите START'
+				+ '<p>Или отправьте боту '
+				+ '<a href="https://telegram.me/%BOT_NAME%Bot/" target="_blank" class="bot-link">@%BOT_NAME%Bot</a>'
+				+ ' сообщение:</p>'
+				+ '<span class="command-name">/' + response.command + '</span>'
 				+ '</div>'
 				+ '<div class="expired">'
 				+ '<span>Истекает через 00:</span>'
@@ -163,7 +181,19 @@ class AuthGramWidget {
 			//-- -- -- --
 		}
 
+		//-- Создание элемента для подложки виджета
+		let closeHandler = () => {
+			this.removeCodeContainer();
+			this.drawAuthoriseButton();
+		};
+
+		let containerShadow = document.createElement('div');
+		containerShadow.className = DEFAULT_CLASS_CONTAINER_SHADOW;
+		containerShadow.addEventListener('click', closeHandler, false);
+		//-- -- -- --
+
 		this.htmlContainer.innerHTML = '';
+		this.htmlContainer.appendChild(containerShadow);
 		this.htmlContainer.appendChild(commandContainer);
 
 		this.channelName = CHANNEL_AUTH_COMMAND_STATUS + '.' + response.command;
