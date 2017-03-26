@@ -3,7 +3,7 @@
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-const BASE_URL      = 'API_URL';
+const BASE_URL      = '%API_URL%';
 const AUTH_BASE_URL = BASE_URL + '/auth/';
 
 const DEFAULT_SELECTOR = '[data-role="authgram-bot"]';
@@ -135,7 +135,7 @@ class AuthGramWidget {
 		else {
 			commandContainer.innerHTML = '<div class="command">'
 				+ '<span>Чтобы войти на сайт, отправьте боту следующую команду:</span> '
-				+ '<a href="https://telegram.me/BOT_NAME" target="_blank" class="command">'
+				+ '<a href="https://telegram.me/%BOT_NAME%Bot/" target="_blank" class="command">'
 				+ '/' + response.command + ''
 				+ '</a>'
 				+ '</div>'

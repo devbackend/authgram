@@ -4,8 +4,8 @@ require('laravel-elixir-replace');
 require('laravel-elixir-env');
 
 let authgramWidgetReplacements = [
-	['API_URL', process.env.API_URL],
-	['BOT_NAME', process.env.BOT_NAME],
+	['%API_URL%', process.env.API_URL],
+	['%BOT_NAME%', process.env.BOT_NAME],
 ];
 
 elixir(function(mix) {
