@@ -17,11 +17,9 @@
 		});
 
 		$('[data-activates="profile-menu"]').dropdown({
-				inDuration: 300,
-				outDuration: 225,
-				belowOrigin: true,
-				alignment: 'left', // Displays dropdown with edge aligned to the left of button
-			}
-		);
+			inDuration: 300,
+			outDuration: 225,
+			belowOrigin: true,
+		});
 	});
 }(jQuery));
