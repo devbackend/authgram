@@ -40,7 +40,7 @@
 			<p>Для того, чтобы использовать виджет <?= env('BOT_NAME') ?>, разместите следующий код на своём сайте:</p>
 			<blockquote>
 				<pre><!--
-	                -->&lt;div data-role=&quot;authgram-bot&quot; class=&quot;authgram-widget&quot;&gt;&lt;/div&gt;
+	                -->&lt;button data-role="authgram-sign-button" class="authgram-sign-button"&gt;&lt;span&gt;Войти через Telegram&lt;/span&gt;&lt;/button&gt;
 <!--                -->&lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.authgram.ru/js/authgram-widget.js&quot;&gt;&lt;/script&gt;
 <!--                -->&lt;script type=&quot;text/javascript&quot;&gt;
 <!--                -->    var AuthGramWidget = new AuthGramWidget('[UUID ВАШЕГО ПРИЛОЖЕНИЯ]', [НАСТРОЙКИ]);
@@ -55,7 +55,7 @@
 			<h3>Доступные настройки</h3>
 			<ul>
 				<li>
-					<b>selector</b> &mdash; селектор, который является контейнером виджета. По умолчанию - <i>data-role="authgram-bot"</i>
+					<b>selector</b> &mdash; селектор, на который будет навешиваться действие кнопки авторизации. По умолчанию - <i>[data-role="authgram-sign-button"]</i>
 				</li>
 				<li>
 					<b>onAuthSuccess(authKey)</b> &mdash; метод, который выполняется при успешной авторизации.

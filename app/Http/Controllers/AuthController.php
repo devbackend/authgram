@@ -5,7 +5,10 @@ use App\Entities\Application;
 use App\Entities\AuthCommand;
 use App\Entities\LogAuthAttempt;
 use App\Jobs\CreateAuthCommandClass;
+use App\Providers\RouteServiceProvider;
+use Auth;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -57,5 +60,18 @@ class AuthController extends Controller {
 			'command' => $authCommand->command,
 			'expired' => $authCommand::EXPIRED_TIME_SEC,
 		]);
+	}
+
+	/**
+	 * Выход из ЛК
+	 *
+	 * @return RedirectResponse
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function logoutAction() {
+		Auth::logout();
+
+		return redirect()->route(RouteServiceProvider::ROUTE_NAME_HOMEPAGE);
 	}
 }
