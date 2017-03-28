@@ -25,6 +25,7 @@ $router->post('auth/telegram', 'AuthRequestController');
 
 //-- Получение кода авторизации
 $router->get('auth/{appUuid}/{callback}', 'AuthController');
+$router->get('auth/logout', 'AuthController@logoutAction');
 //-- -- -- --
 
 //-- Управление приложениями

@@ -10,7 +10,7 @@
 use App\Entities\Application;
 ?>
 
-<div data-role="authgram-bot" class="authgram-widget"></div>
+<button data-role="authgram-sign-button" class="authgram-sign-button"><span>Войти через Telegram</span></button>
 
 <script type="text/javascript" src="https://cdn.authgram.ru/js/authgram-widget.js"></script>
 <script type="text/javascript">

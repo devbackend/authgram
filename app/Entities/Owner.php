@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use Eloquent;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
 
@@ -15,6 +16,8 @@ use Illuminate\Notifications\Notifiable;
  * @property string $remember_token Токен для запоминания авторизации пользователя
  * @property string $created_at     Дата создания записи
  * @property string $updated_at     Дата обновления записи
+ *
+ * @property-read \App\Entities\User $user
  *
  * @method static Eloquent where($column, $operator = null, $value = null, $boolean = 'and')
  * @method static Owner create($attributes = [])
@@ -34,4 +37,16 @@ class Owner extends User {
 
 	/** @var string[] Поля, недоступные для выборки в массивах */
 	protected $hidden = [self::PASSWORD, self::REMEMBER_TOKEN];
+
+	/**
+	 * Связь с пользователем.
+	 *
+	 * @return HasOne
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function user() {
+		return $this->hasOne(\App\Entities\User::class, \App\Entities\User::UUID, static::USER_UUID);
+	}
+	const RELATED_USER = 'user';
 }
