@@ -40,7 +40,7 @@
 			<p>Для того, чтобы использовать виджет <?= env('BOT_NAME') ?>, разместите следующий код на своём сайте:</p>
 			<blockquote>
 				<pre><!--
-	                -->&lt;!-- AuthGram widget: html of sign button --&gt;
+                    -->&lt;!-- AuthGram widget: html of sign button --&gt;
 <!--                -->&lt;button data-role="authgram-sign-button" class="authgram-sign-button"&gt;&lt;span&gt;Войти через Telegram&lt;/span&gt;&lt;/button&gt;
 <!--                -->&lt;!-- /AuthGram widget: html of sign button --&gt;
 
