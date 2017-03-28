@@ -36,3 +36,23 @@ MAIN {
 		background-size: cover;
 	}
 }
+
+.user-profile {
+	margin-left: 15px;
+
+	i, span {
+		display: inline-block !important;
+		vertical-align: top;
+		line-height: 64px;
+	}
+}
+
+.container {
+	@media (min-width: $medium-screen) {
+		width: 100%;
+	}
+
+	@media (min-width: $large-screen) {
+		width: $large-screen;
+	}
+}
