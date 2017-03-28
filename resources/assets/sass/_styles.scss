@@ -16,6 +16,7 @@ MAIN {
 
 .page-footer {
 	padding-bottom: 20px;
+	margin-top: 20px;
 }
 
 .mobile-menu {
@@ -31,7 +32,27 @@ MAIN {
 
 	i {
 		width: 64px;
-		background-image: url('/images/logo.svg');
+		background-image: url('/images/logo.png');
 		background-size: cover;
+	}
+}
+
+.user-profile {
+	margin-left: 15px;
+
+	i, span {
+		display: inline-block !important;
+		vertical-align: top;
+		line-height: 64px;
+	}
+}
+
+.container {
+	@media (min-width: $medium-screen) {
+		width: 100%;
+	}
+
+	@media (min-width: $large-screen) {
+		width: $large-screen;
 	}
 }

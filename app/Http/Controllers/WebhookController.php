@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use App;
-use App\Entities\IncomeMessageLog;
+use App\Entities\LogIncomeMessage;
 use App\Entities\User;
 use Symfony\Component\HttpFoundation\Response;
 use Telegram\Bot\Laravel\Facades\Telegram;
@@ -32,9 +32,9 @@ class WebhookController extends Controller {
 
 		$from = $update->getMessage()->getFrom();
 		$user = User::loadByTelegramProfile($from);
-		IncomeMessageLog::create([
-			IncomeMessageLog::USER_UUID     => $user->uuid,
-			IncomeMessageLog::MESSAGE_DATA  => json_encode($update),
+		LogIncomeMessage::create([
+			LogIncomeMessage::USER_UUID    => $user->uuid,
+			LogIncomeMessage::MESSAGE_DATA => json_encode($update),
 		]);
 
 		return response('ok');

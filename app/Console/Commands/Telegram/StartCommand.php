@@ -27,6 +27,12 @@ class StartCommand extends TelegramCommand {
 
 		$user = User::loadByTelegramProfile($from);
 
+		if ('' !== $arguments) {
+			$this->triggerCommand($arguments);
+
+			return;
+		}
+
 		$message = $this->initiateMessage()
 			->setText('Привет' . ('' !== $user->first_name ? ', ' . $user->first_name : '') . '!')
 			->get()

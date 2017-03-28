@@ -73,4 +73,15 @@ class User extends Entity {
 			$entity->uuid = Uuid::generate()->string;
 		});
 	}
+
+	/**
+	 * Получение отображаемого имени пользователя.
+	 *
+	 * @return string
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function getShowName() {
+		return ('' !== $this->username ? $this->username : $this->first_name);
+	}
 }
