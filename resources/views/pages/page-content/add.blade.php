@@ -29,19 +29,7 @@ use App\Entities\Application;
 		</li>
 	</ul>
 
-	<button id="telegram-auth-button" class="authgram-sign-button"><span>Войти через Telegram</span></button>
-
-	@push('scripts')
-	<script type="text/javascript" src="<?= env('API_URL') ?>/js/authgram-widget.js"></script>
-	<script type="text/javascript">
-		new AuthGramWidget('157bb070-eaee-11e6-84e2-0f2ab592a536', {
-			selector: '#telegram-auth-button',
-			onAuthSuccess: function (authKey) {
-				document.location.href = '?auth_key=' + authKey;
-			}
-		});
-	</script>
-	@endpush
+	<button data-role="authgram-sign-button" class="authgram-sign-button"><span>Войти через Telegram</span></button>
 <?php else: ?>
 	<div class="row" id="creation-form">
 		<p>Для того чтобы начать использовать возможности <?= env('BOT_NAME') ?>, необходимо добавить свой сайт при помощи формы ниже, указав все необходимые данные.</p>
@@ -56,11 +44,11 @@ use App\Entities\Application;
 			{{ csrf_field() }}
 			<input type="hidden" name="<?= Application::OWNER_UUID ?>" value="<?= Auth::user()->user_uuid ?>">
 			<div class="row">
-				<div class="input-field col s6">
+				<div class="input-field col s12 m6 l6">
 					<input type="text" name="<?= Application::TITLE ?>" class="validate" required placeholder="Например: Авторизатор" value="<?= old(Application::TITLE) ?>" id="field-<?= Application::TITLE ?>">
 					<label for="field-<?= Application::TITLE ?>">Название приложения или сайта</label>
 				</div>
-				<div class="input-field col s6">
+				<div class="input-field col s12 m6 l6">
 					<input type="url" name="<?= Application::WEBSITE ?>" placeholder="Например: http://example.com" class="validate" data-inputmask-url required value="<?= old(Application::WEBSITE) ?>" id="field-<?= Application::WEBSITE ?>">
 					<label for="field-<?= Application::WEBSITE ?>">Адрес сайта</label>
 				</div>

@@ -47,6 +47,21 @@ MAIN {
 	}
 }
 
+.mobile-user-profile {
+	i {
+		margin-right: 10px !important;
+	}
+
+	ul {
+		padding-left: 15px;
+
+		a {
+			line-height: 38px;
+			height: 38px;
+		}
+	}
+}
+
 .container {
 	@media (min-width: $medium-screen) {
 		width: 100%;

@@ -25,6 +25,21 @@ $currentUser = Auth::user();
 				<li><a href="<?= route(RouteServiceProvider::ROUTE_NAME_HOMEPAGE) ?>">Главная</a></li>
 				<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'add']) ?>">Добавить</a></li>
 				<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'dev']) ?>">Разработчикам</a></li>
+				<li class="mobile-user-profile">
+					<?php if (null !== $currentUser): ?>
+						<a href="javascript:">
+							<i class="material-icons">perm_identity</i>
+							<?= $currentUser->user->getShowName() ?>
+						</a>
+
+						<ul>
+							<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'add']) ?>">Добавить сайт</a></li>
+							<li><a href="<?= action('AuthController@logoutAction') ?>">Выйти</a></li>
+						</ul>
+					<?php else: ?>
+						<a href="javascript:" data-role="authgram-sign-button">Войти</a>
+					<?php endif ?>
+				</li>
 			</ul>
 
 			<ul class="right hide-on-med-and-down">
@@ -39,26 +54,24 @@ $currentUser = Auth::user();
 							?>
 						</a>
 
-						<ul id='profile-menu' class='dropdown-content'>
+						<ul id="profile-menu" class='dropdown-content'>
 							<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'add']) ?>">Добавить сайт</a></li>
 							<li class="divider"></li>
 							<li><a href="<?= action('AuthController@logoutAction') ?>">Выйти</a></li>
 						</ul>
 					<?php else: ?>
 						<a href="javascript:" data-role="authgram-sign-button">Войти</a>
-						@push('scripts')
-						<script type="text/javascript" src="<?= env('API_URL') ?>/js/authgram-widget.js"></script>
-						<script type="text/javascript">
-							new AuthGramWidget('157bb070-eaee-11e6-84e2-0f2ab592a536', {
-								onAuthSuccess: function (authKey) {
-									document.location.href = '?auth_key=' + authKey;
-								}
-							});
-						</script>
-						@endpush
 					<?php endif ?>
 				</li>
 			</ul>
 		</div>
 	</nav>
 </div>
+<?php if (null === $currentUser): ?>
+	@push('scripts')
+	<script type="text/javascript" src="<?= env('API_URL') ?>/js/authgram-widget.js"></script>
+	<script type="text/javascript">
+		new AuthGramWidget('157bb070-eaee-11e6-84e2-0f2ab592a536');
+	</script>
+	@endpush
+<?php endif ?>
