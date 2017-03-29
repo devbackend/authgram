@@ -38,16 +38,6 @@ $currentUser = Auth::user();
 						</ul>
 					<?php else: ?>
 						<a href="javascript:" data-role="authgram-sign-button">Войти</a>
-						@push('scripts')
-						<script type="text/javascript" src="<?= env('API_URL') ?>/js/authgram-widget.js"></script>
-						<script type="text/javascript">
-							new AuthGramWidget('157bb070-eaee-11e6-84e2-0f2ab592a536', {
-								onAuthSuccess: function (authKey) {
-									document.location.href = '?auth_key=' + authKey;
-								}
-							});
-						</script>
-						@endpush
 					<?php endif ?>
 				</li>
 			</ul>
@@ -71,19 +61,17 @@ $currentUser = Auth::user();
 						</ul>
 					<?php else: ?>
 						<a href="javascript:" data-role="authgram-sign-button">Войти</a>
-						@push('scripts')
-						<script type="text/javascript" src="<?= env('API_URL') ?>/js/authgram-widget.js"></script>
-						<script type="text/javascript">
-							new AuthGramWidget('157bb070-eaee-11e6-84e2-0f2ab592a536', {
-								onAuthSuccess: function (authKey) {
-									document.location.href = '?auth_key=' + authKey;
-								}
-							});
-						</script>
-						@endpush
 					<?php endif ?>
 				</li>
 			</ul>
 		</div>
 	</nav>
 </div>
+<?php if (null === $currentUser): ?>
+	@push('scripts')
+	<script type="text/javascript" src="<?= env('API_URL') ?>/js/authgram-widget.js"></script>
+	<script type="text/javascript">
+		new AuthGramWidget('157bb070-eaee-11e6-84e2-0f2ab592a536');
+	</script>
+	@endpush
+<?php endif ?>
