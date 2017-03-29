@@ -38,7 +38,7 @@ class AuthGramWidget {
 		this.authGramModal.appendChild(errorMessage);
 	};
 
-	protected authgramSignButton:   Element;
+	protected authgramSignButtons:  NodeListOf<Element>;
 	protected authGramModal:        Element;
 	protected authGramModalShadow:  Element;
 	protected channelName;
@@ -52,16 +52,17 @@ class AuthGramWidget {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	constructor(uuid: string, config?) {
-		this.uuid = uuid;
+		this.uuid   = uuid;
+		config      = config || {};
 
 		Object.keys(config).forEach((key) => {
 			this[key] = config[key];
 		});
 
 		//-- Устанавливаем селектор
-		this.authgramSignButton = document.querySelector(this.selector);
-		if (null === this.authgramSignButton) {
-			throw new Error('Элемент "' + config.selector + '" не найден');
+		this.authgramSignButtons = document.querySelectorAll(this.selector);
+		if (0 === this.authgramSignButtons.length) {
+			return;
 		}
 		//-- -- -- --
 
@@ -80,7 +81,14 @@ class AuthGramWidget {
 		document.querySelector('head').appendChild(listenerScript);
 		document.querySelector('head').appendChild(widgetStyles);
 
-		this.authgramSignButton.addEventListener('click', this.getCommand, false);
+		for (let i in this.authgramSignButtons) {
+			if (false === this.authgramSignButtons.hasOwnProperty(i)) {
+				continue;
+			}
+
+			this.authgramSignButtons[i].addEventListener('click', this.getCommand, false);
+		}
+
 		this.drawModal();
 	}
 
@@ -90,6 +98,7 @@ class AuthGramWidget {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	protected getCommand = () => {
+		console.log('fdsghtas');
 		this.showModal();
 		this.authGramModal.innerHTML = '<p class="getting-command">Получение кода...</p>';
 
