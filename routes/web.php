@@ -14,6 +14,7 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 $router->any('/', 'HomepageController')->name(RouteServiceProvider::ROUTE_NAME_HOMEPAGE);
 $router->get('/p/{slug}', 'PagesController@showAction');
+$router->get('/sign', 'Dashboard\DashBoardController@signAction')->name(RouteServiceProvider::ROUTE_NAME_SIGN);
 
 $router->get('telegram', function(){
 	Telegram::commandsHandler();

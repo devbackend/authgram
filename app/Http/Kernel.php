@@ -2,7 +2,9 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckAdminAuthMiddleware;
 use App\Http\Middleware\CheckAuthKey;
+use App\Http\Middleware\CheckOwnerAuthMiddleware;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -18,12 +20,15 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class Kernel extends HttpKernel {
-	const MIDDLEWARE_ALIAS_AUTH         = 'auth';
-	const MIDDLEWARE_ALIAS_AUTH_BASIC   = 'auth.basic';
-	const MIDDLEWARE_ALIAS_BINDINGS     = 'bindings';
-	const MIDDLEWARE_ALIAS_CAN          = 'can';
-	const MIDDLEWARE_ALIAS_GUEST        = 'guest';
-	const MIDDLEWARE_ALIAS_THROTTLE     = 'throttle';
+	const MIDDLEWARE_ALIAS_AUTH             = 'auth';
+	const MIDDLEWARE_ALIAS_AUTH_ADMIN       = 'auth.admin';
+	const MIDDLEWARE_ALIAS_AUTH_BASIC       = 'auth.basic';
+	const MIDDLEWARE_ALIAS_AUTH_TELEGRAM    = 'auth.telegram';
+
+	const MIDDLEWARE_ALIAS_BINDINGS = 'bindings';
+	const MIDDLEWARE_ALIAS_CAN      = 'can';
+	const MIDDLEWARE_ALIAS_GUEST    = 'guest';
+	const MIDDLEWARE_ALIAS_THROTTLE = 'throttle';
 
 	const MIDDLEWARE_GROUP_API = 'api';
 	const MIDDLEWARE_GROUP_WEB = 'web';
@@ -53,11 +58,13 @@ class Kernel extends HttpKernel {
 
 	/** @var string[] Список middleware для использования в роутах. */
 	protected $routeMiddleware = [
-		self::MIDDLEWARE_ALIAS_AUTH       => Authenticate::class,
-		self::MIDDLEWARE_ALIAS_AUTH_BASIC => AuthenticateWithBasicAuth::class,
-		self::MIDDLEWARE_ALIAS_BINDINGS   => SubstituteBindings::class,
-		self::MIDDLEWARE_ALIAS_CAN        => Authorize::class,
-		self::MIDDLEWARE_ALIAS_GUEST      => RedirectIfAuthenticated::class,
-		self::MIDDLEWARE_ALIAS_THROTTLE   => ThrottleRequests::class,
+		self::MIDDLEWARE_ALIAS_AUTH             => Authenticate::class,
+		self::MIDDLEWARE_ALIAS_AUTH_BASIC       => AuthenticateWithBasicAuth::class,
+		self::MIDDLEWARE_ALIAS_AUTH_ADMIN       => CheckAdminAuthMiddleware::class,
+		self::MIDDLEWARE_ALIAS_AUTH_TELEGRAM    => CheckOwnerAuthMiddleware::class,
+		self::MIDDLEWARE_ALIAS_BINDINGS         => SubstituteBindings::class,
+		self::MIDDLEWARE_ALIAS_CAN              => Authorize::class,
+		self::MIDDLEWARE_ALIAS_GUEST            => RedirectIfAuthenticated::class,
+		self::MIDDLEWARE_ALIAS_THROTTLE         => ThrottleRequests::class,
 	];
 }

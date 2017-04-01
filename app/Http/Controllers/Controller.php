@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
+use ReflectionClass;
 
 /**
  * Базовый контроллер приложения.
@@ -18,14 +19,13 @@ use Illuminate\View\View;
 class Controller extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-	/** @var Repository */
+	/** @var Repository Провайдер для работы с кэшем */
 	protected $cache;
 
-	/** @var Log */
+	/** @var Log Провайдер для работы с логгированием */
 	protected $logger;
 
 	/**
-	 *
 	 * @param Log        $logger    Инстанс логгера
 	 * @param Repository $cache     Инстанс для работы с кэшем
 	 *
@@ -47,12 +47,20 @@ class Controller extends BaseController {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	protected function render($viewFile, $params = []) {
-		$viewDir = get_called_class(); // App\Http\Controllers\ExampleController
-		$viewDir = explode('\\', $viewDir);
-		$viewDir = end($viewDir); // ExampleController
-		$viewDir = substr($viewDir, 0, -10); // Example
-		$viewDir = camel_case($viewDir); // example
+		$class = new ReflectionClass(self::class);
 
-		return view($viewDir . '/' . $viewFile, $params);
+		$controllerPathParts = get_called_class(); // App\Http\Controllers\ExampleController
+		$controllerPathParts = str_replace($class->getNamespaceName() . '\\', '', $controllerPathParts); // ExampleController
+		$controllerPathParts = explode('\\', $controllerPathParts);
+
+
+		foreach ($controllerPathParts as $key => $controllerPathPart) {
+			$controllerPathPart = str_replace('Controller', '', $controllerPathPart);
+			$controllerPathPart = kebab_case($controllerPathPart);
+
+			$controllerPathParts[$key] = $controllerPathPart;
+		}
+
+		return view(implode('.', $controllerPathParts) . '.' . $viewFile, $params);
 	}
 }

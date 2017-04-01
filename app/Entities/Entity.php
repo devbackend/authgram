@@ -1,12 +1,17 @@
 <?php
 namespace App\Entities;
 
+use Carbon\Carbon;
 use Eloquent;
 use Exception;
 use Illuminate\Http\Request;
 
 /**
  * Базовый класс моделей.
+ *
+ * @property Carbon $created_at Дата создания записи
+ * @property Carbon $updated_at Дата обновления записи
+ * @property Carbon $deleted_at Дата удаления записи
  *
  * @method static $this create($attributes = []) Создание модели
  *
@@ -52,5 +57,34 @@ abstract class Entity extends Eloquent {
 	 */
 	public static function table() {
 		return (new static)->getTable();
+	}
+
+	/**
+	 * Название первичного ключа
+	 *
+	 * @return string
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function getPrimaryKey() {
+		return $this->primaryKey;
+	}
+
+	/**
+	 * Получение времени создания в человеко-понятном виде.
+	 *
+	 * @return string
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function getCreationTime() {
+		if (false === $this->timestamps) {
+			return '';
+		}
+
+		return ($this->created_at->diffInHours() < 24
+			? $this->created_at->diffForHumans()
+			: $this->created_at->format('d.m.Y H:i')
+		);
 	}
 }
