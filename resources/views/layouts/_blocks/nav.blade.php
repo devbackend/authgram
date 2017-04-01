@@ -1,11 +1,12 @@
 <?php
+
+use App\Entities\Owner;use App\Entities\Page;use App\Entities\Policy;use App\Providers\RouteServiceProvider;
+
 /**
  * Шаблон блока навигации
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-
-use App\Entities\Owner;use App\Entities\Page;use App\Providers\RouteServiceProvider;
 
 /** @var Owner $currentUser */
 $currentUser = Auth::user();
@@ -29,7 +30,7 @@ $currentUser = Auth::user();
 					<?php if (null !== $currentUser): ?>
 						<a href="javascript:">
 							<i class="material-icons">perm_identity</i>
-							<?= $currentUser->user->getShowName() ?>
+							<?= $currentUser->user->getName() ?>
 						</a>
 
 						<ul>
@@ -50,12 +51,18 @@ $currentUser = Auth::user();
 						<a href="javascript:" data-activates="profile-menu">
 							<i class="material-icons">perm_identity</i>
 							<?=
-								$currentUser->user->getShowName()
+								$currentUser->user->getName()
 							?>
 						</a>
 
 						<ul id="profile-menu" class='dropdown-content'>
 							<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'add']) ?>">Добавить сайт</a></li>
+
+							<?php if (Gate::allows(Policy::ADMIN_ACTION)): ?>
+								<li><a href="<?= action('Dashboard\DashboardController@indexAction') ?>">Панель управления</a></li>
+								<li><a href="<?= action('Dashboard\ApplicationController@index') ?>">Мои приложения</a></li>
+							<?php endif ?>
+
 							<li class="divider"></li>
 							<li><a href="<?= action('AuthController@logoutAction') ?>">Выйти</a></li>
 						</ul>

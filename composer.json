@@ -9,7 +9,7 @@
 	"type": "project",
 	"require": {
 		"php": ">=7.0.0",
-		"laravel/framework": "5.4.*",
+		"laravel/framework": "5.4.16",
 		"irazasyed/telegram-bot-sdk": "^2.0",
 		"webpatser/laravel-uuid": "^2.0",
 		"laravel/tinker": "^1.0",
