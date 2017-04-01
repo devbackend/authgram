@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Kernel;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +16,13 @@ use Illuminate\Support\Facades\Route;
 class RouteServiceProvider extends ServiceProvider {
 	const ROUTE_NAME_WEBHOOK    = 'webhook';
 	const ROUTE_NAME_HOMEPAGE   = 'homepage';
+	const ROUTE_NAME_SIGN       = 'sign';
 
 	/** @var string Неймспейс, в котором хранятся контроллеры приложения. */
 	protected $namespace = 'App\Http\Controllers';
+
+	/** @var string Неймспейс, в котором хранятся контроллеры панели управления. */
+	protected $dashboardNamespace = 'App\Http\Controllers\Dashboard';
 
 	/**
 	 * Определение роутов приложения.
@@ -27,6 +32,7 @@ class RouteServiceProvider extends ServiceProvider {
 	public function map() {
 		$this->mapApiRoutes();
 		$this->mapWebRoutes();
+		$this->mapDashboardRoutes();
 		$this->mapBroadcastRoutes();
 	}
 
@@ -66,5 +72,20 @@ class RouteServiceProvider extends ServiceProvider {
 	 */
 	protected function mapBroadcastRoutes() {
 		require base_path('routes/channels.php');
+	}
+
+	/**
+	 * Роуты для админки.
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	protected function mapDashboardRoutes() {
+		Route::group([
+			'namespace'     => $this->dashboardNamespace,
+			'middleware'    => [Kernel::MIDDLEWARE_GROUP_WEB, Kernel::MIDDLEWARE_ALIAS_AUTH_ADMIN],
+			'prefix'        => 'dashboard',
+		], function ($router) {
+			require base_path('routes/dashboard.php');
+		});
 	}
 }

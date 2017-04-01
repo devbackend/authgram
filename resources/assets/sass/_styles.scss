@@ -33,7 +33,11 @@ MAIN {
 }
 
 .user-profile {
-	margin-left: 15px;
+	width: 175px;
+
+	> a {
+		text-align: center;
+	}
 
 	i, span {
 		display: inline-block !important;
@@ -64,5 +68,18 @@ MAIN {
 
 	@media (min-width: $large-screen) {
 		width: $large-screen;
+	}
+}
+
+.pagination {
+	text-align: center;
+
+	li {
+		width: 30px;
+		line-height: 30px;
+
+		&.active {
+			color: #fff;
+		}
 	}
 }
