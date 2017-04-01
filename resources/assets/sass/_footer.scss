@@ -1,0 +1,19 @@
+.page-footer {
+	padding-bottom: 20px;
+	margin-top: 20px;
+
+	.social-icon {
+		@extend .grey-text, .text-lighten-4;
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+
+		i {
+			font-size: 32px;
+		}
+
+		+ .social-icon {
+			margin-left: 10px;
+		}
+	}
+}
