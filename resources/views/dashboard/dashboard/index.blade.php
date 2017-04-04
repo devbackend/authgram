@@ -1,11 +1,12 @@
 <?php
 
-use App\Entities\LogIncomeMessage;use App\Entities\User;
+use App\Entities\Application;use App\Entities\LogIncomeMessage;use App\Entities\User;
 
 /**
  * Шаблон для главной страницы ПУ
  *
  * @var User[]              $users          Срез последних добавившихся пользователей.
+ * @var Application[]       $applications   Срез последних приложений
  * @var LogIncomeMessage[]  $incomeMessages Срез последних собщений
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
@@ -45,6 +46,22 @@ use App\Entities\LogIncomeMessage;use App\Entities\User;
 			<?php endforeach ?>
 
 			<a href="<?= action('Dashboard\IncomeMessagesController@indexAction') ?>">Смотреть все</a>
+		</div>
+
+		<div class="col s6">
+			<h2>Последние приложения</h2>
+
+			<?php foreach ($applications as $application): ?>
+			<p>
+				<a href="<?= action('Dashboard\ApplicationController@show', ['uuid' => $application->uuid]) ?>" target="_blank">
+					<?= $application->title ?>
+				</a>
+				&mdash;
+				<?= $application->getCreationTime() ?>
+			</p>
+			<?php endforeach ?>
+
+			<a href="<?= action('Dashboard\ApplicationController@index') ?>">Смотреть все</a>
 		</div>
 	</div>
 @endsection
