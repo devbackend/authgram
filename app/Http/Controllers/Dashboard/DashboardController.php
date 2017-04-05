@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\ApplicationRepository;
 use App\Repositories\IncomeMessageRepository;
 use App\Repositories\UserRepository;
 use Illuminate\View\View;
@@ -21,10 +22,12 @@ class DashboardController extends Controller {
 	 */
 	public function indexAction() {
 		$users          = resolve(UserRepository::class)->getLastRecords();
+		$applications   = resolve(ApplicationRepository::class)->getLastRecords();
 		$incomeMessages = resolve(IncomeMessageRepository::class)->getLastRecords();
 
 		return $this->render('index', [
 			'users'             => $users,
+			'applications'      => $applications,
 			'incomeMessages'    => $incomeMessages,
 		]);
 	}

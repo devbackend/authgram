@@ -21,6 +21,8 @@ elixir(function(mix) {
 		'node_modules/jquery/dist/jquery.min.js',
 	], 'public/js/');
 
+	mix.scripts('imask.js', 'public/js/imask.min.js');
+
 	mix.copy('resources/assets/fonts/', 'public/fonts/');
 	mix.copy('resources/assets/images/', 'public/images/');
 
