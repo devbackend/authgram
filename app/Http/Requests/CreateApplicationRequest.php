@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Entities\Application;
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -19,7 +20,7 @@ class CreateApplicationRequest extends FormRequest {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function authorize() {
-		return true; //@todo-05.02.2017-krivonos.iv сделать проверку на авторизацию
+		return Auth::check();
 	}
 
 	/**

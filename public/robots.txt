@@ -1,5 +1,6 @@
 Host: AuthGram.ru
 User-agent: *
 Allow: /
+Disallow: /dashboard
 Crawl-delay: 10
-Sitemap: https://AuthGram.ru/sitemap.xml
+Sitemap: AuthGram.ru/sitemap.xml

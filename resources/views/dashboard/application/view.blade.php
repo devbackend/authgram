@@ -16,4 +16,8 @@ use App\Entities\Application;
 
 @section('content')
 	<h1>Приложение "<?= $application->title ?>"</h1>
+
+	<p>
+		Ссылка: <a href="<?= $application->website ?>" target="_blank"><?= $application->website ?></a>
+	</p>
 @endsection
