@@ -5,8 +5,8 @@
  */
 
 BODY {
-	display: flex;
-	min-height: 100vh;
+	display:        flex;
+	min-height:     100vh;
 	flex-direction: column;
 }
 
@@ -26,9 +26,9 @@ MAIN {
 	font-family: 'Arvo', serif;
 
 	i {
-		width: 64px;
+		width:            64px;
 		background-image: url('/images/logo.png');
-		background-size: cover;
+		background-size:  cover;
 	}
 }
 
@@ -40,9 +40,9 @@ MAIN {
 	}
 
 	i, span {
-		display: inline-block !important;
+		display:        inline-block !important;
 		vertical-align: top;
-		line-height: 64px;
+		line-height:    64px;
 	}
 }
 
@@ -56,7 +56,7 @@ MAIN {
 
 		a {
 			line-height: 38px;
-			height: 38px;
+			height:      38px;
 		}
 	}
 }
@@ -75,7 +75,7 @@ MAIN {
 	text-align: center;
 
 	li {
-		width: 30px;
+		width:       30px;
 		line-height: 30px;
 
 		&.active {
