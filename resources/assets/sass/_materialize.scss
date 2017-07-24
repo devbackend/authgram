@@ -6,6 +6,7 @@
  */
 
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import "https://fonts.googleapis.com/css?family=Comfortaa";
 @import "https://fonts.googleapis.com/css?family=Arvo";
 
 // @import "node_modules/materialize-css/sass/components/prefixer";
@@ -25,7 +26,7 @@
 @import "node_modules/materialize-css/sass/components/grid";
 @import "node_modules/materialize-css/sass/components/navbar";
 @import "node_modules/materialize-css/sass/components/roboto";
-@import "node_modules/materialize-css/sass/components/typography";
+@import "materialize/typography";
 @import "node_modules/materialize-css/sass/components/transitions";
 @import "node_modules/materialize-css/sass/components/cards";
 @import "node_modules/materialize-css/sass/components/toast";
