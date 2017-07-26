@@ -55,7 +55,6 @@ class AuthController extends Controller {
 		$authAttempt->save();
 		//-- -- -- --
 
-
 		return response()->jsonp($callback, [
 			'command' => $authCommand->command,
 			'expired' => $authCommand::EXPIRED_TIME_SEC,
