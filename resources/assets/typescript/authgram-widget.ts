@@ -98,7 +98,6 @@ class AuthGramWidget {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	protected getCommand = () => {
-		console.log('fdsghtas');
 		this.showModal();
 		this.authGramModal.innerHTML = '<p class="getting-command">Получение кода...</p>';
 
