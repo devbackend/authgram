@@ -4,45 +4,45 @@
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 
-$telegram-logo-white:   'data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDE4OS40NzMgMTg5LjQ3MyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTg5LjQ3MyAxODkuNDczOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCI+CjxnPgoJPHBhdGggZD0iTTE1Mi41MzEsMTc5LjQ3NmMtMS40OCwwLTIuOTUtMC40MzgtNC4yMTEtMS4yOTNsLTQ3LjY0MS0zMi4zMTZsLTI1LjU1MiwxOC4zODZjLTIuMDA0LDEuNDQxLTQuNTg3LDEuODA0LTYuOTE0LDAuOTcyICAgYy0yLjMyNC0wLjgzNC00LjA4OS0yLjc1OS00LjcxOS01LjE0NmwtMTIuODMtNDguNjIyTDQuODIxLDkzLjkyOGMtMi44ODYtMS4xMDQtNC44LTMuODY1LTQuODIxLTYuOTU1ICAgYy0wLjAyMS0zLjA5LDEuODU1LTUuODc3LDQuNzI3LTcuMDJsMTc0LjMxMi02OS4zNmMwLjc5MS0wLjMzNiwxLjYyOC0wLjUzLDIuNDcyLTAuNTgyYzAuMzAyLTAuMDE4LDAuNjA1LTAuMDE4LDAuOTA2LTAuMDAxICAgYzEuNzQ4LDAuMTA0LDMuNDY1LDAuODE2LDQuODA1LDIuMTNjMC4xMzksMC4xMzYsMC4yNzEsMC4yNzUsMC4zOTYsMC40MmMxLjExLDEuMjY4LDEuNzIsMi44MTQsMS44MzUsNC4zODkgICBjMC4wMjgsMC4zOTYsMC4wMjYsMC43OTctMC4wMDksMS4xOThjLTAuMDI0LDAuMjg2LTAuMDY1LDAuNTcxLTAuMTIzLDAuODU0TDE1OS44OTgsMTczLjM4Yy0wLjQ3MywyLjQ4LTIuMTYxLDQuNTU2LTQuNDkzLDUuNTIzICAgQzE1NC40OCwxNzkuMjg3LDE1My41MDMsMTc5LjQ3NiwxNTIuNTMxLDE3OS40NzZ6IE0xMDQuODYyLDEzMC41NzlsNDIuNDM3LDI4Ljc4NUwxNzAuMTkzLDM5LjI0bC04Mi42ODcsNzkuNTY2bDE3LjE1NiwxMS42MzggICBDMTA0LjczMSwxMzAuNDg3LDEwNC43OTcsMTMwLjUzMywxMDQuODYyLDEzMC41Nzl6IE02OS41MzUsMTI0LjE3OGw1LjY4MiwyMS41M2wxMi4yNDItOC44MDlsLTE2LjAzLTEwLjg3NCAgIEM3MC42ODQsMTI1LjUyMSw3MC4wNDYsMTI0Ljg5Myw2OS41MzUsMTI0LjE3OHogTTI4LjEzNiw4Ni43ODJsMzEuNDc4LDEyLjAzNWMyLjI1NSwwLjg2MiwzLjk1NywyLjc1OCw0LjU3Myw1LjA5MmwzLjk5MiwxNS4xMjkgICBjMC4xODMtMS43NDUsMC45NzQtMy4zODcsMi4yNTktNC42MjRMMTQ5LjIyNywzOC42TDI4LjEzNiw4Ni43ODJ6IiBmaWxsPSIjRkZGRkZGIi8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==';
-$telegram-logo-blue:    'data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDE4OS40NzMgMTg5LjQ3MyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTg5LjQ3MyAxODkuNDczOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCI+CjxnPgoJPHBhdGggZD0iTTE1Mi41MzEsMTc5LjQ3NmMtMS40OCwwLTIuOTUtMC40MzgtNC4yMTEtMS4yOTNsLTQ3LjY0MS0zMi4zMTZsLTI1LjU1MiwxOC4zODZjLTIuMDA0LDEuNDQxLTQuNTg3LDEuODA0LTYuOTE0LDAuOTcyICAgYy0yLjMyNC0wLjgzNC00LjA4OS0yLjc1OS00LjcxOS01LjE0NmwtMTIuODMtNDguNjIyTDQuODIxLDkzLjkyOGMtMi44ODYtMS4xMDQtNC44LTMuODY1LTQuODIxLTYuOTU1ICAgYy0wLjAyMS0zLjA5LDEuODU1LTUuODc3LDQuNzI3LTcuMDJsMTc0LjMxMi02OS4zNmMwLjc5MS0wLjMzNiwxLjYyOC0wLjUzLDIuNDcyLTAuNTgyYzAuMzAyLTAuMDE4LDAuNjA1LTAuMDE4LDAuOTA2LTAuMDAxICAgYzEuNzQ4LDAuMTA0LDMuNDY1LDAuODE2LDQuODA1LDIuMTNjMC4xMzksMC4xMzYsMC4yNzEsMC4yNzUsMC4zOTYsMC40MmMxLjExLDEuMjY4LDEuNzIsMi44MTQsMS44MzUsNC4zODkgICBjMC4wMjgsMC4zOTYsMC4wMjYsMC43OTctMC4wMDksMS4xOThjLTAuMDI0LDAuMjg2LTAuMDY1LDAuNTcxLTAuMTIzLDAuODU0TDE1OS44OTgsMTczLjM4Yy0wLjQ3MywyLjQ4LTIuMTYxLDQuNTU2LTQuNDkzLDUuNTIzICAgQzE1NC40OCwxNzkuMjg3LDE1My41MDMsMTc5LjQ3NiwxNTIuNTMxLDE3OS40NzZ6IE0xMDQuODYyLDEzMC41NzlsNDIuNDM3LDI4Ljc4NUwxNzAuMTkzLDM5LjI0bC04Mi42ODcsNzkuNTY2bDE3LjE1NiwxMS42MzggICBDMTA0LjczMSwxMzAuNDg3LDEwNC43OTcsMTMwLjUzMywxMDQuODYyLDEzMC41Nzl6IE02OS41MzUsMTI0LjE3OGw1LjY4MiwyMS41M2wxMi4yNDItOC44MDlsLTE2LjAzLTEwLjg3NCAgIEM3MC42ODQsMTI1LjUyMSw3MC4wNDYsMTI0Ljg5Myw2OS41MzUsMTI0LjE3OHogTTI4LjEzNiw4Ni43ODJsMzEuNDc4LDEyLjAzNWMyLjI1NSwwLjg2MiwzLjk1NywyLjc1OCw0LjU3Myw1LjA5MmwzLjk5MiwxNS4xMjkgICBjMC4xODMtMS43NDUsMC45NzQtMy4zODcsMi4yNTktNC42MjRMMTQ5LjIyNywzOC42TDI4LjEzNiw4Ni43ODJ6IiBmaWxsPSIjMDA5MWVhIi8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==';
+$telegram-logo-white: 'data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDE4OS40NzMgMTg5LjQ3MyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTg5LjQ3MyAxODkuNDczOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCI+CjxnPgoJPHBhdGggZD0iTTE1Mi41MzEsMTc5LjQ3NmMtMS40OCwwLTIuOTUtMC40MzgtNC4yMTEtMS4yOTNsLTQ3LjY0MS0zMi4zMTZsLTI1LjU1MiwxOC4zODZjLTIuMDA0LDEuNDQxLTQuNTg3LDEuODA0LTYuOTE0LDAuOTcyICAgYy0yLjMyNC0wLjgzNC00LjA4OS0yLjc1OS00LjcxOS01LjE0NmwtMTIuODMtNDguNjIyTDQuODIxLDkzLjkyOGMtMi44ODYtMS4xMDQtNC44LTMuODY1LTQuODIxLTYuOTU1ICAgYy0wLjAyMS0zLjA5LDEuODU1LTUuODc3LDQuNzI3LTcuMDJsMTc0LjMxMi02OS4zNmMwLjc5MS0wLjMzNiwxLjYyOC0wLjUzLDIuNDcyLTAuNTgyYzAuMzAyLTAuMDE4LDAuNjA1LTAuMDE4LDAuOTA2LTAuMDAxICAgYzEuNzQ4LDAuMTA0LDMuNDY1LDAuODE2LDQuODA1LDIuMTNjMC4xMzksMC4xMzYsMC4yNzEsMC4yNzUsMC4zOTYsMC40MmMxLjExLDEuMjY4LDEuNzIsMi44MTQsMS44MzUsNC4zODkgICBjMC4wMjgsMC4zOTYsMC4wMjYsMC43OTctMC4wMDksMS4xOThjLTAuMDI0LDAuMjg2LTAuMDY1LDAuNTcxLTAuMTIzLDAuODU0TDE1OS44OTgsMTczLjM4Yy0wLjQ3MywyLjQ4LTIuMTYxLDQuNTU2LTQuNDkzLDUuNTIzICAgQzE1NC40OCwxNzkuMjg3LDE1My41MDMsMTc5LjQ3NiwxNTIuNTMxLDE3OS40NzZ6IE0xMDQuODYyLDEzMC41NzlsNDIuNDM3LDI4Ljc4NUwxNzAuMTkzLDM5LjI0bC04Mi42ODcsNzkuNTY2bDE3LjE1NiwxMS42MzggICBDMTA0LjczMSwxMzAuNDg3LDEwNC43OTcsMTMwLjUzMywxMDQuODYyLDEzMC41Nzl6IE02OS41MzUsMTI0LjE3OGw1LjY4MiwyMS41M2wxMi4yNDItOC44MDlsLTE2LjAzLTEwLjg3NCAgIEM3MC42ODQsMTI1LjUyMSw3MC4wNDYsMTI0Ljg5Myw2OS41MzUsMTI0LjE3OHogTTI4LjEzNiw4Ni43ODJsMzEuNDc4LDEyLjAzNWMyLjI1NSwwLjg2MiwzLjk1NywyLjc1OCw0LjU3Myw1LjA5MmwzLjk5MiwxNS4xMjkgICBjMC4xODMtMS43NDUsMC45NzQtMy4zODcsMi4yNTktNC42MjRMMTQ5LjIyNywzOC42TDI4LjEzNiw4Ni43ODJ6IiBmaWxsPSIjRkZGRkZGIi8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==';
+$telegram-logo-blue: 'data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDE4OS40NzMgMTg5LjQ3MyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTg5LjQ3MyAxODkuNDczOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCI+CjxnPgoJPHBhdGggZD0iTTE1Mi41MzEsMTc5LjQ3NmMtMS40OCwwLTIuOTUtMC40MzgtNC4yMTEtMS4yOTNsLTQ3LjY0MS0zMi4zMTZsLTI1LjU1MiwxOC4zODZjLTIuMDA0LDEuNDQxLTQuNTg3LDEuODA0LTYuOTE0LDAuOTcyICAgYy0yLjMyNC0wLjgzNC00LjA4OS0yLjc1OS00LjcxOS01LjE0NmwtMTIuODMtNDguNjIyTDQuODIxLDkzLjkyOGMtMi44ODYtMS4xMDQtNC44LTMuODY1LTQuODIxLTYuOTU1ICAgYy0wLjAyMS0zLjA5LDEuODU1LTUuODc3LDQuNzI3LTcuMDJsMTc0LjMxMi02OS4zNmMwLjc5MS0wLjMzNiwxLjYyOC0wLjUzLDIuNDcyLTAuNTgyYzAuMzAyLTAuMDE4LDAuNjA1LTAuMDE4LDAuOTA2LTAuMDAxICAgYzEuNzQ4LDAuMTA0LDMuNDY1LDAuODE2LDQuODA1LDIuMTNjMC4xMzksMC4xMzYsMC4yNzEsMC4yNzUsMC4zOTYsMC40MmMxLjExLDEuMjY4LDEuNzIsMi44MTQsMS44MzUsNC4zODkgICBjMC4wMjgsMC4zOTYsMC4wMjYsMC43OTctMC4wMDksMS4xOThjLTAuMDI0LDAuMjg2LTAuMDY1LDAuNTcxLTAuMTIzLDAuODU0TDE1OS44OTgsMTczLjM4Yy0wLjQ3MywyLjQ4LTIuMTYxLDQuNTU2LTQuNDkzLDUuNTIzICAgQzE1NC40OCwxNzkuMjg3LDE1My41MDMsMTc5LjQ3NiwxNTIuNTMxLDE3OS40NzZ6IE0xMDQuODYyLDEzMC41NzlsNDIuNDM3LDI4Ljc4NUwxNzAuMTkzLDM5LjI0bC04Mi42ODcsNzkuNTY2bDE3LjE1NiwxMS42MzggICBDMTA0LjczMSwxMzAuNDg3LDEwNC43OTcsMTMwLjUzMywxMDQuODYyLDEzMC41Nzl6IE02OS41MzUsMTI0LjE3OGw1LjY4MiwyMS41M2wxMi4yNDItOC44MDlsLTE2LjAzLTEwLjg3NCAgIEM3MC42ODQsMTI1LjUyMSw3MC4wNDYsMTI0Ljg5Myw2OS41MzUsMTI0LjE3OHogTTI4LjEzNiw4Ni43ODJsMzEuNDc4LDEyLjAzNWMyLjI1NSwwLjg2MiwzLjk1NywyLjc1OCw0LjU3Myw1LjA5MmwzLjk5MiwxNS4xMjkgICBjMC4xODMtMS43NDUsMC45NzQtMy4zODcsMi4yNTktNC42MjRMMTQ5LjIyNywzOC42TDI4LjEzNiw4Ni43ODJ6IiBmaWxsPSIjMDA5MWVhIi8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==';
 $button-bg-color: #0091ea;
 
 .getting-command {
-	font-size: 1.5em;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: auto;
+	font-size:  1.5em;
+	position:   absolute;
+	top:        0;
+	bottom:     0;
+	left:       0;
+	right:      0;
+	margin:     auto;
 	text-align: center;
-	width: 200px;
-	height: 50px;
+	width:      200px;
+	height:     50px;
 }
 
 .authgram-sign-button {
-	font-family: "Roboto", sans-serif;
-	text-decoration: none;
-	color: $button-bg-color;
-	background-color: #fff;
-	text-align: center;
-	letter-spacing: .5px;
-	border: 1px solid $button-bg-color;
-	border-radius: 2px;
-	display: block;
-	margin: auto;
-	width: 250px;
-	height: 54px;
-	line-height: 54px;
-	padding: 0 10px;
-	text-transform: uppercase;
-	vertical-align: middle;
+	font-family:                 "Roboto", sans-serif;
+	text-decoration:             none;
+	color:                       $button-bg-color;
+	background-color:            #fff;
+	text-align:                  center;
+	letter-spacing:              .5px;
+	border:                      1px solid $button-bg-color;
+	border-radius:               2px;
+	display:                     block;
+	margin:                      auto;
+	width:                       250px;
+	height:                      54px;
+	line-height:                 54px;
+	padding:                     0 10px;
+	text-transform:              uppercase;
+	vertical-align:              middle;
 	-webkit-tap-highlight-color: transparent;
 
 	&:hover, &:active, &:focus {
-		cursor: pointer;
-		color: #fff;
+		cursor:           pointer;
+		color:            #fff;
 		background-color: $button-bg-color;
 
 		SPAN::before {
@@ -51,79 +51,94 @@ $button-bg-color: #0091ea;
 	}
 
 	SPAN {
-		position: relative;
+		position:     relative;
 		padding-left: 30px;
-		font-size: 16px;
+		font-size:    16px;
 
 		&::before {
-			content: '';
-			display: inline-block;
-			width: 25px;
-			height: 25px;
-			background: url($telegram-logo-blue) no-repeat;
+			content:         '';
+			display:         inline-block;
+			width:           25px;
+			height:          25px;
+			background:      url($telegram-logo-blue) no-repeat;
 			background-size: cover;
-			position: absolute;
-			top: -2px;
-			left: 0;
+			position:        absolute;
+			top:             -2px;
+			left:            0;
 		}
 	}
 }
 
 .authgram-modal {
-	width: 500px;
-	height: 250px;
-	position: fixed;
-	top: 200px;
-	left: 0;
-	right: 0;
-	margin: auto;
-	z-index: 100000;
-	border: 1px solid rgba(0,0,0,0.1);
+	width:         500px;
+	height:        285px;
+	position:      fixed;
+	top:           200px;
+	left:          0;
+	right:         0;
+	margin:        auto;
+	z-index:       100000;
+	border:        1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 5px;
-	box-shadow: 0 4px 5px 0 rgba(0,0,0,0.1), 0 1px 10px 0 rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.3);
-	padding: 35px 10px;
-	background: #fff;
+	box-shadow:    0 4px 5px 0 rgba(0, 0, 0, 0.1), 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+	padding:       15px 10px 35px;
+	background:    #fff;
 
 	.command {
 		text-align: center;
 
+		.click-head {
+			margin-right: 15px;
+			font-size:    1.75em;
+		}
+
+		.start-rules {
+			font-size:  12px;
+			margin-top: 5px;
+		}
+
+		.or-text {
+			display:       block;
+			font-size:     2em;
+			margin-bottom: 10px;
+		}
+
 		.command-name {
-			display: inline-block;
-			width: 100%;
+			display:    inline-block;
+			width:      100%;
 			text-align: center;
-			font-size: 1.5em;
+			font-size:  2.75em;
 		}
 
 		.sign-button {
-			text-align: right;
-			padding-right: 20px;
-			text-decoration: none;
-			display: inline-block;
-			width: 100px;
-			height: 32px;
-			line-height: 32px;
+			text-align:       right;
+			padding-right:    20px;
+			text-decoration:  none;
+			display:          inline-block;
+			width:            100px;
+			height:           32px;
+			line-height:      32px;
 			background-color: #fff;
-			color: $button-bg-color;
-			border: 1px solid $button-bg-color;
-			border-radius: 3px;
-			margin-right: 10px;
-			position: relative;
+			color:            $button-bg-color;
+			border:           1px solid $button-bg-color;
+			border-radius:    3px;
+			position:         relative;
 
 			&::before {
-				content: '';
-				display: inline-block;
-				width: 15px;
-				height: 15px;
-				background: url($telegram-logo-blue) no-repeat;
+				content:         '';
+				display:         inline-block;
+				width:           15px;
+				height:          15px;
+				background:      url($telegram-logo-blue) no-repeat;
 				background-size: cover;
-				position: absolute;
-				top: 8px;
-				left: 15px;
+				position:        absolute;
+				top:             8px;
+				left:            15px;
 			}
 
 			&:hover, &:focus, &:active {
 				background-color: $button-bg-color;
-				color: #fff;
+				color:            #fff;
 
 				&::before {
 					background-image: url($telegram-logo-white);
@@ -137,38 +152,38 @@ $button-bg-color: #0091ea;
 	}
 
 	.expired {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
+		position:   absolute;
+		bottom:     0;
+		left:       0;
+		width:      100%;
 		text-align: center;
-		padding: 10px;
+		padding:    10px;
 		margin-top: 10px;
-		font-size: 1.15em;
+		font-size:  1.15em;
 		border-top: 1px solid #eee;
 	}
 
 	@media (max-width: 767px) {
-		top: 20%;
+		top:   20%;
 		width: 100%;
 	}
 }
 
 .authgram-modal-shadow {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 99999;
+	position:   fixed;
+	top:        0;
+	left:       0;
+	width:      100%;
+	height:     100%;
+	z-index:    99999;
 	background: rgba(0, 0, 0, .6);
 }
 
 .command-error {
-	color: #f00;
-	text-align: center;
+	color:       #f00;
+	text-align:  center;
 	font-weight: 700;
-	font-size: 17px;
+	font-size:   17px;
 }
 
 .authgram-hidden-element {
