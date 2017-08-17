@@ -138,7 +138,7 @@ class AuthoriseCommand extends TelegramCommand {
 		$authAttempt->save();
 		//-- -- -- --
 
-		$replyMessage->setText('Вы успешно авторизовались');
+		$replyMessage->setText("Вы успешно авторизовались. \n\n Вернитесь в браузер, чтобы продолжить работу с сайтом.");
 
 		$this->replyWithMessage($replyMessage->get());
 	}
