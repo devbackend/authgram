@@ -112,7 +112,7 @@ class AuthGramWidget {
 		(<any>window).AuthGramWidget = this;
 
 		if (undefined !== this.channelName) {
-			(<any>window).Echo.leave(this.channelName);
+			(<any>window).AuthgramListener.getPusher().leave(this.channelName);
 		}
 
 		let elem = document.createElement('script');
@@ -169,19 +169,19 @@ class AuthGramWidget {
 		this.channelName = CHANNEL_AUTH_COMMAND_STATUS + '.' + response.command;
 
 		//-- Начинаем слушать ответ от сервера
-		(<any>window).Echo
+		(<any>window).AuthgramListener.getPusher()
 			.channel(this.channelName)
 			.listen(EVENTS_USER_JOIN_SUCCESS, (eventUserJoinSuccess) => {
 				(<any>window).clearInterval(this.expireTimer);
 				(<any>window).clearInterval(this.reloadTimer);
-				(<any>window).Echo.leave(this.channelName);
+				(<any>window).AuthgramListener.getPusher().leave(this.channelName);
 
 				this.onAuthSuccess(eventUserJoinSuccess.authKey);
 			})
 			.listen(EVENTS_USER_JOIN_FAIL, (eventUserJoinFail) => {
 				(<any>window).clearInterval(this.expireTimer);
 				(<any>window).clearInterval(this.reloadTimer);
-				(<any>window).Echo.leave(this.channelName);
+				(<any>window).AuthgramListener.getPusher().leave(this.channelName);
 
 				this.onAuthFail(eventUserJoinFail.reason);
 			})
@@ -233,7 +233,7 @@ class AuthGramWidget {
 	protected hideModal = () => {
 		(<any>window).clearInterval(this.expireTimer);
 		(<any>window).clearInterval(this.reloadTimer);
-		(<any>window).Echo.leave(this.channelName);
+		(<any>window).AuthgramListener.getPusher().leave(this.channelName);
 
 		this.authGramModal.classList.add(CLASS_NAME_HIDDEN_ELEMENT);
 		this.authGramModalShadow.classList.add(CLASS_NAME_HIDDEN_ELEMENT);
