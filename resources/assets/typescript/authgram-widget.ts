@@ -22,8 +22,9 @@ const EVENTS_USER_JOIN_FAIL         = 'UserJoinFailEvent';
 //-- -- -- --
 
 class AuthGramWidget {
-	public uuid:        string;
-	public selector:    string  = SELECTOR_SIGN_BUTTON;
+	public uuid:            string;
+	public messageClass:    string  = '';
+	public selector:        string  = SELECTOR_SIGN_BUTTON;
 
 	public onAuthSuccess = (authKey: string) => {
 		document.location.href = '?auth_key=' + authKey;
@@ -129,14 +130,16 @@ class AuthGramWidget {
 			this.authGramModal.innerHTML = '<div class="command-error">' + response.error + '</div>';
 		}
 		else {
-			this.authGramModal.innerHTML = '<div class="command">'
+			this.authGramModal.innerHTML = '<div class="command ' + this.messageClass + '">'
+				+ '<span class="click-head">Нажмите</span>'
 				+ '<a href="https://telegram.me/%BOT_NAME%Bot/?start=' + response.command + '" target="_blank" class="sign-button">'
 				+ 'Войти'
 				+ '</a>'
-				+ 'и нажмите START'
-				+ '<p>Или отправьте боту '
+				+ '<p class="start-rules">и в диалоге с ботом кликните по кнопке "START"</p>'
+				+ '<span class="or-text">или</span>'
+				+ 'Отправьте боту '
 				+ '<a href="https://telegram.me/%BOT_NAME%Bot/" target="_blank" class="bot-link">@%BOT_NAME%Bot</a>'
-				+ ' сообщение:</p>'
+				+ ' сообщение:'
 				+ '<span class="command-name">/' + response.command + '</span>'
 				+ '</div>'
 				+ '<div class="expired">'
