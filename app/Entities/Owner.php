@@ -3,8 +3,9 @@
 namespace App\Entities;
 
 use Eloquent;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Foundation\Auth\User;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -17,14 +18,15 @@ use Illuminate\Notifications\Notifiable;
  * @property string $created_at     Дата создания записи
  * @property string $updated_at     Дата обновления записи
  *
- * @property-read \App\Entities\User $user
+ * @property-read \App\Entities\User    $user
+ * @property-read Application[]         $applications
  *
  * @method static Eloquent where($column, $operator = null, $value = null, $boolean = 'and')
  * @method static Owner create($attributes = [])
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-class Owner extends User {
+class Owner extends AuthUser {
 	use Notifiable;
 
 	const ID                = 'id';
@@ -49,4 +51,26 @@ class Owner extends User {
 		return $this->hasOne(\App\Entities\User::class, \App\Entities\User::UUID, static::USER_UUID);
 	}
 	const RELATED_USER = 'user';
+
+	/**
+	 * Связь с приложения.
+	 *
+	 * @return HasMany
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function applications() {
+		return $this->hasMany(Application::class, Application::OWNER_UUID, static::USER_UUID);
+	}
+
+	/**
+	 * Проверка: есть ли у пользователя приложения.
+	 *
+	 * @return bool
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function hasApplications(): bool {
+		return (0 !== count($this->applications));
+	}
 }

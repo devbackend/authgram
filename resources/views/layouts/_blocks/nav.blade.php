@@ -58,9 +58,12 @@ $currentUser = Auth::user();
 						<ul id="profile-menu" class='dropdown-content'>
 							<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'add']) ?>">Добавить сайт</a></li>
 
+							<?php if (true === $currentUser->hasApplications()): ?>
+								<li><a href="<?= action('Dashboard\ApplicationController@index') ?>">Мои приложения</a></li>
+							<?php endif ?>
+
 							<?php if (Gate::allows(Policy::ADMIN_ACTION)): ?>
 								<li><a href="<?= action('Dashboard\DashboardController@indexAction') ?>">Панель управления</a></li>
-								<li><a href="<?= action('Dashboard\ApplicationController@index') ?>">Мои приложения</a></li>
 							<?php endif ?>
 
 							<li class="divider"></li>

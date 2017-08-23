@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Builder;
 
 /**
  * Базовый класс миграций
@@ -8,6 +9,16 @@ use Illuminate\Database\Migrations\Migration;
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 class BaseMigration extends Migration {
+	/** @var Builder */
+	protected $schema;
+
+	/**
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function __construct() {
+		$this->schema = resolve(Builder::class);
+	}
+
 	/**
 	 * Применение миграции.
 	 *
