@@ -16,7 +16,7 @@ use App\Entities\Application;use Illuminate\Support\ViewErrorBag;
 @extends('layouts.frontend')
 
 @section('content')
-	<h1>Приложение "<?= $application->title ?>"</h1>
+	<h1>Редактирование приложения</h1>
 
 	<div class="row">
 		<?php if (0 !== $errors->count()): ?>
