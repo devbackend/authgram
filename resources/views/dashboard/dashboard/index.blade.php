@@ -26,7 +26,7 @@
 			</p>
 
 			<p>
-				<a href="<?= action('Dashboard\AuthStatistic@indexAction') ?>" target="_blank">Статистика авторизаций</a>
+				<a href="<?= action('Dashboard\AuthStatisticController@indexAction') ?>" target="_blank">Статистика авторизаций</a>
 			</p>
 
 			<p>

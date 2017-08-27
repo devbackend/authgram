@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App;
-use App\Entities\LogIncomeMessage;
 use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
@@ -27,7 +26,7 @@ class UserController extends Controller {
 	 */
 	public function indexAction() {
 		$users = (new User)
-			->orderBy(LogIncomeMessage::CREATED_AT, SORT_DESC)
+			->orderBy(User::CREATED_AT, SORT_DESC)
 			->paginate(self::MESSAGE_PAGE_LIMIT)
 		;
 

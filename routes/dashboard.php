@@ -40,4 +40,10 @@ $router->group(['middleware' => [Kernel::MIDDLEWARE_ALIAS_AUTH_ADMIN]], function
 		$router->post('/send/real', 'NotificationController@realSendAction');
 	});
 	// -- -- -- --
+
+	// -- Просмотр статистики авторизации
+	$router->group(['prefix' => 'auth-statisric'], function() use ($router) {
+		$router->get('/', 'AuthStatisticController@indexAction');
+	});
+	// -- -- -- --
 });
