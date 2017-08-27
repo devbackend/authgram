@@ -35,6 +35,9 @@ $currentUser = Auth::user();
 
 						<ul>
 							<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'add']) ?>">Добавить сайт</a></li>
+							<?php if (true === $currentUser->hasApplications()): ?>
+								<li><a href="<?= action('Dashboard\ApplicationController@index') ?>">Мои приложения</a></li>
+							<?php endif ?>
 							<li><a href="<?= action('AuthController@logoutAction') ?>">Выйти</a></li>
 						</ul>
 					<?php else: ?>
@@ -63,8 +66,7 @@ $currentUser = Auth::user();
 							<?php endif ?>
 
 							<?php if (Gate::allows(Policy::ADMIN_ACTION)): ?>
-								<li><a href="<?= action('Dashboard\DashboardController@indexAction') ?>">Backend</a></li>
-								<li><a href="<?= action('Dashboard\NotificationController@indexAction') ?>">Уведомления</a></li>
+								<li><a href="<?= action('Dashboard\DashboardController@indexAction') ?>">Админка</a></li>
 							<?php endif ?>
 
 							<li class="divider"></li>

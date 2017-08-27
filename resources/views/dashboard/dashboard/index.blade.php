@@ -1,13 +1,7 @@
 <?php
 
-use App\Entities\Application;use App\Entities\LogIncomeMessage;use App\Entities\User;
-
 /**
- * Шаблон для главной страницы ПУ
- *
- * @var User[]              $users          Срез последних добавившихся пользователей.
- * @var Application[]       $applications   Срез последних приложений
- * @var LogIncomeMessage[]  $incomeMessages Срез последних собщений
+ * Шаблон для главной страницы панели управления.
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
@@ -18,50 +12,26 @@ use App\Entities\Application;use App\Entities\LogIncomeMessage;use App\Entities\
 
 @section('content')
 	<div class="row">
-		<div class="col s6">
-			<h2>Пользователи</h2>
-
-			<?php foreach ($users as $user): ?>
-				<p>
-					<a href="<?= action('Dashboard\UserController@showAction', ['uuid' => $user->uuid]) ?>" target="_blank">
-						<?= $user->getName() ?>
-						&mdash;
-						<?= $user->created_at ?>
-					</a>
-				</p>
-			<?php endforeach ?>
-
-			<a href="<?= action('Dashboard\UserController@indexAction') ?>">Смотреть всех</a>
-		</div>
-
-		<div class="col s6">
-			<h2>Последние сообщения</h2>
-
-			<?php foreach ($incomeMessages as $incomeMessage): ?>
-				<p>
-					<?= $incomeMessage->getContent() ?>
-					&mdash;
-					<?= $incomeMessage->getCreationTime() ?>
-				</p>
-			<?php endforeach ?>
-
-			<a href="<?= action('Dashboard\IncomeMessagesController@indexAction') ?>">Смотреть все</a>
-		</div>
-
-		<div class="col s6">
-			<h2>Последние приложения</h2>
-
-			<?php foreach ($applications as $application): ?>
+		<div class="col s12">
 			<p>
-				<a href="<?= action('Dashboard\ApplicationController@show', ['uuid' => $application->uuid]) ?>" target="_blank">
-					<?= $application->title ?>
-				</a>
-				&mdash;
-				<?= $application->getCreationTime() ?>
+				<a href="<?= action('Dashboard\UserController@indexAction') ?>" target="_blank">Пользователи</a>
 			</p>
-			<?php endforeach ?>
 
-			<a href="<?= action('Dashboard\ApplicationController@index') ?>">Смотреть все</a>
+			<p>
+				<a href="<?= action('Dashboard\ApplicationController@index') ?>" target="_blank">Приложения</a>
+			</p>
+
+			<p>
+				<a href="<?= action('Dashboard\IncomeMessagesController@indexAction') ?>" target="_blank">Сообщения</a>
+			</p>
+
+			<p>
+				<a href="<?= action('Dashboard\AuthStatistic@indexAction') ?>" target="_blank">Статистика авторизаций</a>
+			</p>
+
+			<p>
+				<a href="<?= action('Dashboard\NotificationController@indexAction') ?>" target="_blank">Рассылка</a>
+			</p>
 		</div>
 	</div>
 @endsection
