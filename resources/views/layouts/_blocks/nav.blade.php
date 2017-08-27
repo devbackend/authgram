@@ -63,7 +63,8 @@ $currentUser = Auth::user();
 							<?php endif ?>
 
 							<?php if (Gate::allows(Policy::ADMIN_ACTION)): ?>
-								<li><a href="<?= action('Dashboard\DashboardController@indexAction') ?>">Панель управления</a></li>
+								<li><a href="<?= action('Dashboard\DashboardController@indexAction') ?>">Backend</a></li>
+								<li><a href="<?= action('Dashboard\NotificationController@indexAction') ?>">Уведомления</a></li>
 							<?php endif ?>
 
 							<li class="divider"></li>

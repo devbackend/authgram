@@ -24,11 +24,12 @@ class User extends Entity {
 	/** Telegram идентификатор админа сайта */
 	const ADMIN_TELEGRAM_ID = 114307233;
 
-	const UUID          = 'uuid';
-	const TELEGRAM_ID   = 'telegram_id';
-	const USERNAME      = 'username';
-	const FIRST_NAME    = 'first_name';
-	const LAST_NAME     = 'last_name';
+	const UUID                  = 'uuid';
+	const TELEGRAM_ID           = 'telegram_id';
+	const USERNAME              = 'username';
+	const FIRST_NAME            = 'first_name';
+	const LAST_NAME             = 'last_name';
+	const NOTIFICATION_ENABLED  = 'notification_enabled';
 
 	/** @var bool Отключаем автоинкремент для первичного ключа */
 	public $incrementing = false;

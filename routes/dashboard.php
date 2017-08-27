@@ -32,4 +32,12 @@ $router->group(['middleware' => [Kernel::MIDDLEWARE_ALIAS_AUTH_ADMIN]], function
 		$router->get('/{uuid}', 'UserController@showAction');
 	});
 	//-- -- -- --
+
+	// -- Управление уведомлениями
+	$router->group(['prefix' => 'notifications'], function() use ($router) {
+		$router->get('/',           'NotificationController@indexAction');
+		$router->post('/send/test', 'NotificationController@testSendAction');
+		$router->post('/send/real', 'NotificationController@realSendAction');
+	});
+	// -- -- -- --
 });

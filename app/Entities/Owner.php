@@ -18,7 +18,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string $created_at     Дата создания записи
  * @property string $updated_at     Дата обновления записи
  *
- * @property-read \App\Entities\User    $user
+ * @property-read User    $user
  * @property-read Application[]         $applications
  *
  * @method static Eloquent where($column, $operator = null, $value = null, $boolean = 'and')
@@ -48,7 +48,7 @@ class Owner extends AuthUser {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function user() {
-		return $this->hasOne(\App\Entities\User::class, \App\Entities\User::UUID, static::USER_UUID);
+		return $this->hasOne(User::class, User::UUID, static::USER_UUID);
 	}
 	const RELATED_USER = 'user';
 

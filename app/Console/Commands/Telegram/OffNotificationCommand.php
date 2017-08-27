@@ -31,7 +31,7 @@ class OffNotificationCommand extends TelegramCommand {
 
 		$replyMessage->setText(implode("\n\n", [
 			'Вы отписаны от уведомлений бота',
-			'Если снова захотите быть в курсе обновлений - отправьте /on',
+			'Если снова захотите быть в курсе обновлений - отправьте боту команду /on',
 		]));
 
 		$this->replyWithMessage($replyMessage->get());
