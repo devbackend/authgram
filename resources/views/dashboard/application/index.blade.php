@@ -35,11 +35,7 @@ use App\Entities\Application;use App\Entities\Policy;
 					<td class="app-controls">
 						<a href="<?= action('Dashboard\ApplicationController@show', ['uuid' => $application->uuid]) ?>">Редактировать</a>
 
-						<?php if (true === Gate::allows(Policy::ADMIN_ACTION)): ?>
-							<?php if (true === $application->trashed()): ?>
-								<b class="red-text">Удалено</b>
-							<?php endif ?>
-						<?php else: ?>
+						<?php if (Auth::user()->user_uuid === $application->owner_uuid): ?>
 							<a href="javascript:" onclick="document.getElementById('delete-app-<?= $application->uuid ?>').submit();" class="red-text">Удалить</a>
 
 							<form
@@ -50,6 +46,12 @@ use App\Entities\Application;use App\Entities\Policy;
 								<?= csrf_field() ?>
 								<?= method_field('DELETE') ?>
 							</form>
+						<?php endif ?>
+
+						<?php if (true === Gate::allows(Policy::ADMIN_ACTION)): ?>
+							<?php if (true === $application->trashed()): ?>
+								<b class="red-text">Удалено</b>
+							<?php endif ?>
 						<?php endif ?>
 					</td>
 				</tr>

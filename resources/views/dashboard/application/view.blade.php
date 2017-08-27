@@ -19,6 +19,11 @@ use App\Entities\Application;use Illuminate\Support\ViewErrorBag;
 	<h1>Редактирование приложения</h1>
 
 	<div class="row">
+		<div class="col s12">
+			<p><b>Идентификатор приложения</b>: <?= $application->uuid ?></p>
+			<p><b>Токен</b>: <?= $application->api_token ?></p>
+		</div>
+
 		<?php if (0 !== $errors->count()): ?>
 			<div class="card-panel red lighten-4 red-text text-darken-4">
 				<?php foreach ($errors->all() as $error): ?>
