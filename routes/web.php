@@ -2,7 +2,6 @@
 
 use App\Providers\RouteServiceProvider;
 use Illuminate\Routing\Router;
-use Telegram\Bot\Laravel\Facades\Telegram;
 
 /**
  * Роуты для HTTP части приложения
@@ -16,10 +15,7 @@ $router->any('/', 'HomepageController')->name(RouteServiceProvider::ROUTE_NAME_H
 $router->get('/p/{slug}', 'PagesController@showAction');
 $router->get('/sign', 'Dashboard\DashBoardController@signAction')->name(RouteServiceProvider::ROUTE_NAME_SIGN);
 
-$router->get('telegram', function(){
-	Telegram::commandsHandler();
-});
-
+$router->get('webhook/dev',      'WebhookController@devAction');
 $router->post('webhook/{token}', 'WebhookController')->name(RouteServiceProvider::ROUTE_NAME_WEBHOOK);
 
 $router->post('auth/telegram', 'AuthRequestController');
