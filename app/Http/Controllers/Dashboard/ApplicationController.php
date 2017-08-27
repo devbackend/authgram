@@ -26,13 +26,11 @@ class ApplicationController extends Controller {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function index() {
-		$applications = Application::orderBy(Application::CREATED_AT, SORT_DESC);
-
 		if (true === Gate::allows(Policy::ADMIN_ACTION)) {
-			$applications->withTrashed();
+			$applications = Application::orderBy(Application::DELETED_AT, SORT_DESC)->orderBy(Application::CREATED_AT, SORT_DESC)->withTrashed();
 		}
 		else {
-			$applications->where(Application::OWNER_UUID, Auth::user()->user_uuid);
+			$applications = Application::orderBy(Application::CREATED_AT, SORT_DESC)->where(Application::OWNER_UUID, Auth::user()->user_uuid);
 		}
 
 		return $this->render('index', ['applications' => $applications->get()]);

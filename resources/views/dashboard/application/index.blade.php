@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\Application;use App\Entities\Policy;
+use App\Entities\Application;
 
 /**
  * Шаблон для страницы приложений
@@ -19,6 +19,7 @@ use App\Entities\Application;use App\Entities\Policy;
 			<tr>
 				<th>Название</th>
 				<th>Адрес</th>
+				<th>Токен</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -32,10 +33,14 @@ use App\Entities\Application;use App\Entities\Policy;
 					<td>
 						<a href="<?= $application->website ?>" target="_blank"><?= $application->website ?></a>
 					</td>
+					<td>
+						<?= $application->api_token ?>
+					</td>
 					<td class="app-controls">
-						<a href="<?= action('Dashboard\ApplicationController@show', ['uuid' => $application->uuid]) ?>">Редактировать</a>
+						<?php if (false === $application->trashed()): ?>
+							<a href="<?= action('Dashboard\ApplicationController@show', ['uuid' => $application->uuid]) ?>">Редактировать</a>
 
-						<?php if (Auth::user()->user_uuid === $application->owner_uuid): ?>
+							<?php if (Auth::user()->user_uuid === $application->owner_uuid): ?>
 							<a href="javascript:" onclick="document.getElementById('delete-app-<?= $application->uuid ?>').submit();" class="red-text">Удалить</a>
 
 							<form
@@ -46,12 +51,9 @@ use App\Entities\Application;use App\Entities\Policy;
 								<?= csrf_field() ?>
 								<?= method_field('DELETE') ?>
 							</form>
-						<?php endif ?>
-
-						<?php if (true === Gate::allows(Policy::ADMIN_ACTION)): ?>
-							<?php if (true === $application->trashed()): ?>
-								<b class="red-text">Удалено</b>
 							<?php endif ?>
+						<?php else: ?>
+							<b class="red-text">Удалено</b>
 						<?php endif ?>
 					</td>
 				</tr>
