@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\DashboardStatisticRepository;
 use Illuminate\View\View;
 
 /**
@@ -13,12 +14,14 @@ class DashboardController extends Controller {
 	/**
 	 * Главная страница админки.
 	 *
+	 * @param DashboardStatisticRepository $statisticRepository
+	 *
 	 * @return View
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function indexAction() {
-		return $this->render('index');
+	public function indexAction(DashboardStatisticRepository $statisticRepository) {
+		return $this->render('index', ['statisticRepository' => $statisticRepository]);
 	}
 
 	/**

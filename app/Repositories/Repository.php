@@ -17,10 +17,12 @@ abstract class Repository {
 	protected $cache;
 
 	/**
+	 * @param Cache $cache
+	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function __construct() {
-		$this->cache = resolve(Cache::class);
+	public function __construct(Cache $cache) {
+		$this->cache = $cache;
 
 		$this->initEntity();
 	}
@@ -86,7 +88,7 @@ abstract class Repository {
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	protected function getCacheKey($method, $params, $version = 1) {
+	protected function getCacheKey($method, $params = [], $version = 1) {
 		foreach ($params as $key => $value) {
 			if (is_array($value)) {
 				$params[$key] = md5(implode('', $params));
@@ -99,5 +101,10 @@ abstract class Repository {
 		return $method . '(' . implode(',', $params) . ')' . (1 !== $version ? $version : '');
 	}
 
+	/**
+	 * Инициализация сущности
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
 	abstract protected function initEntity();
 }
