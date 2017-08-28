@@ -5,6 +5,8 @@ $commandList = [
 	\App\Console\Commands\Telegram\CheckCodeCommand::class,
 	\App\Console\Commands\Telegram\HelpCommand::class,
 	\App\Console\Commands\Telegram\StartCommand::class,
+	\App\Console\Commands\Telegram\OnNotificationCommand::class,
+	\App\Console\Commands\Telegram\OffNotificationCommand::class,
 ];
 
 $cachedAuthCommands = (file_exists(base_path('app/Console/Commands/Telegram/AuthoriseCommands/cached.php'))

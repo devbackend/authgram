@@ -2,11 +2,10 @@
 namespace App\Http\Controllers;
 
 use App\Entities\Application;
-use App\Http\Requests\CreateApplicationRequest;
+use App\Http\Requests\application\ApplicationCreateRequest;
 use App\Wrappers\JsonResponseWrapper;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Request;
 
 /**
  * Контроллер для управления приложениями.
@@ -17,13 +16,13 @@ class ApplicationController extends Controller {
 	/**
 	 * Создание приложения.
 	 *
-	 * @param CreateApplicationRequest $request Данные запроса на создание приложения
+	 * @param ApplicationCreateRequest $request Данные запроса на создание приложения
 	 *
 	 * @return JsonResponse
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function createAction(CreateApplicationRequest $request) {
+	public function createAction(ApplicationCreateRequest $request) {
 		$jsonResponse = new JsonResponseWrapper;
 
 		try {
@@ -44,16 +43,5 @@ class ApplicationController extends Controller {
 		$jsonResponse->text = e(view('application.widget-content', ['application' => $application])->render());
 
 		return response()->json($jsonResponse);
-	}
-
-	/**
-	 * Удаление приложения.
-	 *
-	 * @param Request $request Данные запроса
-	 *
-	 * @author Кривонос Иван <devbackend@yandex.ru>
-	 */
-	public function deleteAction(Request $request) {
-
 	}
 }

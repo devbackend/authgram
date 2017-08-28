@@ -4,8 +4,8 @@
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 //-- Настройки url-адресов
-const BASE_URL      = '%API_URL%';
-const AUTH_BASE_URL = BASE_URL + '/auth/';
+const API_URL      = '%API_URL%';
+const AUTH_BASE_URL = API_URL + '/auth/';
 //-- -- -- --
 
 //-- Селекторы и классы виджета
@@ -20,6 +20,8 @@ const CHANNEL_AUTH_COMMAND_STATUS   = 'auth-command-status';
 const EVENTS_USER_JOIN_SUCCESS      = 'UserJoinSuccessEvent';
 const EVENTS_USER_JOIN_FAIL         = 'UserJoinFailEvent';
 //-- -- -- --
+
+const CDN_VERSION = 20170827;
 
 class AuthGramWidget {
 	public uuid:            string;
@@ -70,13 +72,13 @@ class AuthGramWidget {
 		//-- Подключаем стили
 		let widgetStyles = document.createElement('link');
 		widgetStyles.setAttribute('rel', 'stylesheet');
-		widgetStyles.setAttribute('href', BASE_URL + '/css/authgram-widget.css');
+		widgetStyles.setAttribute('href', API_URL + '/css/authgram-widget.css?v=' + CDN_VERSION);
 		//-- -- -- --
 
 		//-- Подключаем скрипты
 		let listenerScript = document.createElement('script');
 		listenerScript.setAttribute('type', 'application/javascript');
-		listenerScript.setAttribute('src', BASE_URL + '/js/authgram-listener.js');
+		listenerScript.setAttribute('src', API_URL + '/js/authgram-listener.js?v=' + CDN_VERSION);
 		//-- -- -- --
 
 		document.querySelector('head').appendChild(listenerScript);
@@ -145,6 +147,10 @@ class AuthGramWidget {
 				+ '<div class="expired">'
 				+ '<span>Истекает через 00:</span>'
 				+ '<span data-role="expired-value">' + response.expired + '</span>'
+				+ '</div>'
+				+ '<div class="powered">'
+				+ 'powered by '
+				+ '<a href="https://authgram.ru/?utm_source=' + (<any>window).location.hostname + '&utm_medium=powered_by" target="_blank">AuthGram.ru</a>'
 				+ '</div>'
 			;
 

@@ -1,13 +1,11 @@
 <?php
 
-use App\Entities\Application;use App\Entities\LogIncomeMessage;use App\Entities\User;
+use App\Entities\Application;use App\Entities\LogIncomeMessage;use App\Entities\User;use App\Repositories\DashboardStatisticRepository;
 
 /**
- * Шаблон для главной страницы ПУ
+ * Шаблон для главной страницы панели управления.
  *
- * @var User[]              $users          Срез последних добавившихся пользователей.
- * @var Application[]       $applications   Срез последних приложений
- * @var LogIncomeMessage[]  $incomeMessages Срез последних собщений
+ * @var DashboardStatisticRepository $statisticRepository
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
@@ -18,50 +16,36 @@ use App\Entities\Application;use App\Entities\LogIncomeMessage;use App\Entities\
 
 @section('content')
 	<div class="row">
-		<div class="col s6">
+		<div class="col s4">
 			<h2>Пользователи</h2>
+			<p><b>Всего:</b> <?= $statisticRepository->getEntityTotalCount(User::class) ?></p>
+			<p><b>За последние 24 часа:</b> <?= $statisticRepository->getCountByHourPeriod(User::class) ?></p>
 
-			<?php foreach ($users as $user): ?>
-				<p>
-					<a href="<?= action('Dashboard\UserController@showAction', ['uuid' => $user->uuid]) ?>" target="_blank">
-						<?= $user->getName() ?>
-						&mdash;
-						<?= $user->created_at ?>
-					</a>
-				</p>
-			<?php endforeach ?>
-
-			<a href="<?= action('Dashboard\UserController@indexAction') ?>">Смотреть всех</a>
+			<a href="<?= action('Dashboard\UserController@indexAction') ?>" target="_blank">Перейти</a>
 		</div>
 
-		<div class="col s6">
-			<h2>Последние сообщения</h2>
+		<div class="col s4">
+			<h2>Приложения</h2>
+			<p><b>Всего:</b> <?= $statisticRepository->getEntityTotalCount(Application::class) ?></p>
+			<p><b>За последние 24 часа:</b> <?= $statisticRepository->getCountByHourPeriod(Application::class) ?></p>
 
-			<?php foreach ($incomeMessages as $incomeMessage): ?>
-				<p>
-					<?= $incomeMessage->getContent() ?>
-					&mdash;
-					<?= $incomeMessage->getCreationTime() ?>
-				</p>
-			<?php endforeach ?>
-
-			<a href="<?= action('Dashboard\IncomeMessagesController@indexAction') ?>">Смотреть все</a>
+			<a href="<?= action('Dashboard\ApplicationController@index') ?>" target="_blank">Перейти</a>
 		</div>
 
+		<div class="col s4">
+			<h2>Собщения</h2>
+			<p><b>Всего:</b> <?= $statisticRepository->getEntityTotalCount(LogIncomeMessage::class) ?></p>
+			<p><b>За последние 24 часа:</b> <?= $statisticRepository->getCountByHourPeriod(LogIncomeMessage::class) ?></p>
+
+			<a href="<?= action('Dashboard\IncomeMessagesController@indexAction') ?>" target="_blank">Перейти</a>
+		</div>
+	</div>
+
+	<div class="row">
 		<div class="col s6">
-			<h2>Последние приложения</h2>
-
-			<?php foreach ($applications as $application): ?>
-			<p>
-				<a href="<?= action('Dashboard\ApplicationController@show', ['uuid' => $application->uuid]) ?>" target="_blank">
-					<?= $application->title ?>
-				</a>
-				&mdash;
-				<?= $application->getCreationTime() ?>
-			</p>
-			<?php endforeach ?>
-
-			<a href="<?= action('Dashboard\ApplicationController@index') ?>">Смотреть все</a>
+			<a href="<?= action('Dashboard\AuthStatisticController@indexAction') ?>" target="_blank">Статистика авторизаций</a>
+			<br>
+			<a href="<?= action('Dashboard\NotificationController@indexAction') ?>" target="_blank">Рассылка</a>
 		</div>
 	</div>
 @endsection

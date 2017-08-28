@@ -2,9 +2,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\ApplicationRepository;
-use App\Repositories\IncomeMessageRepository;
-use App\Repositories\UserRepository;
+use App\Repositories\DashboardStatisticRepository;
 use Illuminate\View\View;
 
 /**
@@ -16,20 +14,14 @@ class DashboardController extends Controller {
 	/**
 	 * Главная страница админки.
 	 *
+	 * @param DashboardStatisticRepository $statisticRepository
+	 *
 	 * @return View
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function indexAction() {
-		$users          = resolve(UserRepository::class)->getLastRecords();
-		$applications   = resolve(ApplicationRepository::class)->getLastRecords();
-		$incomeMessages = resolve(IncomeMessageRepository::class)->getLastRecords();
-
-		return $this->render('index', [
-			'users'             => $users,
-			'applications'      => $applications,
-			'incomeMessages'    => $incomeMessages,
-		]);
+	public function indexAction(DashboardStatisticRepository $statisticRepository) {
+		return $this->render('index', ['statisticRepository' => $statisticRepository]);
 	}
 
 	/**

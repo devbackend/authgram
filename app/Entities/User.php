@@ -9,11 +9,12 @@ use Uuid;
 /**
  * Модель пользователя.
  *
- * @property string $uuid           Идентификатор пользователя
- * @property int    $telegram_id    Идентификатор пользователя в Telegram
- * @property string $username       Никнейм пользователя
- * @property string $first_name     Имя пользователя
- * @property string $last_name      Фамилия пользователя
+ * @property string $uuid                   Идентификатор пользователя
+ * @property int    $telegram_id            Идентификатор пользователя в Telegram
+ * @property string $username               Никнейм пользователя
+ * @property string $first_name             Имя пользователя
+ * @property string $last_name              Фамилия пользователя
+ * @property bool   $notification_enabled   Уведомления включены
  *
  * @property-read Application[] $applications Приложения, добавленные пользователем.
  *
@@ -23,11 +24,12 @@ class User extends Entity {
 	/** Telegram идентификатор админа сайта */
 	const ADMIN_TELEGRAM_ID = 114307233;
 
-	const UUID          = 'uuid';
-	const TELEGRAM_ID   = 'telegram_id';
-	const USERNAME      = 'username';
-	const FIRST_NAME    = 'first_name';
-	const LAST_NAME     = 'last_name';
+	const UUID                  = 'uuid';
+	const TELEGRAM_ID           = 'telegram_id';
+	const USERNAME              = 'username';
+	const FIRST_NAME            = 'first_name';
+	const LAST_NAME             = 'last_name';
+	const NOTIFICATION_ENABLED  = 'notification_enabled';
 
 	/** @var bool Отключаем автоинкремент для первичного ключа */
 	public $incrementing = false;
@@ -47,11 +49,11 @@ class User extends Entity {
 	 *
 	 * @param TelegramUser $telegramUser Профиль в telegram
 	 *
-	 * @return static
+	 * @return User
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public static function loadByTelegramProfile(TelegramUser $telegramUser) {
+	public static function loadByTelegramProfile(TelegramUser $telegramUser): User {
 		$telegramId = $telegramUser->getId();
 
 		$user = static::where(static::TELEGRAM_ID, $telegramId)->first();

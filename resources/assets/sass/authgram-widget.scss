@@ -71,7 +71,7 @@ $button-bg-color: #0091ea;
 
 .authgram-modal {
 	width:         500px;
-	height:        285px;
+	height:        300px;
 	position:      fixed;
 	top:           200px;
 	left:          0;
@@ -81,7 +81,7 @@ $button-bg-color: #0091ea;
 	border:        1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 5px;
 	box-shadow:    0 4px 5px 0 rgba(0, 0, 0, 0.1), 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-	padding:       15px 10px 35px;
+	padding:       15px 10px 55px;
 	background:    #fff;
 
 	.command {
@@ -145,15 +145,11 @@ $button-bg-color: #0091ea;
 				}
 			}
 		}
-
-		.bot-link {
-
-		}
 	}
 
 	.expired {
 		position:   absolute;
-		bottom:     0;
+		bottom:     20px;
 		left:       0;
 		width:      100%;
 		text-align: center;
@@ -161,6 +157,15 @@ $button-bg-color: #0091ea;
 		margin-top: 10px;
 		font-size:  1.15em;
 		border-top: 1px solid #eee;
+	}
+
+	.powered {
+		position:   absolute;
+		bottom:     5px;
+		left:       0;
+		width:      100%;
+		text-align: center;
+		font-size:  11px;
 	}
 
 	@media (max-width: 767px) {

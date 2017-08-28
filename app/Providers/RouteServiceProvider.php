@@ -82,7 +82,7 @@ class RouteServiceProvider extends ServiceProvider {
 	protected function mapDashboardRoutes() {
 		Route::group([
 			'namespace'     => $this->dashboardNamespace,
-			'middleware'    => [Kernel::MIDDLEWARE_GROUP_WEB, Kernel::MIDDLEWARE_ALIAS_AUTH_ADMIN],
+			'middleware'    => [Kernel::MIDDLEWARE_GROUP_WEB, Kernel::MIDDLEWARE_ALIAS_AUTH],
 			'prefix'        => 'dashboard',
 		], function ($router) {
 			require base_path('routes/dashboard.php');

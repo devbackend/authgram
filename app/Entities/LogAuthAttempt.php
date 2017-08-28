@@ -14,6 +14,9 @@ use Carbon\Carbon;
  * @property string $additional_info    Дополнительные данные
  * @property string $insert_stamp       Время добавления записи
  *
+ * @property-read Application   $application
+ * @property-read User          $user
+ *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 class LogAuthAttempt extends Entity {
@@ -34,11 +37,62 @@ class LogAuthAttempt extends Entity {
 	/** Константа шага: авторизация завершилась успешно */
 	const STEP_AUTH_SUCCESS = 3;
 
+	protected static $_stepTitles = [
+		self::STEP_GET_CODE     => 'Получение кода',
+		self::STEP_GET_COMMAND  => 'Отправлена команда',
+		self::STEP_AUTH_FAIL    => 'Авторизация не прошла',
+		self::STEP_AUTH_SUCCESS => 'Авторизация успешно завершена',
+	];
+
 	/** @inheritdoc */
 	protected $fillable = [self::STEP, self::APPLICATION_UUID, self::USER_UUID, self::COMMAND, self::ADDITIONAL_INFO];
 
 	/** @var bool Отключаем автоматические timestamp'ы */
 	public $timestamps = false;
+
+	/**
+	 * Получение названия шага.
+	 *
+	 * @return string
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function getStepTitle(): string {
+		return static::$_stepTitles[$this->step];
+	}
+
+	/**
+	 * Получение информации шага.
+	 *
+	 * @return string
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function getStepInfo(): string {
+		if (static::STEP_AUTH_FAIL === $this->step) {
+			$info = json_decode($this->additional_info);
+
+			return $info->reason;
+		}
+
+		return '';
+	}
+
+	/**
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function application() {
+		return $this->hasOne(Application::class, Application::UUID, static::APPLICATION_UUID);
+	}
+
+	/**
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function user() {
+		return $this->hasOne(User::class, User::UUID, static::USER_UUID);
+	}
 
 	/**
 	 * @inheritdoc

@@ -65,7 +65,8 @@ class AuthoriseCommand extends TelegramCommand {
 			return;
 		}
 
-		$authKey = $this->generateAuthKey();
+		$authKey     = $this->generateAuthKey();
+		/** @var Application $application */
 		$application = Application::find($authCommand->applicationUuid);
 
 		//-- Отправляем запрс с авторизационными данными приложению
@@ -138,7 +139,7 @@ class AuthoriseCommand extends TelegramCommand {
 		$authAttempt->save();
 		//-- -- -- --
 
-		$replyMessage->setText("Вы успешно авторизовались.\n\nВернитесь в браузер, чтобы продолжить работу с сайтом.");
+		$replyMessage->setText($application->success_auth_message);
 
 		$this->replyWithMessage($replyMessage->get());
 	}
