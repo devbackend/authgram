@@ -18,6 +18,8 @@ use Illuminate\Http\Request;
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 abstract class Entity extends Eloquent {
+	const DELETED_AT = 'deleted_at';
+
 	/**
 	 * Создание модели на основе данных реквеста.
 	 *
@@ -32,20 +34,35 @@ abstract class Entity extends Eloquent {
 	public static function createByRequest(Request $request) {
 		$entity = new static;
 
-		$requestData = $request->all();
-		foreach ($requestData as $field => $value) {
-			if (false === in_array($field, $entity->fillable)) {
-				continue;
-			}
-
-			$entity->$field = $value;
-		}
+		$entity->loadRequest($request);
 
 		if (false === $entity->save()) {
 			throw new Exception('Произошла ошибка при создании модели');
 		}
 
 		return $entity;
+	}
+
+	/**
+	 * Загрузка данных из входящего запроса.
+	 *
+	 * @param Request $request
+	 *
+	 * @return static
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function loadRequest(Request $request) {
+		$requestData = $request->all();
+		foreach ($requestData as $field => $value) {
+			if (false === in_array($field, $this->fillable)) {
+				continue;
+			}
+
+			$this->setAttribute($field, $value);
+		}
+
+		return $this;
 	}
 
 	/**

@@ -33,6 +33,18 @@
 
 <main>
 	<div class="container">
+		<?php if (session('request-success-message')): ?>
+			<div class="card-panel green lighten-4 green-text text-darken-4">
+				<?= session('request-success-message') ?>
+			</div>
+		<?php endif ?>
+
+		<?php if (session('request-error-message')): ?>
+			<div class="card-panel red lighten-4 red-text text-darken-4">
+				<?= session('request-error-message') ?>
+			</div>
+		<?php endif ?>
+
 		@yield('content')
 	</div>
 </main>

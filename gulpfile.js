@@ -1,3 +1,5 @@
+process.env.DISABLE_NOTIFIER = true;
+
 const elixir = require('laravel-elixir');
 require('laravel-elixir-typescript');
 require('laravel-elixir-replace');
@@ -22,6 +24,7 @@ elixir(function(mix) {
 	], 'public/js/');
 
 	mix.scripts('imask.js', 'public/js/imask.min.js');
+	mix.scripts('notifications.js', 'public/js/notifications.min.js');
 
 	mix.copy('resources/assets/fonts/', 'public/fonts/');
 	mix.copy('resources/assets/images/', 'public/images/');

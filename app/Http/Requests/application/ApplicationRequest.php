@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\application;
 
 use App\Entities\Application;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Данные формы создания нового приложения
+ * Базовый запрос для управления приложением.
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-class CreateApplicationRequest extends FormRequest {
+abstract class ApplicationRequest extends FormRequest {
 	/**
 	 * Имеет ли текущий пользователь право на отправку запроса.
 	 *
@@ -26,7 +26,7 @@ class CreateApplicationRequest extends FormRequest {
 	/**
 	 * Правила валидации.
 	 *
-	 * @return array
+	 * @return string[]
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
