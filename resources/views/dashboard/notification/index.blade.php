@@ -29,6 +29,10 @@
 					</div>
 				</div>
 			</div>
+
+			<div data-role="result">
+
+			</div>
 		</div>
 	</div>
 @endsection

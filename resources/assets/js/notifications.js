@@ -63,13 +63,7 @@
 					$preloader.toggleClass('hide', true);
 				},
 				success: function(response) {
-					if (false === response.success) {
-						alert(response.error);
-
-						return;
-					}
-
-					alert('Успешно отправлено!');
+					$('[data-role="result"]').html('<p><b>Успешно отправлено:</b> ' + response.successCount + '</p><p><b>Не отправлено:</b> ' + response.errorsCount + '</p>');
 					$textarea.val('');
 					$realButton.prop('disabled', true);
 				},
