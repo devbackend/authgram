@@ -45,8 +45,13 @@ class AuthoriseCommand extends TelegramCommand {
 		//-- -- -- --
 
 		if (null === $authCommand) {
-			$replyMessage->setText('Команда не найдена');
-			$this->replyWithMessage($replyMessage->get());
+			try {
+				$replyMessage->setText('Команда не найдена');
+				$this->replyWithMessage($replyMessage->get());
+			}
+			catch(\Exception $e) {
+			}
+			
 
 			event(new UserJoinFailEvent($this->name, 'Команда не найдена'));
 
