@@ -7,7 +7,7 @@
  */
 return [
 
-	'name'              => 'Adrc Web Application',              // название приложения
+	'name'              => 'Authgram',                          // название приложения
 	'env'               => env('APP_ENV', 'production'),        // окружение, в котором будет запущено приложение
 	'debug'             => env('APP_DEBUG', false),             // требуется ли режим отладки
 	'url'               => env('APP_URL', 'http://localhost'),  // url-адрес приложения
