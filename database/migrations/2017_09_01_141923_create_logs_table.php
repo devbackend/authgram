@@ -18,8 +18,11 @@ class CreateLogsTable extends BaseMigration {
 			$table->uuid('guid');
 			$table->smallInteger('level');
 			$table->text('message');
+			$table->string('category');
+			$table->string('file');
 			$table->text('trace');
 			$table->timestamp('insert_stamp')->default($this->db->raw('CURRENT_TIMESTAMP(0)'));
+			$table->softDeletes();
 
 			$table->primary('guid');
 		});

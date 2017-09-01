@@ -20,7 +20,9 @@ class LogHandler extends AbstractProcessingHandler {
 		Log::create([
 			Log::LEVEL      => $record['level'],
 			Log::MESSAGE    => $record['message'],
-			Log::TRACE      => '', /** @todo временное решение */
+			Log::TRACE      => $record['context']['trace']      ?? '',
+			Log::FILE       => $record['context']['file']       ?? '',
+			Log::CATEGORY   => $record['context']['category']   ?? 'DefaultLogCategory',
 		]);
 	}
 }

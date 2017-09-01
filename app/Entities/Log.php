@@ -8,6 +8,8 @@ namespace App\Entities;
  * @property string $guid
  * @property int    $level
  * @property string $message
+ * @property string $category
+ * @property string $file
  * @property string $trace
  * @property string $insert_stamp
  *
@@ -17,15 +19,26 @@ class Log extends Entity {
 	const GUID          = 'guid';
 	const LEVEL         = 'level';
 	const MESSAGE       = 'message';
+	const CATEGORY      = 'category';
+	const FILE          = 'file';
 	const TRACE         = 'trace';
 	const INSERT_STAMP  = 'insert_stamp';
 
+	/** @var bool Отключаем автоинкремент для первичного ключа */
+	public $incrementing = false;
+
+	/** @var string Первичный ключ */
 	protected $primaryKey = self::GUID;
+
+	/** @var string[] Дата удаления */
+	protected $dates = [self::DELETED_AT];
 
 	/** @inheritdoc */
 	protected $fillable = [
 		self::LEVEL,
 		self::MESSAGE,
+		self::CATEGORY,
+		self::FILE,
 		self::TRACE,
 		self::INSERT_STAMP,
 	];
