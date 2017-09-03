@@ -62,7 +62,7 @@ use Illuminate\Http\Request;
 <script type="text/javascript" src="/js/all.js"></script>
 @stack('scripts')
 
-<?php if (true === app()->isLocal() && false === strpos(app()->make(Request::class)->path(), 'dashboard')): ?>
+<?php if (false === app()->isLocal() && false === strpos(app()->make(Request::class)->path(), 'dashboard')): ?>
 	@include('layouts._blocks.counters')
 <?php endif ?>
 
