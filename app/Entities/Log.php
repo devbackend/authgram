@@ -2,27 +2,38 @@
 
 namespace App\Entities;
 
+use Carbon\Carbon;
+
 /**
  * Модель для логирования.
  *
- * @property string $guid
- * @property int    $level
- * @property string $message
- * @property string $category
- * @property string $file
- * @property string $trace
- * @property string $insert_stamp
+ * @property string     $guid
+ * @property int        $level
+ * @property string     $category
+ * @property string     $message
+ * @property string     $file
+ * @property string[]   $trace
+ * @property string     $url
+ * @property string     $ip
+ * @property string     $method
+ * @property string[]   $params
+ * @property Carbon     $insert_stamp
+ * @property Carbon     $deleted_at
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 class Log extends Entity {
 	const GUID          = 'guid';
 	const LEVEL         = 'level';
-	const MESSAGE       = 'message';
 	const CATEGORY      = 'category';
+	const MESSAGE       = 'message';
 	const FILE          = 'file';
 	const TRACE         = 'trace';
 	const INSERT_STAMP  = 'insert_stamp';
+	const URL           = 'url';
+	const IP            = 'ip';
+	const METHOD        = 'method';
+	const PARAMS        = 'params';
 
 	/** @var bool Отключаем автоинкремент для первичного ключа */
 	public $incrementing = false;
@@ -31,7 +42,7 @@ class Log extends Entity {
 	protected $primaryKey = self::GUID;
 
 	/** @var string[] Дата удаления */
-	protected $dates = [self::DELETED_AT];
+	protected $dates = [self::INSERT_STAMP, self::DELETED_AT];
 
 	/** @inheritdoc */
 	protected $fillable = [
@@ -41,6 +52,10 @@ class Log extends Entity {
 		self::FILE,
 		self::TRACE,
 		self::INSERT_STAMP,
+		self::URL,
+		self::IP,
+		self::METHOD,
+		self::PARAMS,
 	];
 
 	public $timestamps = false;
@@ -63,7 +78,7 @@ class Log extends Entity {
 	const EMERGENCY = 600;
 
 	/** @var string[] Описание кодов логирования */
-	protected static $levels = array(
+	protected static $_levels = array(
 		self::DEBUG     => 'Отладка',
 		self::INFO      => 'Информационное сообщение',
 		self::NOTICE    => 'Уведомление',
@@ -73,4 +88,55 @@ class Log extends Entity {
 		self::ALERT     => 'Проблема с доступностью сайта',
 		self::EMERGENCY => 'Приоритетная ошибка',
 	);
+
+	/**
+	 * Получение заголовка уровня логов.
+	 *
+	 * @return string
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function getLevelTitle(): string {
+		return (array_key_exists($this->level, static::$_levels)
+			? static::$_levels[$this->level]
+			: 'Unknown'
+		);
+	}
+
+	/**
+	 * Форматирование значения стека вызова
+	 *
+	 * @param string $trace
+	 *
+	 * @return string[]
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function getTraceAttribute(string $trace) {
+		return explode("\n", $trace);
+	}
+
+	/**
+	 * Получение значения аттрибута "Параметры"
+	 *
+	 * @param string $value
+	 *
+	 * @return string[]
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function getParamsAttribute(string $value) {
+		return json_decode($value);
+	}
+
+	/**
+	 * Установка аттрибута "Параметры"
+	 *
+	 * @param array $value
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function setParamsAttribute(array $value) {
+		$this->attributes[static::PARAMS] = json_encode($value);
+	}
 }

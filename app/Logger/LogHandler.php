@@ -6,7 +6,7 @@ use App\Entities\Log;
 use Monolog\Handler\AbstractProcessingHandler;
 
 /**
- *
+ * Обработчик логов.
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
@@ -23,6 +23,10 @@ class LogHandler extends AbstractProcessingHandler {
 			Log::TRACE      => $record['context']['trace']      ?? '',
 			Log::FILE       => $record['context']['file']       ?? '',
 			Log::CATEGORY   => $record['context']['category']   ?? 'DefaultLogCategory',
+			Log::URL        => $record['extra']['url'],
+			Log::IP         => $record['extra']['ip'],
+			Log::METHOD     => $record['extra']['method'],
+			Log::PARAMS     => $record['extra']['params'],
 		]);
 	}
 }

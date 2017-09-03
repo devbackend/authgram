@@ -76,7 +76,13 @@ $authSteps      = array_keys($authStepTitles);
 
 	<div class="row">
 		<div class="col s6">
-			<a href="<?= action('Dashboard\NotificationController@indexAction') ?>">Рассылка</a>
+			<p>
+				<a href="<?= action('Dashboard\NotificationController@indexAction') ?>">Рассылка</a>
+			</p>
+
+			<p>
+				<a href="<?= action('Dashboard\LogsController@indexAction') ?>">Логи</a>
+			</p>
 		</div>
 	</div>
 @endsection

@@ -39,7 +39,7 @@ abstract class Repository {
 	 *
 	 * @param mixed $id Идентификатор
 	 *
-	 * @return mixed
+	 * @return Entity|null
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */

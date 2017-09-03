@@ -17,12 +17,12 @@ use Psr\Log\LoggerInterface;
 class Handler extends ExceptionHandler {
 	/** @var string[] Список исключительных ситуаций, которые не надо логировать */
 	protected $dontReport = [
-		//AuthenticationException::class,
-		//AuthorizationException::class,
-		//HttpException::class,
-		//ModelNotFoundException::class,
-		//TokenMismatchException::class,
-		//ValidationException::class,
+		//AuthenticationException ::class,
+		//AuthorizationException  ::class,
+		//HttpException           ::class,
+		//ModelNotFoundException  ::class,
+		//TokenMismatchException  ::class,
+		//ValidationException     ::class,
 	];
 
 	/**
