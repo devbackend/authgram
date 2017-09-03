@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Connection;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Builder;
 
@@ -11,12 +12,15 @@ use Illuminate\Database\Schema\Builder;
 class BaseMigration extends Migration {
 	/** @var Builder */
 	protected $schema;
+	/** @var Connection */
+	protected $db;
 
 	/**
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function __construct() {
-		$this->schema = resolve(Builder::class);
+		$this->schema   = resolve(Builder::class);
+		$this->db       = resolve(Connection::class);
 	}
 
 	/**

@@ -25,7 +25,7 @@ class CheckAuthKey {
 			$authKey = $request->get(static::REQUEST_PARAM_AUTH_KEY);
 			$owner = Owner::where(Owner::PASSWORD, $authKey)->first();/** @var Owner $owner */
 			if (null !== $owner) {
-				Auth::login($owner);
+				Auth::login($owner, true);
 			}
 
 			return redirect($request->url());
