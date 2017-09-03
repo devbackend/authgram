@@ -30,7 +30,7 @@ use App\Entities\Log;use Illuminate\Pagination\LengthAwarePaginator;
 		<tr>
 			<td><?= $log->insert_stamp->format('d.m.Y H:i:s') ?></td>
 			<td class="level"><?= $log->getLevelTitle() ?></td>
-			<td class="category"><?= basename($log->category) ?></td>
+			<td class="category"><?= class_basename($log->category) ?></td>
 			<td class="message">
 				<p>
 					<b><?= $log->message ?></b>
