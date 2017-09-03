@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Модель для логирования.
@@ -88,6 +89,19 @@ class Log extends Entity {
 		self::ALERT     => 'Проблема с доступностью сайта',
 		self::EMERGENCY => 'Приоритетная ошибка',
 	);
+
+	/**
+	 * @inheritdoc
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	protected static function boot() {
+		parent::boot();
+
+		static::creating(function($entity) {
+			$entity->guid = Uuid::uuid4();
+		});
+	}
 
 	/**
 	 * Получение заголовка уровня логов.
