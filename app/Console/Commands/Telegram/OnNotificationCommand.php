@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands\Telegram;
 
-use App\Entities\User;
-
 /**
  * Команда для включения уведомлений от бота для владельцев приложений.
  *
@@ -25,7 +23,7 @@ class OnNotificationCommand extends TelegramCommand {
 		$replyMessage = $this->initiateMessage();
 
 		$from = $this->getUpdate()->getMessage()->getFrom();
-		$user = User::loadByTelegramProfile($from);
+		$user = $this->users->loadByTelegramProfile($from);
 		$user->notification_enabled = true;
 		$user->save();
 

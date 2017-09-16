@@ -4,7 +4,6 @@ namespace App\Console\Commands\Telegram;
 use App\Entities\Application;
 use App\Entities\AuthCommand;
 use App\Entities\LogAuthAttempt;
-use App\Entities\User;
 use App\Events\UserJoinFailEvent;
 use App\Events\UserJoinSuccessEvent;
 use App\Wrappers\authRequest\Request;
@@ -34,7 +33,7 @@ class AuthoriseCommand extends TelegramCommand {
 		$authCommand = $this->cache->get($cacheKey);/** @var AuthCommand $authCommand */
 
 		$from = $this->getUpdate()->getMessage()->getFrom();
-		$user = User::loadByTelegramProfile($from);
+		$user = $this->users->loadByTelegramProfile($from);
 
 		//-- Логируем попытку авторизации
 		$authAttempt = LogAuthAttempt::create([
