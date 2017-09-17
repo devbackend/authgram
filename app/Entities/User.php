@@ -3,8 +3,7 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Telegram\Bot\Objects\User as TelegramUser;
-use Uuid;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Модель пользователя.
@@ -45,31 +44,6 @@ class User extends Entity {
 	];
 
 	/**
-	 * Загрузка пользователя по его профилю Telegram.
-	 *
-	 * @param TelegramUser $telegramUser Профиль в telegram
-	 *
-	 * @return User
-	 *
-	 * @author Кривонос Иван <devbackend@yandex.ru>
-	 */
-	public static function loadByTelegramProfile(TelegramUser $telegramUser): User {
-		$telegramId = $telegramUser->getId();
-
-		$user = static::where(static::TELEGRAM_ID, $telegramId)->first();
-		if (null === $user) {
-			$user = User::create([
-				User::TELEGRAM_ID   => $telegramId,
-				User::USERNAME      => $telegramUser->getUsername()     ?? '',
-				User::FIRST_NAME    => $telegramUser->getFirstName()    ?? '',
-				User::LAST_NAME     => $telegramUser->getLastName()     ?? '',
-			]);
-		}
-
-		return $user;
-	}
-
-	/**
 	 * Получение отображаемого имени пользователя.
 	 *
 	 * @return string
@@ -100,7 +74,7 @@ class User extends Entity {
 		parent::boot();
 
 		static::creating(function($entity) {
-			$entity->uuid = Uuid::generate()->string;
+			$entity->uuid = Uuid::uuid4();
 		});
 	}
 }

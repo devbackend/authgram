@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Telegram;
 
+use App\Repositories\UserRepository;
 use App\Wrappers\TelegramMessage;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Logging\Log;
@@ -19,9 +20,13 @@ abstract class TelegramCommand extends Command {
 	/** @var Log Логгер */
 	protected $logger;
 
+	/** @var UserRepository Репозиторий пользователей */
+	protected $users;
+
 	public function __construct() {
 		$this->cache  = resolve(Repository::class);
 		$this->logger = resolve(Log::class);
+		$this->users  = resolve(UserRepository::class);
 	}
 
 	/**

@@ -31,8 +31,6 @@ class CreateLogsTable extends BaseMigration {
 
 			$table->primary('guid');
 		});
-
-		$this->db->statement('ALTER TABLE logs ALTER COLUMN guid SET DEFAULT uuid_generate_v4();');
 	}
 
 	/**

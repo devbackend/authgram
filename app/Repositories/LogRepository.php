@@ -29,6 +29,7 @@ class LogRepository extends Repository {
 	 */
 	public function load() {
 		return $this->entity
+			->where('deleted_at', null)
 			->orderBy(Log::INSERT_STAMP, 'desc')
 			->paginate(50)
 		;

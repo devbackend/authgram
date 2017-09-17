@@ -39,7 +39,7 @@ use App\Entities\Log;
 		</tr>
 		<tr>
 			<td>Параметры запроса:</td>
-			<td><?= print_r($log->params, true) ?></td>
+			<td><pre><?= print_r($log->params, true) ?></pre></td>
 		</tr>
 		<tr>
 			<td>Дата:</td>
