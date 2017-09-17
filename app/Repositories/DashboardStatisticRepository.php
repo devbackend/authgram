@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Entities\Entity;
+use App\Entities\LogAuthAttempt;
 use App\Exceptions\NotImplementedException;
 
 /**
@@ -14,31 +15,6 @@ class DashboardStatisticRepository extends Repository {
 	/**
 	 * Получение количества записей.
 	 *
-	 * @param string $entity
-	 *
-	 * @return int
-	 *
-	 * @author Кривонос Иван <devbackend@yandex.ru>
-	 */
-	public function getEntityTotalCount(string $entity): int {
-		$cacheKey = $this->getCacheKey(__METHOD__, [$entity]);
-		$count    = $this->cache->get($cacheKey);
-
-		if (null === $count) {
-			/** @var Entity $entity */
-			$entity = new $entity;
-
-			$count = $entity->count();
-
-			$this->cache->put($cacheKey, $count, 60);
-		}
-
-		return $count;
-	}
-
-	/**
-	 * Получение количества записей за последнеи несколько часов
-	 *
 	 * @param string $entity    Модель
 	 * @param int    $hours     Количество часов для выборки
 	 *
@@ -46,21 +22,67 @@ class DashboardStatisticRepository extends Repository {
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function getCountByHourPeriod(string $entity, $hours = 24): int {
-		$cacheKey   = $this->getCacheKey(__METHOD__, [$entity, $hours]);
-		$count      = $this->cache->get($cacheKey);
+	public function getEntityCount(string $entity, $hours = 0): int {
+		$cacheKey = $this->getCacheKey(__METHOD__, [$entity, $hours]);
+		$count    = $this->cache->get($cacheKey);
+
 		if (null === $count) {
 			/** @var Entity $entity */
 			$entity = new $entity;
 
-			$date = date('c', time() - $hours * 3600);
+			if ($hours > 0) {
+				$date = date('c', time() - $hours * 3600);
 
-			$count = $entity->where($entity::CREATED_AT, '>=', $date)->count();
+				$entity = $entity->where($entity::CREATED_AT, '>=', $date);
+			}
 
-			$this->cache->put($cacheKey, $count, 60);
+			$count = $entity->count();
+
+			$this->cache->put($cacheKey, $count, 15);
 		}
 
 		return $count;
+	}
+
+	/**
+	 * Получение статистики шагов авторизации.
+	 *
+	 * @param int|null $hours Количество часов статистики; по умолчанию весь период
+	 *
+	 * @return int[]
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function getAuthStepsStatistic(int $hours = 0) {
+		$cacheKey   = $this->getCacheKey(__METHOD__, [$hours]);
+		$result     = $this->cache->get($cacheKey);
+		if (null === $result) {
+			$query = (new LogAuthAttempt())
+				->select([
+					LogAuthAttempt::STEP,
+					$this->db->raw('count(id) as count')
+				])
+				->groupBy(LogAuthAttempt::STEP)
+				->orderBy(LogAuthAttempt::STEP, 'ASC')
+			;
+
+			if ($hours > 0) {
+				$date = date('c', time() - $hours * 3600);
+
+				$query->where(LogAuthAttempt::INSERT_STAMP, '>=', $date)->count();
+			}
+
+			$attempts = $query->get()->toArray();
+
+			$result = [];
+			foreach ($attempts as $attempt) {
+				$result[$attempt['step']] = $attempt['count'];
+			}
+
+			$this->cache->put($cacheKey, $result, 5);
+		}
+
+		return $result;
 	}
 
 	/**

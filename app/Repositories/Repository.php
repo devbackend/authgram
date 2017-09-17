@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\Entities\Entity;
 use Illuminate\Contracts\Cache\Repository as Cache;
+use Illuminate\Database\Connection;
 
 /**
  * Абстрактный класс репозитория с данными.
@@ -16,15 +17,21 @@ abstract class Repository {
 	/** @var Cache Провайдер для работы с кэшем */
 	protected $cache;
 
+	/** @var Connection */
+	protected $db;
+
 	/**
-	 * @param Cache $cache
+	 * @param Cache      $cache
+	 * @param Connection $db
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function __construct(Cache $cache) {
+	public function __construct(Cache $cache, Connection $db) {
 		$this->cache = $cache;
+		$this->db    = $db;
 
 		$this->initEntity();
+
 	}
 
 	/**
@@ -32,7 +39,7 @@ abstract class Repository {
 	 *
 	 * @param mixed $id Идентификатор
 	 *
-	 * @return mixed
+	 * @return Entity|null
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */

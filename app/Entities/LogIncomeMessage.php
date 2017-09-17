@@ -59,6 +59,9 @@ class LogIncomeMessage extends Entity {
 				elseif (false !== property_exists($message, 'document')) {
 					$message = '[Прислан документ]';
 				}
+				elseif (false !== property_exists($message, 'location')) {
+					$message = '[Прислано местоположение]';
+				}
 				elseif (false !== property_exists($message, 'sticker')) {
 					$message = '[Стикер]';
 				}
@@ -72,7 +75,7 @@ class LogIncomeMessage extends Entity {
 					$message = '[Действие в чате, куда добавлен бот]';
 				}
 				else {
-					dd($message);
+					$message = '[Неизвестное действие]';
 				}
 			}
 			// -- -- -- --

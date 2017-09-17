@@ -1,3 +1,9 @@
+<?php
+
+use Illuminate\Http\Request;
+
+?>
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -56,7 +62,7 @@
 <script type="text/javascript" src="/js/all.js"></script>
 @stack('scripts')
 
-<?php if ('local' !== app()->environment()): ?>
+<?php if (false === app()->isLocal() && false === strpos(app()->make(Request::class)->path(), 'dashboard')): ?>
 	@include('layouts._blocks.counters')
 <?php endif ?>
 

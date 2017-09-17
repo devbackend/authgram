@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Telegram;
 
 use App\Entities\Application;
-use App\Entities\User;
 
 /**
  * Добавление приложения.
@@ -26,7 +25,7 @@ class AddApplicationCommand extends TelegramCommand {
 		$update = $this->getUpdate();
 		$from   = $update->getMessage()->getFrom();
 
-		$user = User::loadByTelegramProfile($from);
+		$user = $this->users->loadByTelegramProfile($from);
 
 		$application = new Application;
 		$application->owner_uuid = $user->uuid;

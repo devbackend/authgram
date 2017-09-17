@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands\Telegram;
 
-use App\Entities\User;
-
 /**
  * Команда для инициализации работы с ботом.
  *
@@ -25,7 +23,7 @@ class StartCommand extends TelegramCommand {
 		$update = $this->getUpdate();
 		$from   = $update->getMessage()->getFrom();
 
-		$user = User::loadByTelegramProfile($from);
+		$user = $this->users->loadByTelegramProfile($from);
 
 		if ('' !== $arguments) {
 			$this->triggerCommand($arguments);

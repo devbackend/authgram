@@ -3,15 +3,11 @@
 namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Session\TokenMismatchException;
-use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Psr\Log\LoggerInterface;
 
 /**
  * Отлов исключительных ситуаций.
@@ -21,12 +17,12 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class Handler extends ExceptionHandler {
 	/** @var string[] Список исключительных ситуаций, которые не надо логировать */
 	protected $dontReport = [
-		AuthenticationException::class,
-		AuthorizationException::class,
-		HttpException::class,
-		ModelNotFoundException::class,
-		TokenMismatchException::class,
-		ValidationException::class,
+		//AuthenticationException ::class,
+		//AuthorizationException  ::class,
+		//HttpException           ::class,
+		//ModelNotFoundException  ::class,
+		//TokenMismatchException  ::class,
+		//ValidationException     ::class,
 	];
 
 	/**
@@ -35,7 +31,20 @@ class Handler extends ExceptionHandler {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function report(Exception $exception) {
-		parent::report($exception);
+		try {
+			$logger = $this->container->make(LoggerInterface::class);
+		} catch (Exception $e) {
+			throw $exception; // бросаем оригинальное исключение
+		}
+
+		$logger->error(
+			$exception->getMessage(),
+			[
+				'file'      => $exception->getFile() . ':' . $exception->getLine(),
+				'trace'     => $exception->getTraceAsString(),
+				'category'  => get_class($exception),
+			]
+		);
 	}
 
 	/**

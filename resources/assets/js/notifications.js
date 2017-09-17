@@ -4,18 +4,18 @@
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 (function(window, $) {
-	let SELECTOR_NOTIFICATION_TEXT = '#notification_text';
+	var SELECTOR_NOTIFICATION_TEXT = '#notification_text';
 
-	let SELECTOR_TEST_SEND_BUTTON = '[data-role="text-send"]';
-	let SELECTOR_REAL_SEND_BUTTON = '[data-role="real-send"]';
+	var SELECTOR_TEST_SEND_BUTTON = '[data-role="text-send"]';
+	var SELECTOR_REAL_SEND_BUTTON = '[data-role="real-send"]';
 
-	let SELECTOR_PRELOADER = '[data-role="preloader"]';
+	var SELECTOR_PRELOADER = '[data-role="preloader"]';
 
 	$(function () {
-		let $textarea   = $(SELECTOR_NOTIFICATION_TEXT);
-		let $testButton = $(SELECTOR_TEST_SEND_BUTTON);
-		let $realButton = $(SELECTOR_REAL_SEND_BUTTON);
-		let $preloader  = $(SELECTOR_PRELOADER);
+		var $textarea   = $(SELECTOR_NOTIFICATION_TEXT);
+		var $testButton = $(SELECTOR_TEST_SEND_BUTTON);
+		var $realButton = $(SELECTOR_REAL_SEND_BUTTON);
+		var $preloader  = $(SELECTOR_PRELOADER);
 
 		$.ajaxSetup({
 			headers: {

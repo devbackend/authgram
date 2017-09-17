@@ -3,10 +3,12 @@ namespace App\Http\Controllers;
 
 use App;
 use App\Entities\LogIncomeMessage;
-use App\Entities\User;
+use App\Exceptions\UndefinedMessageException;
+use App\Repositories\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
+use Throwable;
 
 /**
  * Контроллер для обработки web-хука от Telegram.
@@ -14,6 +16,9 @@ use Telegram\Bot\Objects\Update;
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 class WebhookController extends Controller {
+	/** @var UserRepository Репозиторий пользователей */
+	private $userRepository;
+
 	/**
 	 * @param string $token       Значение токена Telegram-бота
 	 * @param Api    $telegramApi Инстанс бота telegram
@@ -27,9 +32,14 @@ class WebhookController extends Controller {
 			App::abort(401);
 		}
 
-		$this->handleUpdateObject(
-			$telegramApi->commandsHandler(true)
-		);
+		try {
+			$this->handleUpdateObject(
+				$telegramApi->commandsHandler(true)
+			);
+		}
+		catch (Throwable $e) {
+			$this->logger->error('Не удалось обработать входящее сообщение: ' . $e->getMessage());
+		}
 
 		return response('ok');
 	}
@@ -51,7 +61,12 @@ class WebhookController extends Controller {
 		$updates = $telegramApi->commandsHandler();
 
 		foreach ($updates as $update) {
-			$this->handleUpdateObject($update);
+			try {
+				$this->handleUpdateObject($update);
+			}
+			catch (Throwable $e) {
+				$this->logger->error('Не удалось обработать входящее сообщение: ' . $e->getMessage());
+			}
 		}
 
 		return 'Обработано обновлений: ' . count($updates);
@@ -62,11 +77,18 @@ class WebhookController extends Controller {
 	 *
 	 * @param Update $update
 	 *
+	 * @throws UndefinedMessageException
+	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	protected function handleUpdateObject(Update $update) {
-		$from = $update->getMessage()->getFrom();
-		$user = User::loadByTelegramProfile($from);
+		$updateMessage = $update->getMessage();
+		if (null === $updateMessage) {
+			throw new UndefinedMessageException($update);
+		}
+
+		$telegramUser   = $updateMessage->getFrom();
+		$user           = $this->getUserRepository()->loadByTelegramProfile($telegramUser);
 
 		$message = serialize($update);
 
@@ -74,5 +96,20 @@ class WebhookController extends Controller {
 			LogIncomeMessage::USER_UUID    => $user->uuid,
 			LogIncomeMessage::MESSAGE_DATA => addslashes($message),
 		]);
+	}
+
+	/**
+	 * Получение репозитория пользователей
+	 *
+	 * @return UserRepository
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	private function getUserRepository(): UserRepository {
+		if (null === $this->userRepository) {
+			$this->userRepository = resolve(UserRepository::class);
+		}
+
+		return $this->userRepository;
 	}
 }

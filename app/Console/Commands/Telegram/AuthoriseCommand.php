@@ -4,13 +4,13 @@ namespace App\Console\Commands\Telegram;
 use App\Entities\Application;
 use App\Entities\AuthCommand;
 use App\Entities\LogAuthAttempt;
-use App\Entities\User;
 use App\Events\UserJoinFailEvent;
 use App\Events\UserJoinSuccessEvent;
 use App\Wrappers\authRequest\Request;
 use App\Wrappers\authRequest\User as AuthUser;
 use Exception;
 use GuzzleHttp\Client;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 /**
  * Базовый класс команд авторизации. Здесь находится вся логика авторизации.
@@ -33,7 +33,7 @@ class AuthoriseCommand extends TelegramCommand {
 		$authCommand = $this->cache->get($cacheKey);/** @var AuthCommand $authCommand */
 
 		$from = $this->getUpdate()->getMessage()->getFrom();
-		$user = User::loadByTelegramProfile($from);
+		$user = $this->users->loadByTelegramProfile($from);
 
 		//-- Логируем попытку авторизации
 		$authAttempt = LogAuthAttempt::create([
@@ -45,8 +45,13 @@ class AuthoriseCommand extends TelegramCommand {
 		//-- -- -- --
 
 		if (null === $authCommand) {
-			$replyMessage->setText('Команда не найдена');
-			$this->replyWithMessage($replyMessage->get());
+			try {
+				$replyMessage->setText('Команда не найдена');
+				$this->replyWithMessage($replyMessage->get());
+			}
+			catch(TelegramSDKException $e) {
+				$this->logger->error('Не удалось отправить собщению пользователю: ' . $e->getMessage());
+			}
 
 			event(new UserJoinFailEvent($this->name, 'Команда не найдена'));
 
@@ -98,7 +103,7 @@ class AuthoriseCommand extends TelegramCommand {
 				}
 			}
 			catch (Exception $e) {
-				$this->logger->error($e->getMessage());
+				$this->logger->error('Не удалось отправить авторизационные данные приложению ' . $application->title . ': ' . $e->getMessage());
 			}
 		}
 		//-- -- -- --
@@ -106,8 +111,13 @@ class AuthoriseCommand extends TelegramCommand {
 		$this->cache->forget($cacheKey);
 
 		if (false === $isSuccessResponse) {
-			$replyMessage->setText('Ошибка авторизации. Попробуйте позже');
-			$this->replyWithMessage($replyMessage->get());
+			try {
+				$replyMessage->setText('Ошибка авторизации. Попробуйте позже');
+				$this->replyWithMessage($replyMessage->get());
+			}
+			catch (TelegramSDKException $e) {
+				$this->logger->error('Не удалось отправить собщению пользователю: ' . $e->getMessage());
+			}
 
 			event(new UserJoinFailEvent($this->name, 'Не смогли получить ответ от сайта'));
 
@@ -139,9 +149,13 @@ class AuthoriseCommand extends TelegramCommand {
 		$authAttempt->save();
 		//-- -- -- --
 
-		$replyMessage->setText($application->success_auth_message);
-
-		$this->replyWithMessage($replyMessage->get());
+		try {
+			$replyMessage->setText($application->success_auth_message);
+			$this->replyWithMessage($replyMessage->get());
+		}
+		catch (TelegramSDKException $e) {
+			$this->logger->error('Не удалось отправить собщению пользователю: ' . $e->getMessage());
+		}
 	}
 
 	/**

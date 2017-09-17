@@ -42,8 +42,15 @@ $router->group(['middleware' => [Kernel::MIDDLEWARE_ALIAS_AUTH_ADMIN]], function
 	// -- -- -- --
 
 	// -- Просмотр статистики авторизации
-	$router->group(['prefix' => 'auth-statisric'], function() use ($router) {
+	$router->group(['prefix' => 'auth-statistic'], function() use ($router) {
 		$router->get('/', 'AuthStatisticController@indexAction');
+	});
+	// -- -- -- --
+
+	// -- Просмотр логов
+	$router->group(['prefix' => 'logs'], function() use ($router) {
+		$router->get('/',       'LogsController@indexAction');
+		$router->get('/{guid}', 'LogsController@showAction');
 	});
 	// -- -- -- --
 });

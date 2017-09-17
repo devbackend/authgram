@@ -43,7 +43,7 @@ class RouteServiceProvider extends ServiceProvider {
 	 */
 	protected function mapWebRoutes() {
 		Route::group([
-			'middleware' => 'web',
+			'middleware' => [Kernel::MIDDLEWARE_GROUP_WEB],
 			'namespace'  => $this->namespace,
 		], function($router) {
 			require base_path('routes/web.php');

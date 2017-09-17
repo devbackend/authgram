@@ -38,8 +38,8 @@ class LogAuthAttempt extends Entity {
 	const STEP_AUTH_SUCCESS = 3;
 
 	protected static $_stepTitles = [
-		self::STEP_GET_CODE     => 'Получение кода',
-		self::STEP_GET_COMMAND  => 'Отправлена команда',
+		self::STEP_GET_CODE     => 'Получен запрос на авторизацию',
+		self::STEP_GET_COMMAND  => 'Получена команда',
 		self::STEP_AUTH_FAIL    => 'Авторизация не прошла',
 		self::STEP_AUTH_SUCCESS => 'Авторизация успешно завершена',
 	];
@@ -49,6 +49,17 @@ class LogAuthAttempt extends Entity {
 
 	/** @var bool Отключаем автоматические timestamp'ы */
 	public $timestamps = false;
+
+	/**
+	 * Получение шагов авторизации.
+	 *
+	 * @return string[]
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public static function getStepTitles(): array {
+		return self::$_stepTitles;
+	}
 
 	/**
 	 * Получение названия шага.
