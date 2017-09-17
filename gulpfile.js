@@ -31,9 +31,9 @@ elixir(function(mix) {
 
 	//-- Генерация скриптов и стилей для виджета
 	mix.typescript('authgram-widget.ts');
-	mix.webpack('authgram-listener.js', 'public/js/authgram-listener.js');
+	mix.replace('public/js/authgram-widget.js', authgramWidgetReplacements);
 	mix.sass('resources/assets/sass/authgram-widget.scss', 'public/css/authgram-widget.css');
 
-	mix.replace('public/js/authgram-widget.js', authgramWidgetReplacements);
+	mix.webpack('authgram-listener.js', 'public/js/authgram-listener.js');
 	//-- -- -- --
 });
