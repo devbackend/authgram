@@ -39,4 +39,11 @@ abstract class TelegramCommand extends Command {
 	protected function initiateMessage() {
 		return new TelegramMessage;
 	}
+
+	/**
+	 * @inheritdoc
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function replyWithMessage($message) {}
 }
