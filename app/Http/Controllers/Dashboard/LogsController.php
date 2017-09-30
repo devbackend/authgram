@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\LogRepository;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
@@ -43,5 +45,41 @@ class LogsController extends Controller {
 		}
 
 		return $this->render('show', ['log' => $log]);
+	}
+
+	/**
+	 * @param Request       $request
+	 * @param LogRepository $logs
+	 *
+	 * @return RedirectResponse
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function deleteSelectedAction(Request $request, LogRepository $logs) {
+		$guids = $request->input('guids');
+
+		if ([] !== $guids) {
+			$logs->deleteAll($guids);
+		}
+
+		return redirect()->action('Dashboard\LogsController@indexAction');
+	}
+
+	/**
+	 * @param Request       $request
+	 * @param LogRepository $logs
+	 *
+	 * @return RedirectResponse
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function deleteContentAction(Request $request, LogRepository $logs) {
+		$logContent = $request->input('log');
+
+		if ('' !== $logContent) {
+			$logs->deleteByContent($logContent);
+		}
+
+		return redirect()->action('Dashboard\LogsController@indexAction');
 	}
 }

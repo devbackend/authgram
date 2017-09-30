@@ -49,8 +49,10 @@ $router->group(['middleware' => [Kernel::MIDDLEWARE_ALIAS_AUTH_ADMIN]], function
 
 	// -- Просмотр логов
 	$router->group(['prefix' => 'logs'], function() use ($router) {
-		$router->get('/',       'LogsController@indexAction');
-		$router->get('/{guid}', 'LogsController@showAction');
+		$router->get('/',                   'LogsController@indexAction');
+		$router->get('/{guid}',             'LogsController@showAction');
+		$router->delete('/delete-selected', 'LogsController@deleteSelectedAction');
+		$router->delete('/delete-content',  'LogsController@deleteContentAction');
 	});
 	// -- -- -- --
 });
