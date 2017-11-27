@@ -19,7 +19,7 @@ use Carbon\Carbon;
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-class LogAuthAttempt extends Entity {
+class LogAuthAttemptTmp extends Entity {
 	const ID                = 'id';
 	const STEP              = 'step';
 	const APPLICATION_UUID  = 'application_uuid';

@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Entities\Application;
 use App\Entities\AuthCommand;
-use App\Entities\LogAuthAttempt;
+use App\Entities\LogAuthAttemptTmp;
 use App\Jobs\CreateAuthCommandClass;
 use App\Providers\RouteServiceProvider;
 use Auth;
@@ -46,11 +46,11 @@ class AuthController extends Controller {
 		//-- Логируем попытку авторизации
 		$additionalInfo = ['user_ip' => $request->ip()];
 
-		$authAttempt = LogAuthAttempt::create([
-			LogAuthAttempt::STEP                => LogAuthAttempt::STEP_GET_CODE,
-			LogAuthAttempt::APPLICATION_UUID    => $appUuid,
-			LogAuthAttempt::COMMAND             => $authCommand->command,
-			LogAuthAttempt::ADDITIONAL_INFO     => json_encode($additionalInfo),
+		$authAttempt = LogAuthAttemptTmp::create([
+			LogAuthAttemptTmp::STEP             => LogAuthAttemptTmp::STEP_GET_CODE,
+			LogAuthAttemptTmp::APPLICATION_UUID => $appUuid,
+			LogAuthAttemptTmp::COMMAND          => $authCommand->command,
+			LogAuthAttemptTmp::ADDITIONAL_INFO  => json_encode($additionalInfo),
 		]);
 		$authAttempt->save();
 		//-- -- -- --

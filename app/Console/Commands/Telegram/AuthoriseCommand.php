@@ -3,7 +3,7 @@ namespace App\Console\Commands\Telegram;
 
 use App\Entities\Application;
 use App\Entities\AuthCommand;
-use App\Entities\LogAuthAttempt;
+use App\Entities\LogAuthAttemptTmp;
 use App\Events\UserJoinFailEvent;
 use App\Events\UserJoinSuccessEvent;
 use App\Wrappers\authRequest\Request;
@@ -36,10 +36,10 @@ class AuthoriseCommand extends TelegramCommand {
 		$user = $this->users->loadByTelegramProfile($from);
 
 		//-- Логируем попытку авторизации
-		$authAttempt = LogAuthAttempt::create([
-			LogAuthAttempt::STEP        => LogAuthAttempt::STEP_GET_COMMAND,
-			LogAuthAttempt::USER_UUID   => $user->uuid,
-			LogAuthAttempt::COMMAND     => $this->name,
+		$authAttempt = LogAuthAttemptTmp::create([
+			LogAuthAttemptTmp::STEP      => LogAuthAttemptTmp::STEP_GET_COMMAND,
+			LogAuthAttemptTmp::USER_UUID => $user->uuid,
+			LogAuthAttemptTmp::COMMAND   => $this->name,
 		]);
 		$authAttempt->save();
 		//-- -- -- --
@@ -58,11 +58,11 @@ class AuthoriseCommand extends TelegramCommand {
 			//-- Логируем попытку авторизации
 			$additionalInfo = ['reason' => 'Команда не найдена'];
 
-			$authAttempt = LogAuthAttempt::create([
-				LogAuthAttempt::STEP            => LogAuthAttempt::STEP_AUTH_FAIL,
-				LogAuthAttempt::USER_UUID       => $user->uuid,
-				LogAuthAttempt::COMMAND         => $this->name,
-				LogAuthAttempt::ADDITIONAL_INFO => json_encode($additionalInfo),
+			$authAttempt = LogAuthAttemptTmp::create([
+				LogAuthAttemptTmp::STEP            => LogAuthAttemptTmp::STEP_AUTH_FAIL,
+				LogAuthAttemptTmp::USER_UUID       => $user->uuid,
+				LogAuthAttemptTmp::COMMAND         => $this->name,
+				LogAuthAttemptTmp::ADDITIONAL_INFO => json_encode($additionalInfo),
 			]);
 			$authAttempt->save();
 			//-- -- -- --
@@ -124,12 +124,12 @@ class AuthoriseCommand extends TelegramCommand {
 			//-- Логируем попытку авторизации
 			$additionalInfo = ['reason' => 'Не смогли получить ответ от сайта'];
 
-			$authAttempt = LogAuthAttempt::create([
-				LogAuthAttempt::STEP                => LogAuthAttempt::STEP_AUTH_FAIL,
-				LogAuthAttempt::USER_UUID           => $user->uuid,
-				LogAuthAttempt::APPLICATION_UUID    => $authCommand->applicationUuid,
-				LogAuthAttempt::COMMAND             => $this->name,
-				LogAuthAttempt::ADDITIONAL_INFO     => json_encode($additionalInfo),
+			$authAttempt = LogAuthAttemptTmp::create([
+				LogAuthAttemptTmp::STEP             => LogAuthAttemptTmp::STEP_AUTH_FAIL,
+				LogAuthAttemptTmp::USER_UUID        => $user->uuid,
+				LogAuthAttemptTmp::APPLICATION_UUID => $authCommand->applicationUuid,
+				LogAuthAttemptTmp::COMMAND          => $this->name,
+				LogAuthAttemptTmp::ADDITIONAL_INFO  => json_encode($additionalInfo),
 			]);
 			$authAttempt->save();
 			//-- -- -- --
@@ -140,11 +140,11 @@ class AuthoriseCommand extends TelegramCommand {
 		event(new UserJoinSuccessEvent($this->name, $authKey));
 
 		//-- Логируем попытку авторизации
-		$authAttempt = LogAuthAttempt::create([
-			LogAuthAttempt::STEP                => LogAuthAttempt::STEP_AUTH_SUCCESS,
-			LogAuthAttempt::USER_UUID           => $user->uuid,
-			LogAuthAttempt::APPLICATION_UUID    => $authCommand->applicationUuid,
-			LogAuthAttempt::COMMAND             => $this->name,
+		$authAttempt = LogAuthAttemptTmp::create([
+			LogAuthAttemptTmp::STEP             => LogAuthAttemptTmp::STEP_AUTH_SUCCESS,
+			LogAuthAttemptTmp::USER_UUID        => $user->uuid,
+			LogAuthAttemptTmp::APPLICATION_UUID => $authCommand->applicationUuid,
+			LogAuthAttemptTmp::COMMAND          => $this->name,
 		]);
 		$authAttempt->save();
 		//-- -- -- --

@@ -1,20 +1,20 @@
 <?php
 
-use App\Entities\LogAuthAttempt;
+use App\Entities\LogAuthAttemptTmp;use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Шаблон для страницы попыток авторизации
  *
- * @var LogAuthAttempt[] $attempts Логи попыток авторизации
+ * @var LogAuthAttemptTmp[]|LengthAwarePaginator $attempts Логи попыток авторизации
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 
 $attemptClasses = [
-	LogAuthAttempt::STEP_GET_CODE       => 'light-blue accent-1',
-	LogAuthAttempt::STEP_GET_COMMAND    => 'yellow accent-1',
-	LogAuthAttempt::STEP_AUTH_FAIL      => 'red accent-1',
-	LogAuthAttempt::STEP_AUTH_SUCCESS   => 'green accent-1',
+	LogAuthAttemptTmp::STEP_GET_CODE     => 'light-blue accent-1',
+	LogAuthAttemptTmp::STEP_GET_COMMAND  => 'yellow accent-1',
+	LogAuthAttemptTmp::STEP_AUTH_FAIL    => 'red accent-1',
+	LogAuthAttemptTmp::STEP_AUTH_SUCCESS => 'green accent-1',
 ];
 
 ?>

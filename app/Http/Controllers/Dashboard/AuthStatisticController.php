@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Entities\LogAuthAttempt;
+use App\Entities\LogAuthAttemptTmp;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Connection;
 use Illuminate\View\View;
@@ -26,14 +26,14 @@ class AuthStatisticController extends Controller {
 	 * @return View
 	 */
 	public function indexAction(Connection $db) {
-		$attempts = (new LogAuthAttempt())
+		$attempts = (new LogAuthAttemptTmp())
 			->select([
 				'*',
 				$db->raw("date_trunc('minutes', insert_stamp) as stamp")
 			])
 			->orderBy('stamp',                  'desc')
-			->orderBy(LogAuthAttempt::COMMAND,  'asc')
-			->orderBy(LogAuthAttempt::STEP,     'asc')
+			->orderBy(LogAuthAttemptTmp::COMMAND,  'asc')
+			->orderBy(LogAuthAttemptTmp::STEP,     'asc')
 			->paginate(self::MESSAGE_PAGE_LIMIT)
 		;
 

@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Entities\Entity;
-use App\Entities\LogAuthAttempt;
+use App\Entities\LogAuthAttemptTmp;
 use App\Exceptions\NotImplementedException;
 
 /**
@@ -57,19 +57,19 @@ class DashboardStatisticRepository extends Repository {
 		$cacheKey   = $this->getCacheKey(__METHOD__, [$hours]);
 		$result     = $this->cache->get($cacheKey);
 		if (null === $result) {
-			$query = (new LogAuthAttempt())
+			$query = (new LogAuthAttemptTmp())
 				->select([
-					LogAuthAttempt::STEP,
+					LogAuthAttemptTmp::STEP,
 					$this->db->raw('count(id) as count')
 				])
-				->groupBy(LogAuthAttempt::STEP)
-				->orderBy(LogAuthAttempt::STEP, 'ASC')
+				->groupBy(LogAuthAttemptTmp::STEP)
+				->orderBy(LogAuthAttemptTmp::STEP, 'ASC')
 			;
 
 			if ($hours > 0) {
 				$date = date('c', time() - $hours * 3600);
 
-				$query->where(LogAuthAttempt::INSERT_STAMP, '>=', $date)->count();
+				$query->where(LogAuthAttemptTmp::INSERT_STAMP, '>=', $date)->count();
 			}
 
 			$attempts = $query->get()->toArray();
