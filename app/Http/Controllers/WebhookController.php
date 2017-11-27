@@ -27,7 +27,7 @@ class WebhookController extends Controller {
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function __invoke($token, Api $telegramApi) {
+	public function __invoke($token, Api $telegramApi) {return response('Ok');
 		if (env('TELEGRAM_BOT_TOKEN') !== $token) {
 			App::abort(401);
 		}
@@ -54,6 +54,10 @@ class WebhookController extends Controller {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function devAction(Api $telegramApi) {
+		if ('local' !== app()->environment()) {
+			App::abort(404);
+		}
+
 		$updates = $telegramApi->commandsHandler();
 
 		foreach ($updates as $update) {
