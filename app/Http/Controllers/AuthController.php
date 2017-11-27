@@ -3,9 +3,9 @@ namespace App\Http\Controllers;
 
 use App\Entities\Application;
 use App\Entities\AuthCommand;
-use App\Entities\LogAuthAttemptTmp;
 use App\Jobs\CreateAuthCommandClass;
 use App\Providers\RouteServiceProvider;
+use App\Repositories\LogAuthStepRepository;
 use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -40,20 +40,18 @@ class AuthController extends Controller {
 		$authCommand->command           = AuthCommand::generateCommandName();
 
 		$cacheKey = AuthCommand::getKeyName($authCommand->command);
-		$this->cache->put($cacheKey, $authCommand, 1);
+
+		// Записываем команду на 5 минут - по факту будет произведена проверка - устарела она или нет
+		$this->cache->put($cacheKey, $authCommand, 5);
+
 		$this->dispatchNow(new CreateAuthCommandClass($authCommand));
 
-		//-- Логируем попытку авторизации
-		$additionalInfo = ['user_ip' => $request->ip()];
+		// -- Логируем получение кода
+		/** @var LogAuthStepRepository $authSteps */
+		$authSteps = app(LogAuthStepRepository::class);
 
-		$authAttempt = LogAuthAttemptTmp::create([
-			LogAuthAttemptTmp::STEP             => LogAuthAttemptTmp::STEP_GET_CODE,
-			LogAuthAttemptTmp::APPLICATION_UUID => $appUuid,
-			LogAuthAttemptTmp::COMMAND          => $authCommand->command,
-			LogAuthAttemptTmp::ADDITIONAL_INFO  => json_encode($additionalInfo),
-		]);
-		$authAttempt->save();
-		//-- -- -- --
+		$authSteps->writeCodeStep($authCommand);
+		// -- -- -- --
 
 		return response()->jsonp($callback, [
 			'command' => $authCommand->command,

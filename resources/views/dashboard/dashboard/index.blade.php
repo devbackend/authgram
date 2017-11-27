@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\Application;use App\Entities\LogAuthAttemptTmp;use App\Entities\LogIncomeMessage;use App\Entities\User;use App\Repositories\DashboardStatisticRepository;
+use App\Entities\Application;use App\Entities\LogAuthStep;use App\Entities\LogIncomeMessage;use App\Entities\User;use App\Repositories\DashboardStatisticRepository;
 
 /**
  * Шаблон для главной страницы панели управления.
@@ -10,7 +10,7 @@ use App\Entities\Application;use App\Entities\LogAuthAttemptTmp;use App\Entities
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 
-$authStepTitles = LogAuthAttemptTmp::getStepTitles();
+$authStepTitles = LogAuthStep::getStepTitles();
 $authSteps      = array_keys($authStepTitles);
 
 ?>

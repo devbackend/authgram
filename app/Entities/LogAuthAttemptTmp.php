@@ -4,6 +4,7 @@ namespace App\Entities;
 use Carbon\Carbon;
 
 /**
+ * @deprecated
  * Модель для логгирования авторизации
  *
  * @property int    $id                 Идентификатор записи

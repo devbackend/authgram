@@ -1,6 +1,8 @@
 <?php
 namespace App\Entities;
 
+use Ramsey\Uuid\Uuid;
+
 /**
  * Модель команды авторизации.
  *
@@ -13,11 +15,26 @@ class AuthCommand {
 	/** Константа для префикса названия ключа кэша */
 	const CACHE_KEY_NAME_PREFIX = 'authorisation-command';
 
+	/** @var string Идентификатор попытки */
+	public $attemptGuid;
+
 	/** @var string Идентификатор приложения */
 	public $applicationUuid;
 
 	/** @var string Значение команды авторизации */
 	public $command;
+
+	/** @var int Timestamp-метка создания команды */
+	public $createStamp;
+
+	/**
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function __construct() {
+		$this->attemptGuid      = Uuid::uuid4()->toString();
+		$this->applicationUuid  = Uuid::NIL;
+		$this->createStamp      = time();
+	}
 
 	/**
 	 * Генерация команды.

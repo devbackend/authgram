@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Entities\Entity;
-use App\Entities\LogAuthAttemptTmp;
+use App\Entities\LogAuthStep;
 use App\Exceptions\NotImplementedException;
 
 /**
@@ -54,22 +54,22 @@ class DashboardStatisticRepository extends Repository {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function getAuthStepsStatistic(int $hours = 0) {
-		$cacheKey   = $this->getCacheKey(__METHOD__, [$hours]);
+		$cacheKey   = $this->getCacheKey(__METHOD__, [$hours], 2);
 		$result     = $this->cache->get($cacheKey);
 		if (null === $result) {
-			$query = (new LogAuthAttemptTmp())
+			$query = (new LogAuthStep())
 				->select([
-					LogAuthAttemptTmp::STEP,
-					$this->db->raw('count(id) as count')
+					LogAuthStep::STEP,
+					$this->db->raw('count(guid) as count')
 				])
-				->groupBy(LogAuthAttemptTmp::STEP)
-				->orderBy(LogAuthAttemptTmp::STEP, 'ASC')
+				->groupBy(LogAuthStep::STEP)
+				->orderBy(LogAuthStep::STEP, 'ASC')
 			;
 
 			if ($hours > 0) {
 				$date = date('c', time() - $hours * 3600);
 
-				$query->where(LogAuthAttemptTmp::INSERT_STAMP, '>=', $date)->count();
+				$query->where(LogAuthStep::INSERT_STAMP, '>=', $date)->count();
 			}
 
 			$attempts = $query->get()->toArray();

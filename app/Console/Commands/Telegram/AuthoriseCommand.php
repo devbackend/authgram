@@ -3,9 +3,9 @@ namespace App\Console\Commands\Telegram;
 
 use App\Entities\Application;
 use App\Entities\AuthCommand;
-use App\Entities\LogAuthAttemptTmp;
 use App\Events\UserJoinFailEvent;
 use App\Events\UserJoinSuccessEvent;
+use App\Repositories\LogAuthStepRepository;
 use App\Wrappers\authRequest\Request;
 use App\Wrappers\authRequest\User as AuthUser;
 use Exception;
@@ -35,16 +35,17 @@ class AuthoriseCommand extends TelegramCommand {
 		$from = $this->getUpdate()->getMessage()->getFrom();
 		$user = $this->users->loadByTelegramProfile($from);
 
-		//-- Логируем попытку авторизации
-		$authAttempt = LogAuthAttemptTmp::create([
-			LogAuthAttemptTmp::STEP      => LogAuthAttemptTmp::STEP_GET_COMMAND,
-			LogAuthAttemptTmp::USER_UUID => $user->uuid,
-			LogAuthAttemptTmp::COMMAND   => $this->name,
-		]);
-		$authAttempt->save();
-		//-- -- -- --
+		/** @var LogAuthStepRepository $authSteps */
+		$authSteps = app(LogAuthStepRepository::class);
 
+		// -- Команда не найдена в кэше
 		if (null === $authCommand) {
+			$authCommand = new AuthCommand();
+			$authCommand->command = $this->name;
+
+			// Логируем полученную команду
+			$authSteps->writeCommandStep($authCommand, $user->uuid);
+
 			try {
 				$replyMessage->setText('Команда не найдена');
 				$this->replyWithMessage($replyMessage->get());
@@ -55,20 +56,38 @@ class AuthoriseCommand extends TelegramCommand {
 
 			event(new UserJoinFailEvent($this->name, 'Команда не найдена'));
 
-			//-- Логируем попытку авторизации
-			$additionalInfo = ['reason' => 'Команда не найдена'];
-
-			$authAttempt = LogAuthAttemptTmp::create([
-				LogAuthAttemptTmp::STEP            => LogAuthAttemptTmp::STEP_AUTH_FAIL,
-				LogAuthAttemptTmp::USER_UUID       => $user->uuid,
-				LogAuthAttemptTmp::COMMAND         => $this->name,
-				LogAuthAttemptTmp::ADDITIONAL_INFO => json_encode($additionalInfo),
-			]);
-			$authAttempt->save();
-			//-- -- -- --
+			// Логируем ошибку авторизации
+			$authSteps->writeFailResultStep($authCommand, $user->uuid, 'Команда не найдена');
 
 			return;
 		}
+		// -- -- -- --
+
+		// Логируем попытку авторизации
+		$authSteps->writeCommandStep($authCommand, $user->uuid);
+
+		// Удаляем команду из кэша
+		$this->cache->forget($cacheKey);
+
+		// -- Проверяем, возможно команда устарела
+		$delta = time() - $authCommand->createStamp;
+		if ($delta > AuthCommand::EXPIRED_TIME_SEC) {
+			try {
+				$replyMessage->setText('Команда не найдена');
+				$this->replyWithMessage($replyMessage->get());
+			}
+			catch(TelegramSDKException $e) {
+				$this->logger->error('Не удалось отправить собщению пользователю: ' . $e->getMessage());
+			}
+
+			event(new UserJoinFailEvent($this->name, 'Команда не найдена'));
+
+			// Логируем ошибку авторизации
+			$authSteps->writeFailResultStep($authCommand, $user->uuid, 'Команда устарела на ' . ($delta - AuthCommand::EXPIRED_TIME_SEC) . 'c');
+
+			return;
+		}
+		// -- -- -- --
 
 		$authKey     = $this->generateAuthKey();
 		/** @var Application $application */
@@ -108,8 +127,6 @@ class AuthoriseCommand extends TelegramCommand {
 		}
 		//-- -- -- --
 
-		$this->cache->forget($cacheKey);
-
 		if (false === $isSuccessResponse) {
 			try {
 				$replyMessage->setText('Ошибка авторизации. Попробуйте позже');
@@ -121,33 +138,18 @@ class AuthoriseCommand extends TelegramCommand {
 
 			event(new UserJoinFailEvent($this->name, 'Не смогли получить ответ от сайта'));
 
-			//-- Логируем попытку авторизации
-			$additionalInfo = ['reason' => 'Не смогли получить ответ от сайта'];
-
-			$authAttempt = LogAuthAttemptTmp::create([
-				LogAuthAttemptTmp::STEP             => LogAuthAttemptTmp::STEP_AUTH_FAIL,
-				LogAuthAttemptTmp::USER_UUID        => $user->uuid,
-				LogAuthAttemptTmp::APPLICATION_UUID => $authCommand->applicationUuid,
-				LogAuthAttemptTmp::COMMAND          => $this->name,
-				LogAuthAttemptTmp::ADDITIONAL_INFO  => json_encode($additionalInfo),
-			]);
-			$authAttempt->save();
-			//-- -- -- --
+			// Логируем ошибку авторизации
+			$authSteps->writeFailResultStep($authCommand, $user->uuid, 'Не смогли получить ответ от сайта');
 
 			return;
 		}
 
 		event(new UserJoinSuccessEvent($this->name, $authKey));
 
-		//-- Логируем попытку авторизации
-		$authAttempt = LogAuthAttemptTmp::create([
-			LogAuthAttemptTmp::STEP             => LogAuthAttemptTmp::STEP_AUTH_SUCCESS,
-			LogAuthAttemptTmp::USER_UUID        => $user->uuid,
-			LogAuthAttemptTmp::APPLICATION_UUID => $authCommand->applicationUuid,
-			LogAuthAttemptTmp::COMMAND          => $this->name,
+		// Логируем успешное завершение авторизации
+		$authSteps->writeSuccessResultStep($authCommand, $user->uuid, [
+			'Авторизация завершена за ' . (time() - $authCommand->createStamp) . 'c',
 		]);
-		$authAttempt->save();
-		//-- -- -- --
 
 		try {
 			$replyMessage->setText($application->success_auth_message);
