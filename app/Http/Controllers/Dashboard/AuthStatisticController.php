@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Entities\LogAuthAttemptTmp;
+use App\Entities\LogAuthStep;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Connection;
+use App\Repositories\LogAuthStepRepository;
+use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\View\View;
 
 /**
@@ -14,29 +16,44 @@ use Illuminate\View\View;
  */
 class AuthStatisticController extends Controller {
 	/** Лимит записей на страницу */
-	const MESSAGE_PAGE_LIMIT = 50;
+	const PAGINATION_LIMIT = 50;
+
+	/** @var LogAuthStepRepository */
+	protected $authStepRepository;
+
+	/**
+	 * @param Log                   $logger
+	 * @param Repository            $cache
+	 * @param LogAuthStepRepository $authStepRepository
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function __construct(Log $logger, Repository $cache, LogAuthStepRepository $authStepRepository) {
+		$this->authStepRepository = $authStepRepository;
+
+		parent::__construct($logger, $cache);
+	}
 
 	/**
 	 * Главная страница.
 	 *
-	 * @author Кривонос Иван <devbackend@yandex.ru>
-	 *
-	 * @param Connection $db
-	 *
 	 * @return View
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function indexAction(Connection $db) {
-		$attempts = (new LogAuthAttemptTmp())
-			->select([
-				'*',
-				$db->raw("date_trunc('minutes', insert_stamp) as stamp")
-			])
-			->orderBy('stamp',                  'desc')
-			->orderBy(LogAuthAttemptTmp::COMMAND,  'asc')
-			->orderBy(LogAuthAttemptTmp::STEP,     'asc')
-			->paginate(self::MESSAGE_PAGE_LIMIT)
-		;
+	public function indexAction() {
+		$attempts = $this->authStepRepository->getLastAttempts(static::PAGINATION_LIMIT);
 
-		return $this->render('index', ['attempts' => $attempts]);
+		$attemptGuids = [];
+		foreach ($attempts as $attempt) {/** @var LogAuthStep $attempt */
+			$attemptGuids[] = $attempt->attempt_guid;
+		}
+
+		$authSteps = $this->authStepRepository->getAuthStepsByAttemptIds($attemptGuids);
+
+		return $this->render('index', [
+			'attempts'  => $attempts,
+			'authSteps' => $authSteps
+		]);
 	}
 }

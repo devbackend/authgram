@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Модель логирования шагов авторизации.
@@ -15,6 +16,9 @@ use Carbon\Carbon;
  * @property string $command
  * @property string $message
  * @property Carbon $insert_stamp
+ *
+ * @property-read Application   $application
+ * @property-read User          $user
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
@@ -74,5 +78,23 @@ class LogAuthStep extends Entity {
 	 */
 	public function getStepTitle(): string {
 		return static::$_stepTitles[$this->step];
+	}
+
+	/**
+	 * @return HasOne
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function application() {
+		return $this->hasOne(Application::class, Application::UUID, static::APPLICATION_UUID);
+	}
+
+	/**
+	 * @return HasOne
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function user() {
+		return $this->hasOne(User::class, User::UUID, static::USER_UUID);
 	}
 }
