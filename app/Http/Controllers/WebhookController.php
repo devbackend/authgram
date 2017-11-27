@@ -81,7 +81,7 @@ class WebhookController extends Controller {
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	protected function handleUpdateObject(Update $update) {
+	protected function handleUpdateObject(Update $update) {return;
 		$updateMessage = $update->getMessage();
 		if (null === $updateMessage) {
 			throw new UndefinedMessageException($update);
