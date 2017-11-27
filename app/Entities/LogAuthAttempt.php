@@ -50,6 +50,8 @@ class LogAuthAttempt extends Entity {
 	/** @var bool Отключаем автоматические timestamp'ы */
 	public $timestamps = false;
 
+	protected $table = 'log_auth_attempt_tmp';
+
 	/**
 	 * Получение шагов авторизации.
 	 *
