@@ -27,7 +27,7 @@ class WebhookController extends Controller {
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function __invoke($token, Api $telegramApi) {return response('Ok');
+	public function __invoke($token, Api $telegramApi) {
 		if (env('TELEGRAM_BOT_TOKEN') !== $token) {
 			App::abort(401);
 		}
