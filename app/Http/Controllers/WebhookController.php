@@ -54,10 +54,6 @@ class WebhookController extends Controller {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function devAction(Api $telegramApi) {
-		if ('local' !== app()->environment()) {
-			App::abort(404);
-		}
-
 		$updates = $telegramApi->commandsHandler();
 
 		foreach ($updates as $update) {
@@ -81,7 +77,7 @@ class WebhookController extends Controller {
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	protected function handleUpdateObject(Update $update) {return;
+	protected function handleUpdateObject(Update $update) {
 		$updateMessage = $update->getMessage();
 		if (null === $updateMessage) {
 			throw new UndefinedMessageException($update);
