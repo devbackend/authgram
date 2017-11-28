@@ -73,6 +73,8 @@ class MigrateOldLogs extends Command {
 					$logAuthStep->step    = LogAuthStep::STEP_AUTH_SUCCESS;
 					$logAuthStep->message = 'Авторизация завершена за ' . ($authTime - $startTimes[$attemptGuid]) . 'c';
 
+					unset($guids[$command->command]);
+
 					break;
 
 				case LogAuthAttemptTmp::STEP_AUTH_FAIL:
@@ -87,17 +89,10 @@ class MigrateOldLogs extends Command {
 						$reason = end($reason);
 					}
 
-					$logAuthStep                    = new LogAuthStep();
-					$logAuthStep->guid              = Uuid::uuid4()->toString();
-					$logAuthStep->attempt_guid      = $attemptGuid;
-					$logAuthStep->insert_stamp      = $command->insert_stamp;
-					$logAuthStep->application_uuid  = $command->application_uuid;
-					$logAuthStep->command           = $command->command;
-					$logAuthStep->user_uuid         = $command->user_uuid;
-					$logAuthStep->step              = LogAuthStep::STEP_AUTH_FAIL;
-					$logAuthStep->message           = 'Причина: ' . $reason;
+					$logAuthStep->step    = LogAuthStep::STEP_AUTH_FAIL;
+					$logAuthStep->message = 'Причина: ' . $reason;
 
-					$logAuthStep->save();
+					unset($guids[$command->command]);
 
 					break;
 			}
