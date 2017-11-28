@@ -68,6 +68,12 @@ class MigrateOldLogs extends Command {
 					break;
 
 				case LogAuthAttemptTmp::STEP_AUTH_SUCCESS:
+					if (false === array_key_exists($attemptGuid, $startTimes)) {
+						$this->error('Идентификатор ' . $command->id . ' является логом успешной авторизации, однако начало найти не удалось');
+
+						continue(2);
+					}
+
 					$authTime = (new Carbon($command->insert_stamp))->timestamp;
 
 					$logAuthStep->step    = LogAuthStep::STEP_AUTH_SUCCESS;
@@ -78,7 +84,7 @@ class MigrateOldLogs extends Command {
 					break;
 
 				case LogAuthAttemptTmp::STEP_AUTH_FAIL:
-					if (array_key_exists($attemptGuid, $startTimes)) {
+					if (true === array_key_exists($attemptGuid, $startTimes)) {
 						$failTime =  (new Carbon($command->insert_stamp))->timestamp - $startTimes[$attemptGuid];
 						$failTime -= AuthCommand::EXPIRED_TIME_SEC;
 
