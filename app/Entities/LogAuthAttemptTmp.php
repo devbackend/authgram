@@ -14,6 +14,7 @@ use Carbon\Carbon;
  * @property string $command            Значение команды авторизации
  * @property string $additional_info    Дополнительные данные
  * @property string $insert_stamp       Время добавления записи
+ * @property bool   $is_moved           Запись перенесена в новую таблицу
  *
  * @property-read Application   $application
  * @property-read User          $user
@@ -28,6 +29,7 @@ class LogAuthAttemptTmp extends Entity {
 	const COMMAND           = 'command';
 	const ADDITIONAL_INFO   = 'additional_info';
 	const INSERT_STAMP      = 'insert_stamp';
+	const IS_MOVED          = 'is_moved';
 
 	/** Константа шага: получен запрос на авторизацию */
 	const STEP_GET_CODE     = 0;
