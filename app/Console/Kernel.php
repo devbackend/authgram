@@ -3,7 +3,6 @@
 namespace App\Console;
 
 use App\Console\Commands\CreateTelegramCommand;
-use App\Console\Commands\MigrateOldLogs;
 use App\Console\Commands\WebhookSwitchCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -18,7 +17,6 @@ class Kernel extends ConsoleKernel {
 	protected $commands = [
 		CreateTelegramCommand::class,
 		WebhookSwitchCommand::class,
-		MigrateOldLogs::class,
 	];
 
 	/**
