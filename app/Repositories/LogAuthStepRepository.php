@@ -108,18 +108,24 @@ class LogAuthStepRepository extends Repository {
 	/**
 	 * Получение идентификаторов последних попыток авторизации.
 	 *
-	 * @param int $limit Количество попыток.
+	 * @param int   $limit  Количество попыток.
+	 * @param int[] $steps  Фильтрация по шагам
 	 *
 	 * @return LogAuthStep[]|LengthAwarePaginator
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function getLastAttempts(int $limit) {
+	public function getLastAttempts(int $limit, array $steps = []) {
+		if ([] === $steps) {
+			$steps = array_keys(LogAuthStep::getStepTitles());
+		}
+
 		$lastAttempts = $this->initEntity()->newQuery()
 			->select([
 				LogAuthStep::ATTEMPT_GUID,
 				$this->db->raw('min(' . LogAuthStep::INSERT_STAMP . ') AS ' . LogAuthStep::INSERT_STAMP)
 			])
+			->whereIn(LogAuthStep::STEP, $steps)
 			->groupBy([LogAuthStep::ATTEMPT_GUID])
 			->orderByDesc(LogAuthStep::INSERT_STAMP)
 			->paginate($limit)

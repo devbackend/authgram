@@ -7,6 +7,7 @@ use App\Entities\LogAuthStep;use Illuminate\Pagination\LengthAwarePaginator;use 
  *
  * @var LogAuthStep[]|LengthAwarePaginator  $attempts   Идентификаторы попыток авторизации
  * @var LogAuthStep[][]                     $authSteps  Логи шагов авторизации
+ * @var int[]                               $checked    Выбранные шаги
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
@@ -20,6 +21,17 @@ $stepNumbers = array_keys($stepTitles);
 
 @section('content')
 	<h1>Логи попыток авторизации</h1>
+
+	<form action="">
+		<?php foreach ($stepTitles as $step => $title): ?>
+			<p>
+				<input type="checkbox" id="step<?= $step ?>" name="step[]" value="<?= $step ?>" <?= (true === in_array($step, $checked) ? 'checked' : '') ?> />
+				<label for="step<?= $step ?>"><?= $title ?></label>
+			</p>
+		<?php endforeach ?>
+
+			<input type="submit" value="Показать" class="btn">
+	</form>
 
 	<table class="bordered">
 		<thead>

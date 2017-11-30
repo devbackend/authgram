@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\LogAuthStepRepository;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
@@ -37,12 +38,16 @@ class AuthStatisticController extends Controller {
 	/**
 	 * Главная страница.
 	 *
+	 * @param Request $request
+	 *
 	 * @return View
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function indexAction() {
-		$attempts = $this->authStepRepository->getLastAttempts(static::PAGINATION_LIMIT);
+	public function indexAction(Request $request) {
+		$steps = $request->input('step', []);
+
+		$attempts = $this->authStepRepository->getLastAttempts(static::PAGINATION_LIMIT, $steps);
 
 		$attemptGuids = [];
 		foreach ($attempts as $attempt) {/** @var LogAuthStep $attempt */
@@ -53,7 +58,8 @@ class AuthStatisticController extends Controller {
 
 		return $this->render('index', [
 			'attempts'  => $attempts,
-			'authSteps' => $authSteps
+			'authSteps' => $authSteps,
+			'checked'   => $steps,
 		]);
 	}
 }
