@@ -23,8 +23,6 @@ class LogIncomeMessage extends Entity {
 
 	protected $fillable = [self::USER_UUID, self::MESSAGE_DATA];
 
-	protected $table = 'log_income_message_tmp';
-
 	/**
 	 * Преобразование сообщения в объект
 	 *
