@@ -28,10 +28,10 @@ $authSteps      = array_keys($authStepTitles);
 			<i class="fa fa-user"></i> Пользователи
 		</span>
 		<div class="count">
-			<?= $statisticRepository->getEntityCount(User::class) ?>
+			<?= number_format($statisticRepository->getEntityCount(User::class), 0, '.', ' ') ?>
 		</div>
 		<span class="count_bottom">
-			<?= $statisticRepository->getEntityCount(User::class, 24) ?> за последние 24 часа
+			<?= number_format($statisticRepository->getEntityCount(User::class, 24), 0, '.', ' ') ?> за последние 24 часа
 		</span>
 	</div>
 
@@ -40,10 +40,10 @@ $authSteps      = array_keys($authStepTitles);
 			<i class="fa fa-server"></i> Приложения
 		</span>
 		<div class="count">
-			<?= $statisticRepository->getEntityCount(Application::class) ?>
+			<?= number_format($statisticRepository->getEntityCount(Application::class), 0, '.', ' ') ?>
 		</div>
 		<span class="count_bottom">
-			<?= $statisticRepository->getEntityCount(Application::class, 24) ?> за последние 24 часа
+			<?= number_format($statisticRepository->getEntityCount(Application::class, 24), 0, '.', ' ') ?> за последние 24 часа
 		</span>
 	</div>
 
@@ -52,10 +52,10 @@ $authSteps      = array_keys($authStepTitles);
 			<i class="fa fa-envelope-o"></i> Сообщения
 		</span>
 		<div class="count">
-			<?= $statisticRepository->getEntityCount(LogIncomeMessage::class) ?>
+			<?= number_format($statisticRepository->getEntityCount(LogIncomeMessage::class), 0, '.', ' ') ?>
 		</div>
 		<span class="count_bottom">
-			<?= $statisticRepository->getEntityCount(LogIncomeMessage::class, 24) ?> за последние 24 часа
+			<?= number_format($statisticRepository->getEntityCount(LogIncomeMessage::class, 24), 0, '.', ' ') ?> за последние 24 часа
 		</span>
 	</div>
 </div>

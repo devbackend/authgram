@@ -36,9 +36,9 @@
 			element: 'auth-stat',
 			data: window.charts.authStats,
 			xkey: 'period',
-			ykeys: [0, 1, 2, 3],
-			lineColors: ['#1976d2', '#0d47a1', '#c62828', '#00695c'],
-			labels: ['Код', 'Команда', 'Успех', 'Неудача'],
+			ykeys: [2, 3],
+			lineColors: ['#c62828', '#00695c'],
+			labels: ['Успех', 'Неудача'],
 			pointSize: 2,
 			hideHover: 'auto',
 			resize: true
