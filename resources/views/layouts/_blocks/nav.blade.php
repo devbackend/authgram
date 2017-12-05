@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\Owner;use App\Entities\Page;use App\Entities\Policy;use App\Providers\RouteServiceProvider;
+use App\Entities\Owner;use App\Entities\Page;use App\Entities\Policy;use App\Http\Controllers\ApplicationController;use App\Http\Controllers\AuthController;use App\Http\Controllers\PagesController;use App\Providers\RouteServiceProvider;
 
 /**
  * Шаблон блока навигации
@@ -24,8 +24,8 @@ $currentUser = Auth::user();
 			</a>
 			<ul id="slide-out" class="side-nav">
 				<li><a href="<?= route(RouteServiceProvider::ROUTE_NAME_HOMEPAGE) ?>">Главная</a></li>
-				<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'add']) ?>">Добавить</a></li>
-				<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'dev']) ?>">Разработчикам</a></li>
+				<li><a href="<?= action(PagesController::class . '@showAction', [Page::SLUG => 'add']) ?>">Добавить</a></li>
+				<li><a href="<?= action(PagesController::class . '@showAction', [Page::SLUG => 'dev']) ?>">Разработчикам</a></li>
 				<li class="mobile-user-profile">
 					<?php if (null !== $currentUser): ?>
 						<a href="javascript:">
@@ -34,11 +34,11 @@ $currentUser = Auth::user();
 						</a>
 
 						<ul>
-							<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'add']) ?>">Добавить сайт</a></li>
+							<li><a href="<?= action(PagesController::class . '@showAction', [Page::SLUG => 'add']) ?>">Добавить сайт</a></li>
 							<?php if (true === $currentUser->hasApplications()): ?>
-								<li><a href="<?= action('Dashboard\ApplicationController@index') ?>">Мои приложения</a></li>
+								<li><a href="<?= action(ApplicationController::class . '@index') ?>">Мои приложения</a></li>
 							<?php endif ?>
-							<li><a href="<?= action('AuthController@logoutAction') ?>">Выйти</a></li>
+							<li><a href="<?= action(AuthController::class . '@logoutAction') ?>">Выйти</a></li>
 						</ul>
 					<?php else: ?>
 						<a href="javascript:" data-role="authgram-sign-button">Войти</a>
@@ -47,8 +47,8 @@ $currentUser = Auth::user();
 			</ul>
 
 			<ul class="right hide-on-med-and-down">
-				<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'add']) ?>">Добавить</a></li>
-				<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'dev']) ?>">Разработчикам</a></li>
+				<li><a href="<?= action(PagesController::class . '@showAction', [Page::SLUG => 'add']) ?>">Добавить</a></li>
+				<li><a href="<?= action(PagesController::class . '@showAction', [Page::SLUG => 'dev']) ?>">Разработчикам</a></li>
 				<li class="user-profile">
 					<?php if (null !== $currentUser): ?>
 						<a href="javascript:" data-activates="profile-menu">
@@ -59,18 +59,18 @@ $currentUser = Auth::user();
 						</a>
 
 						<ul id="profile-menu" class='dropdown-content'>
-							<li><a href="<?= action('PagesController@showAction', [Page::SLUG => 'add']) ?>">Добавить сайт</a></li>
+							<li><a href="<?= action(PagesController::class . '@showAction', [Page::SLUG => 'add']) ?>">Добавить сайт</a></li>
 
 							<?php if (true === $currentUser->hasApplications()): ?>
-								<li><a href="<?= action('Dashboard\ApplicationController@index') ?>">Мои приложения</a></li>
+								<li><a href="<?= action(ApplicationController::class . '@index') ?>">Мои приложения</a></li>
 							<?php endif ?>
 
 							<?php if (Gate::allows(Policy::ADMIN_ACTION)): ?>
-								<li><a href="<?= action('Dashboard\DashboardController@indexAction') ?>">Админка</a></li>
+								<li><a href="<?= route('dashboard') ?>">Админка</a></li>
 							<?php endif ?>
 
 							<li class="divider"></li>
-							<li><a href="<?= action('AuthController@logoutAction') ?>">Выйти</a></li>
+							<li><a href="<?= action(AuthController::class . '@logoutAction') ?>">Выйти</a></li>
 						</ul>
 					<?php else: ?>
 						<a href="javascript:" data-role="authgram-sign-button">Войти</a>

@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App;
 use App\Entities\Policy;
 use Closure;
 use Gate;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Прослойка для проверки того, что авторизованный пользователь является админом сайта.
@@ -20,7 +20,7 @@ class CheckAdminAuthMiddleware extends BaseMiddleware {
 	 */
 	public function handle($request, Closure $next) {
 		if (false === Gate::allows(Policy::ADMIN_ACTION)) {
-			App::abort(403);
+			throw new HttpException(403);
 		}
 
 		return $next($request);

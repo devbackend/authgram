@@ -5,7 +5,7 @@
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 
-use App\Entities\Page;
+use App\Entities\Page;use App\Http\Controllers\PagesController;
 
 ?>
 
@@ -48,7 +48,7 @@ use App\Entities\Page;
 			</p>
 
 			<p class="center">
-				<a href="<?= action('PagesController@showAction', [Page::SLUG => 'add']) ?>" class="waves-effect waves-light btn-large" data-scroll-nav="1">Добавить виджет на свой сайт</a>
+				<a href="<?= action(PagesController::class . '@showAction', [Page::SLUG => 'add']) ?>" class="waves-effect waves-light btn-large" data-scroll-nav="1">Добавить виджет на свой сайт</a>
 			</p>
 		</div>
 	</div>

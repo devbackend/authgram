@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\Application;use Illuminate\Support\ViewErrorBag;
+use App\Entities\Application;use App\Http\Controllers\ApplicationController;use Illuminate\Support\ViewErrorBag;
 
 /**
  * Шаблон страницы приложения.
@@ -32,7 +32,7 @@ use App\Entities\Application;use Illuminate\Support\ViewErrorBag;
 			</div>
 		<?php endif ?>
 
-		<form action="<?= action('Dashboard\ApplicationController@update', ['uuid' => $application->uuid]) ?>" method="post" class="col s12">
+		<form action="<?= action(ApplicationController::class . '@update', ['uuid' => $application->uuid]) ?>" method="post" class="col s12">
 			<?= csrf_field() ?>
 			<?= method_field('PUT') ?>
 

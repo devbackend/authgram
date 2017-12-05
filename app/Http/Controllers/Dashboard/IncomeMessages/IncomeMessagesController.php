@@ -1,16 +1,17 @@
 <?php
-namespace App\Http\Controllers\Dashboard;
+
+namespace App\Http\Controllers\Dashboard\IncomeMessages;
 
 use App\Entities\LogIncomeMessage;
-use App\Http\Controllers\Controller;
-use Illuminate\View\View;
+use App\Http\Controllers\BackOfficeController;
+use Illuminate\Contracts\View\View;
 
 /**
- * Контроллер для обработки входящих сообщений к боту.
+ * Контроллер списка сообщений.
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-class IncomeMessagesController extends Controller {
+class IncomeMessagesController extends BackOfficeController {
 	/** Лимит сообщений на страницу */
 	const MESSAGE_PAGE_LIMIT = 25;
 
@@ -21,10 +22,10 @@ class IncomeMessagesController extends Controller {
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function indexAction() {
+	public function __invoke() {
 		$messages = (new LogIncomeMessage)
 			->orderBy(LogIncomeMessage::CREATED_AT, SORT_DESC)
-			->paginate(self::MESSAGE_PAGE_LIMIT)
+			->paginate(static::MESSAGE_PAGE_LIMIT)
 		;
 
 		return $this->render('index', ['messages' => $messages]);

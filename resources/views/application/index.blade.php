@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\Application;
+use App\Entities\Application;use App\Http\Controllers\ApplicationController;
 
 /**
  * Шаблон для страницы приложений
@@ -38,14 +38,14 @@ use App\Entities\Application;
 					</td>
 					<td class="app-controls">
 						<?php if (false === $application->trashed()): ?>
-							<a href="<?= action('Dashboard\ApplicationController@show', ['uuid' => $application->uuid]) ?>">Редактировать</a>
+							<a href="<?= action(ApplicationController::class . '@show', ['uuid' => $application->uuid]) ?>">Редактировать</a>
 
 							<?php if (Auth::user()->user_uuid === $application->owner_uuid): ?>
 							<a href="javascript:" onclick="document.getElementById('delete-app-<?= $application->uuid ?>').submit();" class="red-text">Удалить</a>
 
 							<form
 								id="delete-app-<?= $application->uuid ?>"
-								action="<?= action('Dashboard\ApplicationController@delete', ['uuid' => $application->uuid]) ?>"
+								action="<?= action(ApplicationController::class . '@delete', ['uuid' => $application->uuid]) ?>"
 								method="post"
 							>
 								<?= csrf_field() ?>

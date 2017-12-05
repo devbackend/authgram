@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BackOfficeController;
 use App\Repositories\DashboardStatisticRepository;
+use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\View\View;
 
 /**
@@ -10,18 +12,30 @@ use Illuminate\View\View;
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-class DashboardController extends Controller {
+class DashboardController extends BackOfficeController {
+	/** @var DashboardStatisticRepository */
+	private $statisticRepository;
+
 	/**
-	 * Главная страница админки.
-	 *
+	 * @param Log                          $logger
+	 * @param Repository                   $cache
 	 * @param DashboardStatisticRepository $statisticRepository
 	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function __construct(Log $logger, Repository $cache, DashboardStatisticRepository $statisticRepository) {
+		$this->statisticRepository = $statisticRepository;
+
+		parent::__construct($logger, $cache);
+	}
+
+	/**
 	 * @return View
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function indexAction(DashboardStatisticRepository $statisticRepository) {
-		return $this->render('index', ['statisticRepository' => $statisticRepository]);
+	public function __invoke() {
+		return $this->render('index', ['statisticRepository' => $this->statisticRepository]);
 	}
 
 	/**

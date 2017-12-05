@@ -18,12 +18,6 @@ class RouteServiceProvider extends ServiceProvider {
 	const ROUTE_NAME_HOMEPAGE   = 'homepage';
 	const ROUTE_NAME_SIGN       = 'sign';
 
-	/** @var string Неймспейс, в котором хранятся контроллеры приложения. */
-	protected $namespace = 'App\Http\Controllers';
-
-	/** @var string Неймспейс, в котором хранятся контроллеры панели управления. */
-	protected $dashboardNamespace = 'App\Http\Controllers\Dashboard';
-
 	/**
 	 * Определение роутов приложения.
 	 *
@@ -44,7 +38,6 @@ class RouteServiceProvider extends ServiceProvider {
 	protected function mapWebRoutes() {
 		Route::group([
 			'middleware' => [Kernel::MIDDLEWARE_GROUP_WEB],
-			'namespace'  => $this->namespace,
 		], function($router) {
 			require base_path('routes/web.php');
 		});
@@ -58,7 +51,6 @@ class RouteServiceProvider extends ServiceProvider {
 	protected function mapApiRoutes() {
 		Route::group([
 			'middleware' => 'api',
-			'namespace'  => $this->namespace,
 			'prefix'     => 'api',
 		], function($router) {
 			require base_path('routes/api.php');
@@ -81,11 +73,10 @@ class RouteServiceProvider extends ServiceProvider {
 	 */
 	protected function mapDashboardRoutes() {
 		Route::group([
-			'namespace'     => $this->dashboardNamespace,
-			'middleware'    => [Kernel::MIDDLEWARE_GROUP_WEB, Kernel::MIDDLEWARE_ALIAS_AUTH],
+			'middleware'    => [Kernel::MIDDLEWARE_GROUP_WEB, Kernel::MIDDLEWARE_ALIAS_AUTH, Kernel::MIDDLEWARE_ALIAS_AUTH_ADMIN],
 			'prefix'        => 'dashboard',
 		], function ($router) {
-			require base_path('routes/dashboard.php');
+			require base_path('routes/back-office.php');
 		});
 	}
 }

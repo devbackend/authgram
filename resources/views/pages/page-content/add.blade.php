@@ -5,7 +5,7 @@
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
 
-use App\Entities\Application;
+use App\Entities\Application;use App\Http\Controllers\ApplicationController;
 ?>
 
 <h1>
@@ -40,7 +40,7 @@ use App\Entities\Application;
 			<ul></ul>
 		</div>
 
-		<form class="col s12" action="<?= action('ApplicationController@createAction') ?>" method="post" data-role="create-application-form">
+		<form class="col s12" action="<?= action(ApplicationController::class . '@createAction') ?>" method="post" data-role="create-application-form">
 			{{ csrf_field() }}
 			<input type="hidden" name="<?= Application::OWNER_UUID ?>" value="<?= Auth::user()->user_uuid ?>">
 			<div class="row">

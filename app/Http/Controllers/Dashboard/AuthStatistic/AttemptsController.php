@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboard\AuthStatistic;
 
 use App\Entities\LogAuthStep;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BackOfficeController;
 use App\Repositories\LogAuthStepRepository;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 /**
- * Контроллер для просмотра статистика авторизаций при помощи бота.
+ * Контроллер статистики авторизации.
  *
  * @author Кривонос Иван <devbackend@yandex.ru>
  */
-class AuthStatisticController extends Controller {
+class AttemptsController extends BackOfficeController {
 	/** Лимит записей на страницу */
 	const PAGINATION_LIMIT = 50;
 
@@ -44,7 +44,7 @@ class AuthStatisticController extends Controller {
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function indexAction(Request $request) {
+	public function __invoke(Request $request) {
 		$steps = $request->input('step', []);
 
 		$attempts = $this->authStepRepository->getLastAttempts(static::PAGINATION_LIMIT, $steps);

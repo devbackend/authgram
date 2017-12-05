@@ -1,3 +1,7 @@
+<?php
+use App\Http\Controllers\Dashboard\NotificationController;
+?>
+
 @extends('layouts.frontend')
 
 @section('content')
@@ -17,13 +21,13 @@
 
 				<div class="row">
 					<div class="input-field col s6 center-align">
-						<button class="btn waves-effect waves-light" data-role="text-send" data-url="<?= action('Dashboard\NotificationController@testSendAction') ?>">Протестировать
+						<button class="btn waves-effect waves-light" data-role="text-send" data-url="<?= action(NotificationController::class . '@testSendAction') ?>">Протестировать
 							<i class="material-icons right">done</i>
 						</button>
 					</div>
 
 					<div class="input-field col s6 center-align">
-						<button class="btn waves-effect waves-light" data-role="real-send" data-url="<?= action('Dashboard\NotificationController@realSendAction') ?>" disabled>Отправить всем
+						<button class="btn waves-effect waves-light" data-role="real-send" data-url="<?= action(NotificationController::class . '@realSendAction') ?>" disabled>Отправить всем
 							<i class="material-icons right">done_all</i>
 						</button>
 					</div>
