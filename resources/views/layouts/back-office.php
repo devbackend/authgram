@@ -1,6 +1,7 @@
 <?php
 
 use App\Entities\Owner;
+use App\Http\Controllers\Dashboard\Applications\ApplicationsListController;
 use App\Http\Controllers\Dashboard\AuthStatistic\AttemptsController;
 use App\Http\Controllers\Dashboard\IncomeMessages\IncomeMessagesController;
 use App\Http\Controllers\Dashboard\Logs\LogsListController;
@@ -54,6 +55,10 @@ $user = app(Guard::class)->user();
 						<ul class="nav side-menu">
 							<li>
 								<a href="<?= action(UsersListController::class) ?>"><i class="fa fa-user"></i> Пользователи</a>
+							</li>
+
+							<li>
+								<a href="<?= action(ApplicationsListController::class) ?>"><i class="fa fa-server"></i> Приложения</a>
 							</li>
 
 							<li>

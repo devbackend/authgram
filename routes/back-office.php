@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\Applications\ApplicationsListController;
 use App\Http\Controllers\Dashboard\AuthStatistic\AttemptsController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\IncomeMessages\IncomeMessagesController;
@@ -53,5 +54,11 @@ $router->group(['prefix' => 'notifications'], function() use ($router) {
 // -- Просмотр статистики авторизации
 $router->group(['prefix' => 'auth-statistic'], function() use ($router) {
 	$router->get('/', AttemptsController::class);
+});
+// -- -- -- --
+
+// -- Просмотр приложений
+$router->group(['prefix' => 'apps'], function() use ($router) {
+	$router->get('/', ApplicationsListController::class);
 });
 // -- -- -- --
