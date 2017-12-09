@@ -9,21 +9,16 @@
 			return;
 		}
 
-		var ctx  = document.getElementById("users-and-messages");
-
-		new Chart(ctx, {
-			type: 'bar',
+		Morris.Area({
+			element: 'users-and-messages',
 			data: window.charts.usersAndMessages,
-
-			options: {
-				scales: {
-					yAxes: [{
-						ticks: {
-							beginAtZero: true
-						}
-					}]
-				}
-			}
+			xkey: 'period',
+			ykeys: ['users', 'messages'],
+			lineColors: ['#2e7d32', '#1565c0'],
+			labels: ['Пользователи', 'Сообщения'],
+			pointSize: 2,
+			hideHover: 'auto',
+			resize: true
 		});
 	}
 

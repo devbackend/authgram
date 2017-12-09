@@ -2,8 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Entities\Charts\BarChart;
-use App\Entities\Charts\BarChartDataSet;
 use App\Entities\Entity;
 use App\Entities\LogAuthStep;
 use App\Entities\LogIncomeMessage;
@@ -120,72 +118,74 @@ class DashboardStatisticRepository extends Repository {
 	/**
 	 * Получение графика.
 	 *
-	 * @return BarChart
+	 * @return array
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
-	public function getUsersAndMessagesChart(): BarChart {
-		$chart = new BarChart();
-		for ($i = -21; $i <= 0; $i += 3) {
-			$date = Carbon::now()->addHours($i);
-
-			$format = 'H:00';
-			if (false === $date->isToday()) {
-				$format = 'd.m H:00';
-			}
-
-			$chart->labels[] = $date->format($format);
-		}
+	public function getUsersAndMessagesChart(): array {
+		$result = [];
 
 		// -- Формируем данные для пользователей
 		$users = (new User())->newQuery()
 			->select([
 				$this->db->raw('count(uuid)'),
-				$this->db->raw('trunc(EXTRACT(HOUR from created_at) / 3) as hours')
+				$this->db->raw('date_trunc(\'day\', created_at) as day'),
+				$this->db->raw('floor((extract(hour from created_at) / 4)) * 4 as hours'),
 			])
-			->whereRaw(User::CREATED_AT . '>= now() - INTERVAL \'24 hours\'')
-			->groupBy('hours')
-			->orderBy('hours')
+			->whereRaw(User::CREATED_AT . '>= now() - INTERVAL \'48 hours\'')
+			->groupBy('day', 'hours')
+			->orderBy('day', 'hours')
 			->get()
 			->toArray()
 		;
 
-		$usersSet                  = new BarChartDataSet();
-		$usersSet->label           = 'Пользователи';
-		$usersSet->backgroundColor = '#004d40';
+		foreach ($users as $messageCount) {
+			$date  = (new Carbon($messageCount['day']))->addHours($messageCount['hours'])->format('Y-m-d H:i:s');
+			$count = $messageCount['count'];
 
-		foreach ($users as $userCount) {
-			$usersSet->data[] = $userCount['count'];
+			if (false === array_key_exists($date, $result)) {
+				$result[$date] = [
+					'period'   => $date,
+					'users'    => 0,
+					'messages' => 0,
+				];
+			}
+
+			$result[$date]['users'] += $count;
 		}
-
-		$chart->datasets[] = $usersSet;
 		// -- -- -- -- --
 
 		// -- Формируем данные для сообщений
 		$messages = (new LogIncomeMessage())->newQuery()
 			->select([
 				$this->db->raw('count(id)'),
-				$this->db->raw('trunc(EXTRACT(HOUR from created_at) / 3) as hours')
+				$this->db->raw('date_trunc(\'day\', created_at) as day'),
+				$this->db->raw('floor((extract(hour from created_at) / 4)) * 4 as hours'),
 			])
-			->whereRaw(LogIncomeMessage::CREATED_AT . '>= now() - INTERVAL \'24 hours\'')
-			->groupBy('hours')
-			->orderBy('hours')
+			->whereRaw(LogIncomeMessage::CREATED_AT . '>= now() - INTERVAL \'48 hours\'')
+			->groupBy('day', 'hours')
+			->orderBy('day', 'hours')
 			->get()
 			->toArray()
 		;
 
-		$messagesSet                  = new BarChartDataSet();
-		$messagesSet->label           = 'Сообщения';
-		$messagesSet->backgroundColor = '#0d47a1';
-
 		foreach ($messages as $messageCount) {
-			$messagesSet->data[] = $messageCount['count'];
-		}
+			$date  = (new Carbon($messageCount['day']))->addHours($messageCount['hours'])->format('Y-m-d H:i:s');
+			$count = $messageCount['count'];
 
-		$chart->datasets[] = $messagesSet;
+			if (false === array_key_exists($date, $result)) {
+				$result[$date] = [
+					'period'   => $date,
+					'users'    => 0,
+					'messages' => 0,
+				];
+			}
+
+			$result[$date]['messages'] += $count;
+		}
 		// -- -- -- -- --
 
-		return $chart;
+		return array_values($result);
 	}
 
 	/**
