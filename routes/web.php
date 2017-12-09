@@ -22,7 +22,7 @@ $router->any('/',           HomepageController  ::class)->name(RouteServiceProvi
 $router->get('/p/{slug}',   PagesController     ::class . '@showAction');
 $router->get('/sign',       DashBoardController ::class . '@signAction')->name(RouteServiceProvider::ROUTE_NAME_SIGN);
 
-$router->get('webhook/dev',      WebhookController::class . 'WebhookController@devAction');
+$router->get('webhook/dev',      WebhookController::class . '@devAction');
 $router->post('webhook/{token}', WebhookController::class)->name(RouteServiceProvider::ROUTE_NAME_WEBHOOK);
 
 $router->post('auth/telegram', AuthRequestController::class);
