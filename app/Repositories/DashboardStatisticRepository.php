@@ -201,7 +201,7 @@ class DashboardStatisticRepository extends Repository {
 				$this->db->raw('count(guid) as count')
 			])
 			->whereIn(LogAuthStep::STEP, [LogAuthStep::STEP_AUTH_FAIL, LogAuthStep::STEP_AUTH_SUCCESS])
-			->whereRaw(LogAuthStep::INSERT_STAMP . ' >= now() - INTERVAL \'7 days\'')
+			->whereRaw(LogAuthStep::INSERT_STAMP . ' >= now() - INTERVAL \'21 days\'')
 			->groupBy('date', 'step')
 			->orderBy('date')
 			->orderBy(LogAuthStep::STEP)
