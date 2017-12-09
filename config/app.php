@@ -11,7 +11,7 @@ return [
 	'env'               => env('APP_ENV', 'production'),        // окружение, в котором будет запущено приложение
 	'debug'             => env('APP_DEBUG', false),             // требуется ли режим отладки
 	'url'               => env('APP_URL', 'http://localhost'),  // url-адрес приложения
-	'timezone'          => 'Europe/Moscow',                     // часовой пояс приложения
+	'timezone'          => 'Asia/Vladivostok',                  // часовой пояс приложения
 	'locale'            => 'ru',                                // основная локализация приложения
 	'fallback_locale'   => 'ru',                                // локализация приложения, если недоступная основная
 	'key'               => env('APP_KEY'),                      // уникальный ключ приложения
