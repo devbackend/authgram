@@ -14,6 +14,7 @@ use Ramsey\Uuid\Uuid;
  * @property string $first_name             Имя пользователя
  * @property string $last_name              Фамилия пользователя
  * @property bool   $notification_enabled   Уведомления включены
+ * @property string $profile_photo          Фото профиля
  *
  * @property-read Application[] $applications Приложения, добавленные пользователем.
  *
@@ -29,6 +30,7 @@ class User extends Entity {
 	const FIRST_NAME            = 'first_name';
 	const LAST_NAME             = 'last_name';
 	const NOTIFICATION_ENABLED  = 'notification_enabled';
+	const PROFILE_PHOTO         = 'profile_photo';
 
 	/** @var bool Отключаем автоинкремент для первичного ключа */
 	public $incrementing = false;

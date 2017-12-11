@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CreateTelegramCommand;
+use App\Console\Commands\SandboxCommand;
 use App\Console\Commands\WebhookSwitchCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -15,8 +16,9 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel {
 	/** @var string[] Консольные команды */
 	protected $commands = [
-		CreateTelegramCommand::class,
-		WebhookSwitchCommand::class,
+		CreateTelegramCommand   ::class,
+		WebhookSwitchCommand    ::class,
+		SandboxCommand          ::class,
 	];
 
 	/**

@@ -3,7 +3,11 @@
 namespace App\Repositories;
 
 use App\Entities\User;
+use App\Exceptions\Handler;
+use App\Jobs\UserProfilePhotoDownload;
+use Illuminate\Contracts\Bus\Dispatcher;
 use Telegram\Bot\Objects\User as TelegramUser;
+use Throwable;
 
 /**
  * Репозиторий пользователей.
@@ -46,6 +50,17 @@ class UserRepository extends Repository {
 			$user->save();
 
 			$this->cache->put($cacheKey, $user, 24 * 60);
+
+			if (null === $user->profile_photo) {
+				try {
+					app(Dispatcher::class)->dispatch(
+						new UserProfilePhotoDownload($user->uuid)
+					);
+				}
+				catch (Throwable $e) {
+					app(Handler::class)->report($e);
+				}
+			}
 		}
 
 		return $user;

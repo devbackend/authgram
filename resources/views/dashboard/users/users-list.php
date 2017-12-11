@@ -19,6 +19,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 <table class="table">
 	<thead>
 	<tr>
+		<th></th>
 		<th>Имя</th>
 		<th>Количество приложений</th>
 		<th>Дата добавления</th>
@@ -29,6 +30,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 	<tbody>
 	<?php  foreach ($users as $user): ?>
 		<tr>
+			<td>
+				<?php if (null !== $user->profile_photo): ?>
+					<img src="<?= url($user->profile_photo) ?>" alt="<?= $user->getName() ?>" width="50">
+				<?php endif ?>
+			</td>
 			<td>
 				<a href="<?= action(UserPageController::class, ['uuid' => $user->uuid]) ?>" target="_blank">
 					<?= $user->getName() ?>
