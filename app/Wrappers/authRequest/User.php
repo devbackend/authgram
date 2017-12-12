@@ -18,4 +18,7 @@ class User {
 
 	/** @var string Фамилия пользователя */
 	public $lastName;
+
+	/** @var string URL-адрес фото профиля */
+	public $profilePhotoUrl;
 }

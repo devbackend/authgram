@@ -98,11 +98,15 @@ class AuthoriseCommand extends TelegramCommand {
 		// Пытаем отправить запрос в несколько попыток
 		$isSuccessResponse = false;
 
-		$authUser = new AuthUser;
+		$authUser               = new AuthUser;
 		$authUser->uuid         = $user->uuid;
 		$authUser->username     = $user->username;
 		$authUser->firstName    = $user->first_name;
 		$authUser->lastName     = $user->last_name;
+
+		if (null !== $user->profile_photo) {
+			$authUser->profilePhotoUrl = '//cdn.authgram.ru/' . $user->profile_photo;
+		}
 
 		$authRequest = new Request;
 		$authRequest->token     = $application->api_token;
