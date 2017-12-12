@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use App;
 use App\Entities\Owner;
-use AuthGramRequestHandler\AuthGramRequestHandler;
+use Devbackend\AuthGramRequestHandler\AuthGramRequestHandler;
 
 /**
  * Контроллер для обработки входящего запроса с авторизационными данными пользователя.
@@ -26,14 +26,14 @@ class AuthRequestController extends Controller {
 
 		$authRequest = $requestHandler->getRequest();
 
-		$owner = Owner::where(Owner::USER_UUID, $authRequest->user->uuid)->first();
+		$owner = Owner::where(Owner::USER_UUID, $authRequest->getUser()->getUuid())->first();
 		if (null === $owner) {
 			$owner = Owner::create([
-				Owner::USER_UUID => $authRequest->user->uuid,
+				Owner::USER_UUID => $authRequest->getUser()->getUuid(),
 			]);
 		}
 
-		$owner->password = $authRequest->authKey;
+		$owner->password = $authRequest->getAuthKey();
 		$owner->save();
 
 		return 'ok';
