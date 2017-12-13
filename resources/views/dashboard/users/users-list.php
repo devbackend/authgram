@@ -36,12 +36,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 				<?php endif ?>
 			</td>
 			<td>
-				<a href="<?= action(UserPageController::class, ['uuid' => $user->uuid]) ?>" target="_blank">
+				<a href="<?= action(UserPageController::class, ['uuid' => $user->uuid]) ?>">
 					<?= $user->getName() ?>
 				</a>
 			</td>
 			<td>
-				<?= $user->applications()->count() ?>
+				<?= count($user->applications) ?>
 			</td>
 			<td>
 				<?= $user->getCreationTime() ?>
