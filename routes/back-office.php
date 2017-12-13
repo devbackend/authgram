@@ -8,7 +8,9 @@ use App\Http\Controllers\Dashboard\Logs\DeleteByContentController;
 use App\Http\Controllers\Dashboard\Logs\DeleteSelectedController;
 use App\Http\Controllers\Dashboard\Logs\LogsListController;
 use App\Http\Controllers\Dashboard\Logs\ShowLogController;
-use App\Http\Controllers\Dashboard\NotificationController;
+use App\Http\Controllers\Dashboard\Notifications\NotificationFormController;
+use App\Http\Controllers\Dashboard\Notifications\NotificationRealSendController;
+use App\Http\Controllers\Dashboard\Notifications\NotificationTestSendController;
 use App\Http\Controllers\Dashboard\Users\UserPageController;
 use App\Http\Controllers\Dashboard\Users\UsersListController;
 use Illuminate\Routing\Router;
@@ -45,9 +47,9 @@ $router->group(['prefix' => 'income-messages'], function (Router $router) {
 
 // -- Управление уведомлениями
 $router->group(['prefix' => 'notifications'], function() use ($router) {
-	$router->get('/',           NotificationController::class . '@indexAction');
-	$router->post('/send/test', NotificationController::class . '@testSendAction');
-	$router->post('/send/real', NotificationController::class . '@realSendAction');
+	$router->get('/',           NotificationFormController      ::class);
+	$router->post('/send/test', NotificationTestSendController  ::class);
+	$router->post('/send/real', NotificationRealSendController  ::class);
 });
 // -- -- -- --
 

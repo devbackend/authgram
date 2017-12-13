@@ -6,6 +6,7 @@ use App\Entities\User;
 use App\Exceptions\Handler;
 use App\Jobs\UserProfilePhotoDownload;
 use Illuminate\Contracts\Bus\Dispatcher;
+use Illuminate\Support\Collection;
 use Telegram\Bot\Objects\User as TelegramUser;
 use Throwable;
 
@@ -23,6 +24,25 @@ class UserRepository extends Repository {
 	 */
 	public function get($id) {
 		return $this->entity->where(User::UUID, $id)->first();
+	}
+
+	/**
+	 * Получение идентификаторов пользователей, которые подписаны на рассылку бота.
+	 *
+	 * @return Collection|string[]
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function getActiveOwnerIds(): Collection {
+		$ownerIds = app(ApplicationRepository::class)->getApplicationOwnerIds();
+
+		$ownerIds = $this->entity->newQuery()
+			->whereIn(User::UUID, $ownerIds)
+			->where(User::NOTIFICATION_ENABLED, true)
+			->pluck(User::TELEGRAM_ID)
+		;
+
+		return $ownerIds;
 	}
 
 	/**

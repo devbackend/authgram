@@ -80,6 +80,7 @@ elixir(function(mix) {
 	let backOfficeScripts = [
 		'back-office/wysiwyg.js',
 		'back-office/dashboard.js',
+		'back-office/notifications.js',
 	];
 
 	mix.styles(backOfficeStyleVendors, 'public/css/back-office.vendors.css');

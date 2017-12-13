@@ -5,7 +5,7 @@ use App\Http\Controllers\Dashboard\Applications\ApplicationsListController;
 use App\Http\Controllers\Dashboard\AuthStatistic\AttemptsController;
 use App\Http\Controllers\Dashboard\IncomeMessages\IncomeMessagesController;
 use App\Http\Controllers\Dashboard\Logs\LogsListController;
-use App\Http\Controllers\Dashboard\NotificationController;
+use App\Http\Controllers\Dashboard\Notifications\NotificationFormController;
 use App\Http\Controllers\Dashboard\Users\UsersListController;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\MessageBag;
@@ -31,6 +31,8 @@ $user = app(Guard::class)->user();
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta name="csrf-token" content="<?= csrf_token() ?>">
 
 	<title>Панель управления</title>
 
@@ -66,7 +68,7 @@ $user = app(Guard::class)->user();
 							</li>
 
 							<li>
-								<a href="<?= action(NotificationController::class . '@indexAction') ?>"><i class="fa fa-pencil"></i> Рассылка</a>
+								<a href="<?= action(NotificationFormController::class) ?>"><i class="fa fa-pencil"></i> Рассылка</a>
 							</li>
 
 							<li>

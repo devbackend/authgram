@@ -28,6 +28,28 @@ class ApplicationRepository extends Repository {
 	}
 
 	/**
+	 * Получение идентификаторов владельцев приложений.
+	 *
+	 * @return string[]
+	 *
+	 * @author Кривонос Иван <devbackend@yandex.ru>
+	 */
+	public function getApplicationOwnerIds(): array {
+		$guids = $this->entity->newQuery()
+			->select(Application::OWNER_UUID)
+			->distinct()
+			->get()
+		;/** @var Application[] $guids */
+
+		$result = [];
+		foreach ($guids as $guid) {
+			$result[] = $guid->owner_uuid;
+		}
+
+		return $result;
+	}
+
+	/**
 	 * @inheritdoc
 	 *
 	 * @author Кривонос Иван <devbackend@yandex.ru>

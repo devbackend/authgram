@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App;
 use App\Entities\LogIncomeMessage;
+use App\Exceptions\Handler;
 use App\Exceptions\UndefinedMessageException;
 use App\Repositories\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,7 +66,7 @@ class WebhookController extends Controller {
 				$this->handleUpdateObject($update);
 			}
 			catch (Throwable $e) {
-				$this->logger->error('Не удалось обработать входящее сообщение: ' . $e->getMessage());
+				app(Handler::class)->report($e);
 			}
 		}
 

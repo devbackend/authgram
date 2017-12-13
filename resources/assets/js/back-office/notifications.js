@@ -9,13 +9,10 @@
 	var SELECTOR_TEST_SEND_BUTTON = '[data-role="text-send"]';
 	var SELECTOR_REAL_SEND_BUTTON = '[data-role="real-send"]';
 
-	var SELECTOR_PRELOADER = '[data-role="preloader"]';
-
 	$(function () {
 		var $textarea   = $(SELECTOR_NOTIFICATION_TEXT);
 		var $testButton = $(SELECTOR_TEST_SEND_BUTTON);
 		var $realButton = $(SELECTOR_REAL_SEND_BUTTON);
-		var $preloader  = $(SELECTOR_PRELOADER);
 
 		$.ajaxSetup({
 			headers: {
@@ -29,12 +26,6 @@
 				url: $testButton.data('url'),
 				data: {text: $textarea.val()},
 				dataType: 'JSON',
-				beforeSend: function() {
-					$preloader.toggleClass('hide', false);
-				},
-				complete: function() {
-					$preloader.toggleClass('hide', true);
-				},
 				success: function(response) {
 					if (false === response.success) {
 						alert(response.error);
@@ -56,15 +47,7 @@
 				url: $realButton.data('url'),
 				data: {text: $textarea.val()},
 				dataType: 'JSON',
-				beforeSend: function() {
-					$preloader.toggleClass('hide', false);
-				},
-				complete: function() {
-					$preloader.toggleClass('hide', true);
-				},
-				success: function(response) {
-					$('[data-role="result"]').html('<p><b>Успешно отправлено:</b> ' + response.successCount + '</p><p><b>Не отправлено:</b> ' + response.errorsCount + '</p>');
-					$textarea.val('');
+				success: function() {
 					$realButton.prop('disabled', true);
 				},
 				error: function (response) {
