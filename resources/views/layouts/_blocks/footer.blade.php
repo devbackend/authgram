@@ -1,6 +1,6 @@
 <footer class="page-footer">
 	<div class="container">
-		<span class="grey-text text-lighten-4">&copy; 2017 AuthGram.ru</span>
+		<span class="grey-text text-lighten-4">&copy; 2017-2018 AuthGram.ru</span>
 		<div class="right">
 			<a class="social-icon" href="https://vk.com/authgram" target="_blank">
 				<i class="si si-vk"></i>
