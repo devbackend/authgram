@@ -49,7 +49,7 @@ class Controller extends BaseController {
 	protected function render($viewFile, $params = []) {
 		$class = new ReflectionClass(self::class);
 
-		$controllerPathParts = get_called_class(); // App\Http\Controllers\ExampleController
+		$controllerPathParts = get_called_class(); 													     // App\Http\Controllers\ExampleController
 		$controllerPathParts = str_replace($class->getNamespaceName() . '\\', '', $controllerPathParts); // ExampleController
 		$controllerPathParts = explode('\\', $controllerPathParts);
 
