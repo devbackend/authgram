@@ -8,13 +8,15 @@ use Ramsey\Uuid\Uuid;
 /**
  * Модель пользователя.
  *
- * @property string $uuid                   Идентификатор пользователя
- * @property int    $telegram_id            Идентификатор пользователя в Telegram
- * @property string $username               Никнейм пользователя
- * @property string $first_name             Имя пользователя
- * @property string $last_name              Фамилия пользователя
- * @property bool   $notification_enabled   Уведомления включены
- * @property string $profile_photo          Фото профиля
+ * @property string $uuid                           Идентификатор пользователя
+ * @property int    $telegram_id                    Идентификатор пользователя в Telegram
+ * @property string $username                       Никнейм пользователя
+ * @property string $first_name                     Имя пользователя
+ * @property string $last_name                      Фамилия пользователя
+ * @property bool   $notification_enabled           Уведомления включены
+ * @property string $profile_photo                  Фото профиля
+ * @property bool   $last_message_status            Статус отправки последнего сообщения
+ * @property int    $last_message_attempts          Количество попытоу отправки последнего сообщения
  *
  * @property-read Application[] $applications Приложения, добавленные пользователем.
  *
@@ -31,6 +33,8 @@ class User extends Entity {
 	const LAST_NAME             = 'last_name';
 	const NOTIFICATION_ENABLED  = 'notification_enabled';
 	const PROFILE_PHOTO         = 'profile_photo';
+	const LAST_MESSAGE_STATUS   = 'last_message_status';
+	const LAST_MESSAGE_ATTEMPTS = 'last_message_attempts';
 
 	/** @var bool Отключаем автоинкремент для первичного ключа */
 	public $incrementing = false;
