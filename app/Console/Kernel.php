@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CreateTelegramCommand;
+use App\Console\Commands\LastMessageSend;
 use App\Console\Commands\SandboxCommand;
 use App\Console\Commands\WebhookSwitchCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel {
 		CreateTelegramCommand   ::class,
 		WebhookSwitchCommand    ::class,
 		SandboxCommand          ::class,
+		LastMessageSend         ::class,
 	];
 
 	/**
