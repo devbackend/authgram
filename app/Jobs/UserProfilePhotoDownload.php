@@ -35,7 +35,7 @@ class UserProfilePhotoDownload extends AbstractQueueJob {
 	 * @author Кривонос Иван <devbackend@yandex.ru>
 	 */
 	public function handle() {
-		$telegram = app(Api::class);
+		$telegram = app(Api::class);/** @var Api $telegram */
 		$user     = app(UserRepository::class)->get($this->userId);/** @var User $user */
 		if (null === $user) {
 			app(Logger::class)->error('Невозможно получить фото профиля: пользователь ' . $this->userId . ' не найден');
