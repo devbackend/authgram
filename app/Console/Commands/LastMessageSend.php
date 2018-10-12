@@ -17,7 +17,7 @@ class LastMessageSend extends Command {
 		$users = (new User())->newQuery()
 			->select(User::UUID)
 			->where(User::LAST_MESSAGE_STATUS, null)
-			->andWhere(User::TELEGRAM_ID, 114307233)
+			->where(User::TELEGRAM_ID, 114307233)
 			->orderByDesc(User::CREATED_AT)
 			->limit(10)
 			->get()
