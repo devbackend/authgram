@@ -22,7 +22,7 @@ class LastMessageSend extends Command {
 			->select(User::UUID)
 //			->where(User::LAST_MESSAGE_STATUS, null)
 			->where(User::TELEGRAM_ID, 114307233)
-			->orderByDesc(User::CREATED_AT)
+			->orderBy(User::CREATED_AT)
 			->limit(10)
 			->get()
 		;
