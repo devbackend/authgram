@@ -50,8 +50,6 @@ class SendLastMessageJob extends AbstractQueueJob {
 				]),
 			]);
 
-			sleep(30);
-
 			$telegram->sendMessage([
 				'chat_id' => $user->telegram_id,
 				'text'    => 'Кстати, наш главный разработчик недавно начал вести свой канал о разработке - вы можете подписаться на него - https://t.me/devbackend',
