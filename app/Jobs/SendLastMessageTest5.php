@@ -13,7 +13,7 @@ use Throwable;
  *
  * @author Ivan Krivonos <devbackend@yandex.ru>
  */
-class SendLastMessageTest4 extends AbstractQueueJob {
+class SendLastMessageTest5 extends AbstractQueueJob {
 	/** @var string */
 	private $userId;
 
@@ -50,7 +50,7 @@ class SendLastMessageTest4 extends AbstractQueueJob {
 				]),
 			]);
 
-			sleep(10);
+			sleep(30);
 
 			$telegram->sendMessage([
 				'chat_id' => $user->telegram_id,
