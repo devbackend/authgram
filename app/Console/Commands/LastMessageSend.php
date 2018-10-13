@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Entities\User;
-use App\Jobs\SendLastMessageTest1;
+use App\Jobs\SendLastMessageTest2;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Throwable;
@@ -31,7 +31,7 @@ class LastMessageSend extends Command {
 				$this->info('Обработка пользователя ' . $user['uuid']);
 
 				app(Dispatcher::class)->dispatch(
-					new SendLastMessageTest1($user['uuid'])
+					new SendLastMessageTest2($user['uuid'])
 				);
 			}
 			catch (Throwable $e) {
