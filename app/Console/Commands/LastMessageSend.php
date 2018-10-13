@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Entities\User;
-use App\Jobs\SendLastMessageTest5;
+use App\Jobs\SendLastMessageJob;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Throwable;
@@ -19,8 +19,8 @@ class LastMessageSend extends Command {
 	public function handle() {
 		$users = (new User())->newQuery()
 			->select(User::UUID)
-//			->where(User::LAST_MESSAGE_STATUS, null)
-			->where(User::TELEGRAM_ID, 114307233)
+			->where(User::LAST_MESSAGE_STATUS, null)
+//			->where(User::TELEGRAM_ID, 114307233)
 			->orderBy(User::CREATED_AT)
 			->limit(10)
 			->get()
@@ -31,7 +31,7 @@ class LastMessageSend extends Command {
 				$this->info('Обработка пользователя ' . $user['uuid']);
 
 				app(Dispatcher::class)->dispatch(
-					new SendLastMessageTest5($user['uuid'])
+					new SendLastMessageJob($user['uuid'])
 				);
 			}
 			catch (Throwable $e) {

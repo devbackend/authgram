@@ -13,7 +13,7 @@ use Throwable;
  *
  * @author Ivan Krivonos <devbackend@yandex.ru>
  */
-class SendLastMessageTest5 extends AbstractQueueJob {
+class SendLastMessageJob extends AbstractQueueJob {
 	/** @var string */
 	private $userId;
 
