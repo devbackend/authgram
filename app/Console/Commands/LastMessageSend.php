@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Entities\User;
-use App\Jobs\SendLastMessage;
+use App\Jobs\SendLastMessages;
 use App\Jobs\UserProfilePhotoDownload;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Bus\Dispatcher;
@@ -32,7 +32,7 @@ class LastMessageSend extends Command {
 				$this->info('Обработка пользователя ' . $user['uuid']);
 
 				app(Dispatcher::class)->dispatch(
-					new SendLastMessage($user['uuid'])
+					new SendLastMessages($user['uuid'])
 				);
 			}
 			catch (Throwable $e) {
