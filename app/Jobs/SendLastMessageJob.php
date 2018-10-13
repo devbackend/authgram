@@ -58,7 +58,8 @@ class SendLastMessageJob extends AbstractQueueJob {
 			$user->last_message_status = true;
 		}
 		catch (Throwable $e) {
-			$user->last_message_status = false;
+			$user->last_message_status      = false;
+			$user->last_message_fail_reason = $e->getMessage();
 		}
 
 		$user->save();

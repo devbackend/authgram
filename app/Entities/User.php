@@ -17,6 +17,7 @@ use Ramsey\Uuid\Uuid;
  * @property string $profile_photo                  Фото профиля
  * @property bool   $last_message_status            Статус отправки последнего сообщения
  * @property int    $last_message_attempts          Количество попытоу отправки последнего сообщения
+ * @property string $last_message_fail_reason       Причина ошибки отправки последнего сообщения
  *
  * @property-read Application[] $applications Приложения, добавленные пользователем.
  *
